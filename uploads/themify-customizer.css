@@ -1,0 +1,10 @@
+/* Themify Customize Styling */
+a {	
+	color: #ab9279; 
+}
+a:hover {	
+	color: #63503d; 
+}
+#header a:hover {	
+	color: #ab9279; 
+}
