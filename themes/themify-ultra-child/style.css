@@ -7,4 +7,132 @@ Template: themify-ultra
 
 /*** Sumner Styles Start ***/
 
+/* =================================
+  Base Layout Styles
+==================================== */
 
+@font-face {
+    font-family: "REIS-Regular";
+    src: url("../themify-ultra-child/fonts/REIS-Regular.ttf"),
+    url("../themify-ultra-child/fonts/REIS-Regular.otf");
+}
+
+.RIES-Regular h1 {
+    font-size: 4em;
+}
+
+#site-logo {
+    font-size: 1.2em !important;
+}
+
+.RIES-Regular h1,
+.RIES-Regular h2 {
+    font-family: REIS-Regular !important;
+}
+
+time.post-date.entry-date.updated {
+    background: rgba(168,144,120, 0.85);
+}
+
+.post-nav .prev .arrow:before,
+.post-nav .next .arrow {
+    color: #A89078;
+}
+
+.comment-form .submit {
+    background-color: #A89078;
+}
+
+header.header-on-scroll nav,
+header.header-on-scroll #site-logo span {
+    color: white;
+}
+
+.home .module_column_6-3-0 {
+    border: none;
+    padding: 0;
+}
+
+.home .testimonial-content {
+    margin-top: 17px;
+}
+
+.home .making-happy-families .testimonial-content p {
+    margin: 0 2em 2em 2em;
+}
+
+.quiz_section {
+    margin: 0 auto !important;
+    width: 50%;
+}
+
+.mlw_qmn_question {
+    margin-bottom: 30px !important;
+    margin-top: 20px !important;
+    font-size: 1.5em;
+}
+
+.quiz_section input[type=text],
+.quiz_section input[type=email] {
+    border: none  !important;
+    border-bottom: 1px solid #A89078 !important;
+}
+
+.quiz_section input[type=submit] {
+    border-radius: 20px;
+    color: white !important;
+    background-color: #A89078 !important;
+
+}
+
+
+
+/* =================================
+  About Page Styles
+==================================== */
+
+/* =================================
+  Unlock my Potential Page Styles
+==================================== */
+
+/* =================================
+  Blog Page Styles
+==================================== */
+
+/* =================================
+  Testimonials Page Styles
+==================================== */
+
+
+
+/* =================================
+  Tablet Layout Styles
+==================================== */
+
+@media (min-width: 680px) {
+    .home .module_column_6-3-0 {
+        border-right: rgba(209,209,209, 1.00) 1px solid;
+        padding-right: 5%;
+    }
+
+    .home .making-happy-families .testimonial-content p {
+        margin: 0 4em 2em 4em;
+    }
+
+    .RIES-Regular h1 {
+        font-size: 5em;
+    }
+
+    #site-logo {
+        font-size: 1.5em !important;
+    }
+
+
+}
+
+
+/* =================================
+  Desktop Layout Styles
+==================================== */
+
+@media (min-width: 1024px) {}

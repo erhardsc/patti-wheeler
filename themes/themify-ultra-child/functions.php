@@ -11,6 +11,9 @@ add_action( 'wp_enqueue_scripts', 'themify_custom_enqueue_child_theme_styles', 1
 function custom_styles() {
 
 	wp_register_style('door-css', get_stylesheet_directory_uri() . '/css/door.css' );
+	wp_register_style('animsition-css', get_stylesheet_directory_uri() . '/lib/animsition/css/animsition.min.css' );
+
+//	wp_enqueue_style( 'animsition-css' );
 
 	if( is_front_page() ) {
 
@@ -24,7 +27,9 @@ function custom_scripts() {
 
 	wp_register_script('main-js', get_stylesheet_directory_uri() . '/js/main.js', array('jquery'), false);
 	wp_register_script('door-js', get_stylesheet_directory_uri() . '/js/door.js', array('jquery'), false);
+	wp_register_script('animsition-js', get_stylesheet_directory_uri() . '/lib/animsition/js/animsition.min.js', array('jquery'), false);
 
+//	wp_enqueue_script('animsition-js');
 	wp_enqueue_script('main-js');
 
 	if( is_front_page() ){

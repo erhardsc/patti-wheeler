@@ -1,0 +1,100 @@
+#slider section#wpforms-widget-2 {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    width: 87%
+}
+
+#slider div.wpforms-container-full .wpforms-form .wpforms-submit-container {
+    left: 36%;
+}
+
+#slider div.wpforms-container-full .wpforms-form .wpforms-field {
+    padding-top: 20px !important;
+}
+
+#slider .wpforms-form button[type=submit] {
+    border-radius: 20px;
+    color: white;
+    border-color: #A89078;
+    background-color: transparent;
+
+}
+
+/* ///////////////////////////////
+Primary styles for the input boxes
+////////////////////////////////*/
+
+#slider input,
+#slider textarea {
+    font-size: 2.8vw;
+    border-bottom: solid 1px #A89078 !important;
+    -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1) !important;
+    transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1) !important;
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #A89078 4%) !important;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #A89078 4%) !important;
+    background-position: -400px 0 !important;
+    background-size: 400px 100% !important;
+    background-repeat: no-repeat !important;
+    color: white !important;
+    font-weight: 200;
+    border: none;
+}
+
+#slider input:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    background-position: 0 0 !important;
+}
+
+/* ///////////////////////////////
+Animate the placeholders on focus
+////////////////////////////////*/
+
+#slider input[type=text]:focus::-webkit-input-placeholder,
+#slider textarea:focus::-webkit-input-placeholder {
+    font-size: 11px !important;
+    -webkit-transform: translateY(-10px) !important;
+    transform: translateY(-10px) !important;
+    visibility: visible !important;
+    color: white !important;
+}
+
+#slider input[type=text]::-webkit-input-placeholder,
+#slider textarea::-webkit-input-placeholder {
+    font-family: 'roboto', sans-serif;
+    -webkit-transition: all 0.3s ease-in-out !important;
+    transition: all 0.3s ease-in-out !important;
+    color: white !important;
+}
+
+#slider .form-row:focus {
+    background: white !important;
+}
+
+#slider textarea {
+    min-height: 20px;
+    height: 35px;
+}
+
+/* =================================
+  Tablet Layout Styles
+==================================== */
+
+@media (min-width: 680px) {
+    #slider input,
+    #slider textarea {
+        font-size: 12px;
+    }
+
+    #slider section#wpforms-widget-2 {
+        width: 82%
+    }
+}
+
+
+/* =================================
+  Desktop Layout Styles
+==================================== */
+
+@media (min-width: 1024px) {}

@@ -1,0 +1,68 @@
+/* .themify_builder_8_row.module_row_0 Style */
+.themify_builder_8_row.module_row_0.module_row {
+	
+	background-color: rgba(206,199,194, 1.00);
+	text-align: center;
+	
+	color: rgba(255,255,255, 1.00);
+	padding-top : 13%;
+	padding-bottom : 13%
+}
+.themify_builder_8_row.module_row_0.module_row h1 {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row h2 {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row h3:not(.module-title) {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row h4 {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row h5 {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row h6 {
+	
+	color: rgba(255,255,255, 1.00)
+}
+.themify_builder_8_row.module_row_0.module_row>.builder_row_cover {
+	background:
+}
+.themify_builder_8_row.module_row_0.module_row> div > .builder_row_cover {
+	background:
+}
+
+/* .module_row_0 .module_column_0.tb_8_column Style */
+.module_row_0 .module_column_0.tb_8_column.module_column {
+	padding-top : 5%;
+	padding-right : 8%;
+	padding-bottom : 5%;
+	padding-left : 8%
+}
+
+/* .themify_builder_8_row.module_row_1 Style */
+.themify_builder_8_row.module_row_1.module_row {
+	padding-top : 3%;
+	padding-bottom : 3%
+}
+
+/* .themify_builder_8_row.module_row_2 Style */
+.themify_builder_8_row.module_row_2.module_row {
+	background-image: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/09/patti-wheel-about-footer-1-1024x686.jpg);
+	padding-top : 17.5%;
+	padding-bottom : 17.5%
+}
+
+@media (min-width: 1025px) {
+	.themify_builder_row.module_row_2 .module_column_0.tb_8_column{ width: 27.8% !important; }
+	.themify_builder_row.module_row_2 .module_column_1.tb_8_column{ width: 69% !important; }
+	
+}
+.themify_builder .text-8-2-1-0.module-text { text-align: center;  } 

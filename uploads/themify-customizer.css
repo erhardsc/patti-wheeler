@@ -5,6 +5,12 @@ a {
 a:hover {	
 	color: #63503d; 
 }
+#header {	
+	color: #393f43; 
+}
 #header a:hover {	
 	color: #ab9279; 
+}
+#main-nav .current_page_item > a, #main-nav .current-menu-item > a, #main-nav > .current_page_item > a, #main-nav > .current-menu-item > a {	
+	color: #a89078; 
 }
