@@ -56,10 +56,10 @@ class Themify_Builder_Revisions {
 		);
 
 		foreach ( $ajax_events as $ajax_event => $nopriv ) {
-			add_action( 'wp_ajax_tfb_' . $ajax_event, array( $this, $ajax_event ) );
+			add_action( 'wp_ajax_tb_' . $ajax_event, array( $this, $ajax_event ) );
 
 			if ( $nopriv ) {
-				add_action( 'wp_ajax_nopriv_tfb_' . $ajax_event, array( $this, $ajax_event ) );
+				add_action( 'wp_ajax_nopriv_tb_' . $ajax_event, array( $this, $ajax_event ) );
 			}
 		}
 
@@ -75,46 +75,13 @@ class Themify_Builder_Revisions {
 	 * @access public
 	 */
 	public function load_revision_lists() {
-		check_ajax_referer('tfb_load_nonce', 'tfb_load_nonce');
+		check_ajax_referer('tb_load_nonce', 'tb_load_nonce');
 
 		$post_id = (int) $_POST['postid'];
 		$revisions = wp_get_post_revisions( $post_id );
-
-		if ( 0 == $post_id )
-			$can_edit_post = true;
-		else
-			$can_edit_post = current_user_can( 'edit_post', $post_id );
-
-		echo '<div class="lightbox_inner">';
-		echo sprintf( '<ul id="themify_builder_lightbox_options_tab_items"><li><a href="#themify_builder_options_setting">%s</a></li></ul>', esc_html__( 'Revisions', 'themify' ) );
-		
-		if ( ! empty( $revisions ) && count( $revisions ) > 0 ) {
-			echo '<div class="themify_builder_options_tab_wrapper">';
-			echo '<ul class="themify_builder_revision_lists">';
-			foreach( $revisions as $revision ) {
-				$date = date_i18n( __( 'd/m/Y @ h:i:s a', 'themify' ), strtotime( $revision->post_modified ) );
-				$delete = '';
-				$revision_is_current = $post_id == $revision->ID;
-				$has_builder = $this->check_has_builder( $revision->ID );
-				$rev_comment = get_metadata( 'post', $revision->ID, '_builder_custom_rev_comment', true );
-				$rev_comment = ! empty( $rev_comment ) ? sprintf( '<small>(%s)</small> ', $rev_comment ) : '';
-
-				if ( ! $revision_is_current && ! wp_is_post_autosave( $revision ) && $can_edit_post && $has_builder ) {
-					$restore = sprintf( '<a href="#" title="%s" class="builder-restore-revision-btn js-builder-restore-revision-btn" data-rev-id="%d">%s</a>', esc_html__( 'Click to restore this revision', 'themify' ), $revision->ID, $date );
-					$delete = sprintf( '<a href="#" title="%s" class="builder-delete-revision-btn js-builder-delete-revision-btn ti-close" data-rev-id="%d"></a>', esc_html__( 'Delete this revision', 'themify' ), $revision->ID );
-				} else {
-					$restore = $date;
-				}
-
-				echo sprintf( '<li>%s %s %s</li>', $restore, $rev_comment, $delete );
-			}
-			echo '</ul>';
-			echo '</div>';
-		} else {
-			echo sprintf( '<p>%s</p>', esc_html__( 'No Revision found.', 'themify' ) );
-		}
-		echo '</div>';
-		die();
+		$can_edit_post = $post_id===0?true:current_user_can( 'edit_post', $post_id );
+                include THEMIFY_BUILDER_INCLUDES_DIR . '/themify-builder-revision-list.php';
+		wp_die();
 	}
 
 	/**
@@ -123,7 +90,7 @@ class Themify_Builder_Revisions {
 	 * @access public
 	 */
 	public function save_revision() {
-		check_ajax_referer('tfb_load_nonce', 'tfb_load_nonce');
+		check_ajax_referer('tb_load_nonce', 'tb_load_nonce');
 
 		$post_id = (int) $_POST['postid'];
 		$post = get_post( $post_id );
@@ -135,11 +102,10 @@ class Themify_Builder_Revisions {
 		if ( ! wp_revisions_enabled( $post ) ) 
 			wp_send_json_error( esc_html__( 'Error. The revision is not enable in this post or has been reach the revision post limit.', 'themify' ) );
 
-		if ( is_object( $post ) ) 
+		if ( is_object( $post ) ){
 			$post = get_object_vars( $post );
-
-		unset( $post['post_modified'] );
-		unset( $post['post_modified_gmt'] );
+                }
+		unset( $post['post_modified'],$post['post_modified_gmt'] );
 		$new_revision_id = _wp_put_post_revision( $post );
 		if ( ! is_wp_error( $new_revision_id ) ) {
 			update_metadata( 'post', $new_revision_id, '_builder_custom_rev_comment', $rev_comment );
@@ -147,7 +113,7 @@ class Themify_Builder_Revisions {
 		} else {
 			wp_send_json_error( esc_html__( 'Cannot save revision, please try again.', 'themify' ) );
 		}
-
+                wp_die();
 	}
 
 	/**
@@ -174,8 +140,9 @@ class Themify_Builder_Revisions {
 		global $revision;
 		if( is_object( $revision ) ) {
 			$data = stripslashes_deep( json_decode( $value, true ) );
-			if ( is_array( $data ) && count( $data ) > 0 ) 
-				return $this->builder->retrieve_template('builder-output.php', array('builder_output' => $data, 'builder_id' => $revision->ID), '', '', false);
+			if (!empty( $data ) && is_array( $data ) ) {
+                            return Themify_Builder_Component_Base::retrieve_template('builder-output.php', array('builder_output' => $data, 'builder_id' => $revision->ID), '', '', false);
+                        }
 		}
 	}
 
@@ -190,8 +157,9 @@ class Themify_Builder_Revisions {
 		$builder_data  = get_metadata( 'post', $revision_id, $this->builder_meta_key, true );
 		$builder_data = $GLOBALS['ThemifyBuilder_Data_Manager']->construct_data( $builder_data, $post_id );
 
-		if ( false !== $builder_data )
-			update_post_meta( $post_id, $this->builder_meta_key, $builder_data );
+		if ( false !== $builder_data ){
+                    update_post_meta( $post_id, $this->builder_meta_key, $builder_data );
+                }
 	}
 
 	/**
@@ -200,25 +168,32 @@ class Themify_Builder_Revisions {
 	 * @access public
 	 */
 	public function restore_revision_page() {
-		check_ajax_referer('tfb_load_nonce', 'tfb_load_nonce');
+		check_ajax_referer('tb_load_nonce', 'tb_load_nonce');
 
 		$rev_id = (int) $_POST['revid'];
 		$revision = wp_get_post_revision( $rev_id );
 
-		if ( ! current_user_can( 'edit_post', $revision->post_parent ) )
-			wp_send_json_error( esc_html__( 'Error. You do not have access to restore revision.', 'themify' ) );
+		if ( ! current_user_can( 'edit_post', $revision->post_parent ) ){
+                    wp_send_json_error( esc_html__( 'Error. You do not have access to restore revision.', 'themify' ) );
+                    return;
+                }
 
 		if ( $revision ) {
 			$builder_data  = get_metadata( 'post', $revision->ID, $this->builder_meta_key, true );
 			if ( false !== $builder_data ) {
-				$GLOBALS['ThemifyBuilder_Data_Manager']->save_data( $builder_data, $revision->post_parent );
-				wp_send_json_success( $revision->post_parent );
+                                $builder_data = json_decode($builder_data,true);
+                                $response = array();
+				$response = $GLOBALS['ThemifyBuilder_Data_Manager']->save_data( $builder_data, $revision->post_parent,'revision' );
+                                $response['status'] = 'success';
+                                $response['builder_data'] = $builder_data;
+				wp_send_json( $response );
 			} else {
 				wp_send_json_error( esc_html__( 'Cannot restore this revision. builder data not founded.', 'themify' ) );
 			}
 		} else {
 			wp_send_json_error( esc_html__( 'Revision post is not found or invalid ID', 'themify' ) );
 		}
+                wp_die();
 	}
 
 	/**
@@ -228,12 +203,13 @@ class Themify_Builder_Revisions {
 	 * @return json
 	 */
 	public function delete_revision() {
-		check_ajax_referer('tfb_load_nonce', 'tfb_load_nonce');	
+		check_ajax_referer('tb_load_nonce', 'tb_load_nonce');	
 		$rev_id = (int) $_POST['revid'];
 		$revision = wp_get_post_revision( $rev_id );
-
-		if ( ! current_user_can( 'edit_post', $revision->post_parent ) )
-			wp_send_json_error( esc_html__( 'Error. You do not have access to delete revision.', 'themify' ) );
+		if ( ! current_user_can( 'edit_post', $revision->post_parent ) ){
+                    wp_send_json_error( esc_html__( 'Error. You do not have access to delete revision.', 'themify' ) );
+                    return;
+                }
 
 		$delete = wp_delete_post_revision( $rev_id );
 		if ( ! is_wp_error( $delete ) ) {
@@ -241,6 +217,7 @@ class Themify_Builder_Revisions {
 		} else {
 			wp_send_json_error( esc_html__( 'Unable to delete this revision, please try again!', 'themify' ) );
 		}
+                wp_die();
 	}
 
 	/**
@@ -258,8 +235,9 @@ class Themify_Builder_Revisions {
 			$builder_data = $this->builder->get_builder_data( $parent->ID );
 			$builder_data = $GLOBALS['ThemifyBuilder_Data_Manager']->construct_data( $builder_data, $parent->ID );
 
-			if ( false !== $builder_data )
-				update_metadata( 'post', $post_id, $this->builder_meta_key, $builder_data );
+			if ( false !== $builder_data ){
+                            update_metadata( 'post', $post_id, $this->builder_meta_key, $builder_data );
+                        }
 		}
 	}
 

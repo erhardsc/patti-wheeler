@@ -21,11 +21,6 @@ body.fixed-header.page-loaded #headerwrap {
 	display: inline-block;
 	vertical-align: middle;
 }
-.fixed-header-on #site-logo img {
-	height: 30px;
-	width: auto;
-	transition: all .3s;
-}
 
 /* header topbar site description */
 #site-description {

@@ -46,6 +46,29 @@ if( ! class_exists('Themify_Mega_Menu_Walker') ) {
 			return $output;
 		}
 
+		/**
+		 * Render a Layout Part inside menu
+		 *
+		 * $dropdown_wrapper add ul.sub-menu around the widget
+		 * $class_names additional CSS classes to add to the menu wrapper
+		 * @return string
+		 */
+		function render_layout_part( $item, $dropdown_wrapper, $class_names = '' ) {
+			$output = '';
+			if( $dropdown_wrapper ) {
+				$title = apply_filters( 'the_title', $item->title, $item->ID );
+				$output .= "<li id='menu-item-$item->ID' $class_names><a href='#'>" . $title . '</a><ul class="sub-menu">';
+			}
+
+			$output .= '<li class="themify-widget-menu">' . do_shortcode( sprintf( '[themify_layout_part id="%s"]', $item->object_id ) ) . '';
+
+			if( $dropdown_wrapper ) {
+				$output .= '</ul>';
+			}
+
+			return $output;
+		}
+
 		function start_el( &$output, $item, $depth = 0, $args = array(), $current_object_id = 0 ) {
 
 			$classes = empty ( $item->classes ) ? array () : (array) $item->classes;
@@ -60,6 +83,12 @@ if( ! class_exists('Themify_Mega_Menu_Walker') ) {
 			/* handle the display of widget menu items */
 			if( Themify_Widgets_Menu::get_instance()->is_menu_widget( $item ) ) {
 				$output .= $this->render_widget_menu( $item, $depth == 0, $class_names );
+				return $output;
+			}
+
+			/* Layout Part rendering */
+			if ( $item->type == 'post_type' && $item->object == 'tbuilder_layout_part' ) {
+				$output .= $this->render_layout_part( $item, $depth == 0, $class_names );
 				return $output;
 			}
 
@@ -179,7 +208,7 @@ if( ! function_exists('themify_theme_mega_get_posts') ) {
 		if ( is_wp_error( $taxObject ) || empty( $taxObject ) ) {
 			return '';
 		}
-		$mega_posts = '<article itemscope itemtype="http://schema.org/Article" class="post"><h1 class="post-title">'.__('Error loading posts.', 'themify').'</a></div>';
+		$mega_posts = '<article itemscope itemtype="http://schema.org/Article" class="post"><h1 class="post-title">'.__('Error loading posts.', 'themify').'</h1></article>';
 
 		$term_query_args = apply_filters( 'themify_mega_menu_query',
 			array(
@@ -653,3 +682,18 @@ function themify_megamenu_minify_vars( $vars ) {
 	return $vars;
 }
 add_filter( 'themify_main_script_vars', 'themify_megamenu_minify_vars', 10, 1 );
+
+/**
+ * Allow Layout Part post type in navigation menus
+ *
+ * @return array
+ * @since 3.3.5
+ */
+function themify_allow_layout_parts_in_nav_menus( $args, $name ) {
+	if ( 'tbuilder_layout_part' == $name ) {
+		$args['show_in_nav_menus'] = true;
+	}
+
+	return $args;
+}
+// add_filter( 'register_post_type_args', 'themify_allow_layout_parts_in_nav_menus', 10, 2 );

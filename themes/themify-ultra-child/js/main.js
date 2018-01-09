@@ -1,17 +1,8 @@
-/*////////////   Page transition animations START //////////// */
+$=jQuery;
 
-// jQuery(document).ready(function(){
-//   $(".animsition").animsition();
-//   console.log("yo");
-// });
+$(document).ready(function() {
 
 
 
 
-
-
-
-
-
-
-/*////////////   Page animations END  //////////// */
+});

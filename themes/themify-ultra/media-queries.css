@@ -520,6 +520,47 @@ body:not(.header-overlay):not(.header-minbar):not(.header-leftpane):not(.header-
 
 }
 
+@media screen and (max-width: 1024px) {
+
+	/* GALLERY COLUMN */
+	#body .gallery-columns-5 .gallery-item:nth-of-type(5n),
+	#body .gallery-columns-6 .gallery-item:nth-of-type(6n),
+	#body .gallery-columns-7 .gallery-item:nth-of-type(7n),
+	#body .gallery-columns-8 .gallery-item:nth-of-type(8n),
+	#body .gallery-columns-9 .gallery-item:nth-of-type(9n) {
+		margin-right: 1.5%;
+	}
+	#body .gallery-columns-5 .gallery-item:nth-of-type(4n+1),
+	#body .gallery-columns-6 .gallery-item:nth-of-type(4n+1),
+	#body .gallery-columns-7 .gallery-item:nth-of-type(4n+1),
+	#body .gallery-columns-8 .gallery-item:nth-of-type(4n+1),
+	#body .gallery-columns-9 .gallery-item:nth-of-type(4n+1) {
+		clear: left;
+	}
+	#body .gallery-columns-5 .gallery-item:nth-of-type(4n),
+	#body .gallery-columns-6 .gallery-item:nth-of-type(4n),
+	#body .gallery-columns-7 .gallery-item:nth-of-type(4n),
+	#body .gallery-columns-8 .gallery-item:nth-of-type(4n),
+	#body .gallery-columns-9 .gallery-item:nth-of-type(4n) {
+		margin-right: 0;
+	}
+	#body .gallery-columns-5 .gallery-item + br,
+	#body .gallery-columns-6 .gallery-item + br,
+	#body .gallery-columns-7 .gallery-item + br,
+	#body .gallery-columns-8 .gallery-item + br,
+	#body .gallery-columns-9 .gallery-item + br {
+		display: none;
+	}
+	#body .gallery-columns-5 .gallery-item,
+	#body .gallery-columns-6 .gallery-item,
+	#body .gallery-columns-7 .gallery-item,
+	#body .gallery-columns-8 .gallery-item,
+	#body .gallery-columns-9 .gallery-item {
+		width: 23.8%;
+	}
+	
+}
+
 @media screen and (max-width: 800px) {
 
 	/************************************************************************************
@@ -781,14 +822,6 @@ body:not(.header-overlay):not(.header-minbar):not(.header-leftpane):not(.header-
 	}
 
 	/************************************************************************************
-	COMMENT FORM
-	*************************************************************************************/
-	#commentform input[type=text], 
-	#contactform input[type=text] {
-		max-width: 50%;
-	}
-
-	/************************************************************************************
 	COMMENTS
 	*************************************************************************************/
 	.commentlist .comment-time {
@@ -964,6 +997,35 @@ body:not(.header-overlay):not(.header-minbar):not(.header-leftpane):not(.header-
 		width: 100%;
 		-webkit-flex-wrap: wrap;
 		flex-wrap: wrap;
+	}
+
+	/************************************************************************************
+	GALLERY COLUMN
+	*************************************************************************************/
+	#body .gallery-columns-3 .gallery-item + br {
+		display: none;
+	}
+	#body .gallery-columns-3 .gallery-item:nth-of-type(3n) {
+		margin-right: 1.5%;
+	}
+	
+	#body .gallery-columns-3 .gallery-item,
+	#body .gallery-columns-4 .gallery-item,
+	#body .gallery-columns-5 .gallery-item,
+	#body .gallery-columns-6 .gallery-item,
+	#body .gallery-columns-7 .gallery-item,
+	#body .gallery-columns-8 .gallery-item,
+	#body .gallery-columns-9 .gallery-item {
+		width: 49.2%;
+	}
+	#body .gallery-columns-3 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-4 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-5 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-6 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-7 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-8 .gallery-item:nth-of-type(2n),
+	#body .gallery-columns-9 .gallery-item:nth-of-type(2n) {
+		margin-right: 0;
 	}
 
 }

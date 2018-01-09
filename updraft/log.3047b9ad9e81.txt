@@ -1,0 +1,341 @@
+0000.000 (0) Opened log file at time: Thu, 30 Nov 2017 19:48:07 +0000 on http://localhost/passionswithpurpose
+0000.004 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.13.12 WP: 4.9.1 PHP: 7.0.15 (apache2handler, Darwin Erhard.local 17.2.0 Darwin Kernel Version 17.2.0: Fri Sep 29 18:27:05 PDT 2017; root:xnu-4570.20.62~3/RELEASE_X86_64 x86_64) MySQL: 5.6.35 WPLANG: en_US Server: Apache/2.2.31 (Unix) mod_wsgi/3.5 Python/2.7.13 PHP/7.0.15 mod_ssl/2.2.31 OpenSSL/1.0.2j DAV/2 mod_fastcgi/2.4.6 mod_perl/2.0.9 Perl/v5.24.0 safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 45.3M | 10M) multisite: N openssl: OpenSSL 1.0.2j  26 Sep 2016 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.008 (0) Free space on disk containing Updraft's temporary directory: 515190 MB
+0000.022 (0) Tasks: Backup files: 1 (schedule: unset) Backup DB: 1 (schedule: unset)
+0000.029 (0) Requesting semaphore lock (fd) (apparently not via scheduler)
+0000.037 (0) Set semaphore last lock (fd) time to 2017-11-30 19:48:07
+0000.039 (0) Semaphore lock (fd) complete
+0000.049 (0) Backup run: resumption=0, nonce=3047b9ad9e81, begun at=1512071287 (0s ago), job type=backup
+0000.055 (0) Scheduling a resumption (1) after 300 seconds (1512071587) in case this run gets aborted
+0000.082 (0) Checking if we have a zip executable available
+0000.085 (0) Testing: /usr/bin/zip
+0000.103 (0) Output: zip warning: binziptest/test.zip not found or empty
+0000.106 (0) Output: adding: binziptest/subdir1/	(in=0) (out=0) (stored 0%)
+0000.109 (0) Output: adding: binziptest/subdir1/subdir2/	(in=0) (out=0) (stored 0%)
+0000.110 (0) Output: adding: binziptest/subdir1/subdir2/test.html	(in=131) (out=107) (deflated 18%)
+0000.112 (0) Output: total bytes=131, compressed=107 -> 18% savings
+0000.127 (0) Output: adding: binziptest/subdir1/subdir2/test2.html	(in=138) (out=113) (deflated 18%)
+0000.131 (0) Output: total bytes=269, compressed=220 -> 18% savings
+0000.146 (0) Working binary zip found: /usr/bin/zip
+0000.150 (0) Zip engine: found/will use a binary zip: /usr/bin/zip
+0000.152 (0) Creation of backups of directories: beginning
+0000.164 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0000.448 (0) Total entities for the zip file: 447 directories, 3278 files (0 skipped as non-modified), 56 MB
+0000.466 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 100 files added (on-disk size: 0 KB)
+0000.479 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 200 files added (on-disk size: 0 KB)
+0000.490 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 300 files added (on-disk size: 0 KB)
+0000.506 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 400 files added (on-disk size: 0 KB)
+0000.516 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 500 files added (on-disk size: 0 KB)
+0000.518 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.2 MB, 3278 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0001.161 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: size is now: 3.50 MB
+0001.179 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 600 files added (on-disk size: 3557.4 KB)
+0001.193 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 700 files added (on-disk size: 3557.4 KB)
+0001.208 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 800 files added (on-disk size: 3557.4 KB)
+0001.223 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 900 files added (on-disk size: 3557.4 KB)
+0001.238 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1000 files added (on-disk size: 3557.4 KB)
+0001.241 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (16.3 MB, 3278 files batched, 501 (1002) added so far); re-opening (prior size: 3557.4 KB)
+0002.488 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: size is now: 7.90 MB
+0002.513 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1100 files added (on-disk size: 8087 KB)
+0002.526 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1200 files added (on-disk size: 8087 KB)
+0002.539 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1300 files added (on-disk size: 8087 KB)
+0002.550 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1400 files added (on-disk size: 8087 KB)
+0002.564 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1500 files added (on-disk size: 8087 KB)
+0002.567 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (1.6 MB, 3278 files batched, 501 (1503) added so far); re-opening (prior size: 8087 KB)
+0002.845 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1600 files added (on-disk size: 8690.5 KB)
+0002.855 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1700 files added (on-disk size: 8690.5 KB)
+0002.866 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1800 files added (on-disk size: 8690.5 KB)
+0002.878 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 1900 files added (on-disk size: 8690.5 KB)
+0002.890 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2000 files added (on-disk size: 8690.5 KB)
+0002.892 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (10.7 MB, 3278 files batched, 501 (2004) added so far); re-opening (prior size: 8690.5 KB)
+0003.518 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: size is now: 11.40 MB
+0003.532 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2100 files added (on-disk size: 11644.3 KB)
+0003.543 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2200 files added (on-disk size: 11644.3 KB)
+0003.553 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2300 files added (on-disk size: 11644.3 KB)
+0003.566 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2400 files added (on-disk size: 11644.3 KB)
+0003.579 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2500 files added (on-disk size: 11644.3 KB)
+0003.581 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.8 MB, 3278 files batched, 501 (2505) added so far); re-opening (prior size: 11644.3 KB)
+0004.090 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: size is now: 14.60 MB
+0004.107 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2600 files added (on-disk size: 14948.7 KB)
+0004.117 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2700 files added (on-disk size: 14948.7 KB)
+0004.127 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2800 files added (on-disk size: 14948.7 KB)
+0004.136 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 2900 files added (on-disk size: 14948.7 KB)
+0004.148 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 3000 files added (on-disk size: 14948.7 KB)
+0004.150 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.2 MB, 3278 files batched, 501 (3006) added so far); re-opening (prior size: 14948.7 KB)
+0004.815 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: size is now: 17.90 MB
+0004.836 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 3100 files added (on-disk size: 18320.7 KB)
+0004.846 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip.tmp: 3200 files added (on-disk size: 18320.7 KB)
+0005.707 (0) Created plugins zip (0) - 19229.4 KB in 5.5 s (3472.3 KB/s) (sha1: ee9aec1965e5733d9ebf69aaaeca9fbfb61e43af, sha256: 511b93b76e897d7cb312706993c682a34a2b482931ac455608e493d337622676)
+0005.715 (0) Beginning creation of dump of themes (split every: 400 MB)
+0005.791 (0) Total entities for the zip file: 111 directories, 961 files (0 skipped as non-modified), 23.3 MB
+0005.801 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0005.811 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0005.820 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0005.831 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0005.840 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0005.842 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (17.5 MB, 961 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0006.708 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: size is now: 6.10 MB
+0006.722 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 600 files added (on-disk size: 6238 KB)
+0006.733 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 700 files added (on-disk size: 6238 KB)
+0006.744 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 800 files added (on-disk size: 6238 KB)
+0006.756 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: 900 files added (on-disk size: 6238 KB)
+0007.128 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip.tmp: size is now: 8.00 MB
+0007.351 (0) Created themes zip (0) - 8179.2 KB in 1.6 s (5012.8 KB/s) (sha1: d3c2758485980e782c3c6b48991f7fb1860565f7, sha256: f850d3143f8f25facc91c15038938dba114989f7fa2bcca8fd46845033ca02ec)
+0007.358 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0007.360 (0) Looking for candidates to back up in: /Users/sumnererhard/Sites/passionswithpurpose/wp-content/uploads
+0007.362 (0) finding files: themify-customizer.css: adding to list (1)
+0007.364 (0) finding files: themify-css: adding to list (2)
+0007.365 (0) finding files: wp-migrate-db: adding to list (3)
+0007.367 (0) finding files: wp_quiz-import: adding to list (4)
+0007.369 (0) finding files: 2017: adding to list (5)
+0007.372 (0) finding files: themify: adding to list (6)
+0007.374 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0007.396 (0) Total entities for the zip file: 11 directories, 108 files (0 skipped as non-modified), 18.9 MB
+0007.406 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0007.612 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-uploads.zip.tmp: size is now: 18.90 MB
+0009.758 (0) Created uploads zip (0) - 19334.8 KB in 2.4 s (8120.8 KB/s) (sha1: 71f64d8d59860e61c113ea8440840eb26b633fd5, sha256: 64e91efde48d1f6f6732ab4cc29f9dbe2461179c9d935e81c4f6fc445f67270d)
+0009.777 (0) Beginning backup of other directories found in the content directory (index: 0)
+0009.780 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0009.810 (0) Looking for candidates to back up in: /Users/sumnererhard/Sites/passionswithpurpose/wp-content
+0009.817 (0) finding files: upgrade: skipping: excluded by options
+0009.819 (0) finding files: .DS_Store: adding to list (1)
+0009.821 (0) finding files: index.php: adding to list (2)
+0009.823 (0) finding files: plugins: skipping: this is the plugins directory
+0009.825 (0) finding files: uploads: skipping: this is the uploads directory
+0009.827 (0) finding files: updraft: skipping: this is the updraft directory
+0009.829 (0) finding files: .git: adding to list (3)
+0009.831 (0) finding files: themes: skipping: this is the themes directory
+0009.832 (0) finding files: mu-plugins: adding to list (4)
+0010.138 (0) Total entities for the zip file: 274 directories, 2178 files (0 skipped as non-modified), 39.4 MB
+0010.148 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 100 files added (on-disk size: 0 KB)
+0010.157 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 200 files added (on-disk size: 0 KB)
+0010.167 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 300 files added (on-disk size: 0 KB)
+0010.176 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 400 files added (on-disk size: 0 KB)
+0010.187 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 500 files added (on-disk size: 0 KB)
+0010.189 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (16.1 MB, 2178 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0011.430 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: size is now: 16.30 MB
+0011.454 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 600 files added (on-disk size: 16641.2 KB)
+0011.469 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 700 files added (on-disk size: 16641.2 KB)
+0011.484 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 800 files added (on-disk size: 16641.2 KB)
+0011.498 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 900 files added (on-disk size: 16641.2 KB)
+0011.510 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1000 files added (on-disk size: 16641.2 KB)
+0011.512 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.1 MB, 2178 files batched, 501 (1002) added so far); re-opening (prior size: 16641.2 KB)
+0011.920 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: size is now: 21.50 MB
+0011.940 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1100 files added (on-disk size: 22028.7 KB)
+0011.951 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1200 files added (on-disk size: 22028.7 KB)
+0011.960 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1300 files added (on-disk size: 22028.7 KB)
+0011.969 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1400 files added (on-disk size: 22028.7 KB)
+0011.979 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1500 files added (on-disk size: 22028.7 KB)
+0011.982 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (8.9 MB, 2178 files batched, 501 (1503) added so far); re-opening (prior size: 22028.7 KB)
+0012.515 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: size is now: 30.50 MB
+0012.537 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1600 files added (on-disk size: 31219.1 KB)
+0012.546 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1700 files added (on-disk size: 31219.1 KB)
+0012.555 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1800 files added (on-disk size: 31219.1 KB)
+0012.565 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 1900 files added (on-disk size: 31219.1 KB)
+0012.574 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 2000 files added (on-disk size: 31219.1 KB)
+0012.577 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (6.6 MB, 2178 files batched, 501 (2004) added so far); re-opening (prior size: 31219.1 KB)
+0013.066 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: size is now: 37.20 MB
+0013.084 (0) Zip: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip.tmp: 2100 files added (on-disk size: 38123.7 KB)
+0014.664 (0) Created others zip (0) - 40682.1 KB in 4.8 s (8427.6 KB/s) (sha1: af54aa44c438e0284fbb3e623bab912f612145ed, sha256: bc8a196938d99099c61f3a3763be84f08734632b5b5a8f45b66ea95c832e9d38)
+0014.674 (0) Saving backup status to database (elements: 8)
+0014.681 (0) Beginning creation of database dump (WordPress DB)
+0014.686 (0) Testing: /usr/local/bin/mysqldump
+0014.734 (0) Binary mysqldump: error (code: 2)
+0014.762 (0) Table wp_options: Total expected rows (approximate): 269
+0014.826 (0) Table wp_options: Total rows added: 241 in 0.06 seconds
+0014.829 (0) Table wp_options: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_options.table.gz - 131.3 KB)
+0014.836 (0) Table wp_users: Total expected rows (approximate): 2
+0014.845 (0) Table wp_users: Total rows added: 2 in 0.01 seconds
+0014.848 (0) Table wp_users: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_users.table.gz - 0.6 KB)
+0014.856 (0) Table wp_usermeta: Total expected rows (approximate): 38
+0014.863 (0) Table wp_usermeta: Total rows added: 38 in 0.01 seconds
+0014.865 (0) Table wp_usermeta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_usermeta.table.gz - 1.2 KB)
+0014.873 (0) Table wp_commentmeta: Total expected rows (approximate): 53
+0014.881 (0) Table wp_commentmeta: Total rows added: 53 in 0.01 seconds
+0014.883 (0) Table wp_commentmeta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_commentmeta.table.gz - 1.3 KB)
+0014.891 (0) Table wp_comments: Total expected rows (approximate): 9
+0014.898 (0) Table wp_comments: Total rows added: 9 in 0.00 seconds
+0014.901 (0) Table wp_comments: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_comments.table.gz - 1.6 KB)
+0014.908 (0) Table wp_links: Total expected rows (approximate): 0
+0014.916 (0) Table wp_links: Total rows added: 0 in 0.01 seconds
+0014.918 (0) Table wp_links: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_links.table.gz - 0.4 KB)
+0014.926 (0) Table wp_postmeta: Total expected rows (approximate): 396
+0014.996 (0) Table wp_postmeta: Total rows added: 305 in 0.07 seconds
+0014.999 (0) Table wp_postmeta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_postmeta.table.gz - 36.4 KB)
+0015.006 (0) Table wp_posts: Total expected rows (approximate): 229
+0015.066 (0) Table wp_posts: Total rows added: 162 in 0.06 seconds
+0015.069 (0) Table wp_posts: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_posts.table.gz - 33.4 KB)
+0015.077 (0) Table wp_term_relationships: Total expected rows (approximate): 14
+0015.084 (0) Table wp_term_relationships: Total rows added: 14 in 0.01 seconds
+0015.086 (0) Table wp_term_relationships: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_term_relationships.table.gz - 0.4 KB)
+0015.093 (0) Table wp_term_taxonomy: Total expected rows (approximate): 5
+0015.100 (0) Table wp_term_taxonomy: Total rows added: 5 in 0.00 seconds
+0015.102 (0) Table wp_term_taxonomy: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_term_taxonomy.table.gz - 0.5 KB)
+0015.109 (0) Table wp_termmeta: Total expected rows (approximate): 0
+0015.114 (0) Table wp_termmeta: Total rows added: 0 in 0.00 seconds
+0015.116 (0) Table wp_termmeta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_termmeta.table.gz - 0.4 KB)
+0015.124 (0) Table wp_terms: Total expected rows (approximate): 5
+0015.130 (0) Table wp_terms: Total rows added: 5 in 0.01 seconds
+0015.132 (0) Table wp_terms: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_terms.table.gz - 0.5 KB)
+0015.141 (0) Table wp_mlw_qm_audit_trail: Total expected rows (approximate): 8
+0015.148 (0) Table wp_mlw_qm_audit_trail: Total rows added: 8 in 0.00 seconds
+0015.150 (0) Table wp_mlw_qm_audit_trail: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_qm_audit_trail.table.gz - 0.5 KB)
+0015.159 (0) Table wp_mlw_questions: Total expected rows (approximate): 2
+0015.167 (0) Table wp_mlw_questions: Total rows added: 2 in 0.01 seconds
+0015.169 (0) Table wp_mlw_questions: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_questions.table.gz - 0.5 KB)
+0015.176 (0) Table wp_mlw_quizzes: Total expected rows (approximate): 1
+0015.184 (0) Table wp_mlw_quizzes: Total rows added: 1 in 0.01 seconds
+0015.186 (0) Table wp_mlw_quizzes: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_quizzes.table.gz - 2.4 KB)
+0015.195 (0) Table wp_mlw_results: Total expected rows (approximate): 3
+0015.202 (0) Table wp_mlw_results: Total rows added: 3 in 0.01 seconds
+0015.204 (0) Table wp_mlw_results: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_results.table.gz - 0.6 KB)
+0015.213 (0) Table wp_nf3_action_meta: Total expected rows (approximate): 82
+0015.221 (0) Table wp_nf3_action_meta: Total rows added: 82 in 0.01 seconds
+0015.224 (0) Table wp_nf3_action_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_action_meta.table.gz - 1.3 KB)
+0015.237 (0) Table wp_nf3_actions: Total expected rows (approximate): 4
+0015.245 (0) Table wp_nf3_actions: Total rows added: 4 in 0.01 seconds
+0015.247 (0) Table wp_nf3_actions: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_actions.table.gz - 0.5 KB)
+0015.255 (0) Table wp_nf3_field_meta: Total expected rows (approximate): 0
+0015.260 (0) Table wp_nf3_field_meta: Total rows added: 0 in 0.00 seconds
+0015.263 (0) Table wp_nf3_field_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_field_meta.table.gz - 0.3 KB)
+0015.272 (0) Table wp_nf3_fields: Total expected rows (approximate): 4
+0015.279 (0) Table wp_nf3_fields: Total rows added: 4 in 0.01 seconds
+0015.282 (0) Table wp_nf3_fields: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_fields.table.gz - 0.4 KB)
+0015.289 (0) Table wp_nf3_form_meta: Total expected rows (approximate): 96
+0015.302 (0) Table wp_nf3_form_meta: Total rows added: 96 in 0.01 seconds
+0015.305 (0) Table wp_nf3_form_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_form_meta.table.gz - 1.2 KB)
+0015.313 (0) Table wp_nf3_forms: Total expected rows (approximate): 1
+0015.319 (0) Table wp_nf3_forms: Total rows added: 1 in 0.00 seconds
+0015.321 (0) Table wp_nf3_forms: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_forms.table.gz - 0.4 KB)
+0015.336 (0) Table wp_nf3_object_meta: Total expected rows (approximate): 0
+0015.345 (0) Table wp_nf3_object_meta: Total rows added: 0 in 0.01 seconds
+0015.348 (0) Table wp_nf3_object_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_object_meta.table.gz - 0.3 KB)
+0015.357 (0) Table wp_nf3_objects: Total expected rows (approximate): 0
+0015.365 (0) Table wp_nf3_objects: Total rows added: 0 in 0.00 seconds
+0015.368 (0) Table wp_nf3_objects: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_objects.table.gz - 0.4 KB)
+0015.379 (0) Table wp_nf3_relationships: Total expected rows (approximate): 0
+0015.388 (0) Table wp_nf3_relationships: Total rows added: 0 in 0.01 seconds
+0015.391 (0) Table wp_nf3_relationships: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_relationships.table.gz - 0.4 KB)
+0015.405 (0) Table wp_rg_form: Total expected rows (approximate): 0
+0015.419 (0) Table wp_rg_form: Total rows added: 0 in 0.01 seconds
+0015.423 (0) Table wp_rg_form: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form.table.gz - 0.4 KB)
+0015.434 (0) Table wp_rg_form_meta: Total expected rows (approximate): 0
+0015.442 (0) Table wp_rg_form_meta: Total rows added: 0 in 0.00 seconds
+0015.445 (0) Table wp_rg_form_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form_meta.table.gz - 0.3 KB)
+0015.458 (0) Table wp_rg_form_view: Total expected rows (approximate): 0
+0015.465 (0) Table wp_rg_form_view: Total rows added: 0 in 0.00 seconds
+0015.469 (0) Table wp_rg_form_view: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form_view.table.gz - 0.4 KB)
+0015.478 (0) Table wp_rg_incomplete_submissions: Total expected rows (approximate): 0
+0015.485 (0) Table wp_rg_incomplete_submissions: Total rows added: 0 in 0.00 seconds
+0015.488 (0) Table wp_rg_incomplete_submissions: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_incomplete_submissions.table.gz - 0.4 KB)
+0015.498 (0) Table wp_rg_lead: Total expected rows (approximate): 0
+0015.506 (0) Table wp_rg_lead: Total rows added: 0 in 0.01 seconds
+0015.509 (0) Table wp_rg_lead: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead.table.gz - 0.5 KB)
+0015.518 (0) Table wp_rg_lead_detail: Total expected rows (approximate): 0
+0015.526 (0) Table wp_rg_lead_detail: Total rows added: 0 in 0.01 seconds
+0015.529 (0) Table wp_rg_lead_detail: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_detail.table.gz - 0.4 KB)
+0015.539 (0) Table wp_rg_lead_detail_long: Total expected rows (approximate): 0
+0015.545 (0) Table wp_rg_lead_detail_long: Total rows added: 0 in 0.00 seconds
+0015.548 (0) Table wp_rg_lead_detail_long: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_detail_long.table.gz - 0.3 KB)
+0015.557 (0) Table wp_rg_lead_meta: Total expected rows (approximate): 0
+0015.564 (0) Table wp_rg_lead_meta: Total rows added: 0 in 0.00 seconds
+0015.567 (0) Table wp_rg_lead_meta: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_meta.table.gz - 0.4 KB)
+0015.577 (0) Table wp_rg_lead_notes: Total expected rows (approximate): 0
+0015.586 (0) Table wp_rg_lead_notes: Total rows added: 0 in 0.01 seconds
+0015.590 (0) Table wp_rg_lead_notes: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_notes.table.gz - 0.4 KB)
+0015.601 (0) Table wp_yikes_easy_mc_forms: Total expected rows (approximate): 0
+0015.609 (0) Table wp_yikes_easy_mc_forms: Total rows added: 0 in 0.01 seconds
+0015.612 (0) Table wp_yikes_easy_mc_forms: finishing file (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_yikes_easy_mc_forms.table.gz - 0.4 KB)
+0015.622 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_options.table.gz (1/35): adding to final database dump
+0015.676 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_users.table.gz (2/35): adding to final database dump
+0015.679 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_usermeta.table.gz (3/35): adding to final database dump
+0015.683 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_commentmeta.table.gz (4/35): adding to final database dump
+0015.688 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_comments.table.gz (5/35): adding to final database dump
+0015.692 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_links.table.gz (6/35): adding to final database dump
+0015.695 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_postmeta.table.gz (7/35): adding to final database dump
+0015.757 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_posts.table.gz (8/35): adding to final database dump
+0015.789 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_term_relationships.table.gz (9/35): adding to final database dump
+0015.791 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_term_taxonomy.table.gz (10/35): adding to final database dump
+0015.795 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_termmeta.table.gz (11/35): adding to final database dump
+0015.799 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_terms.table.gz (12/35): adding to final database dump
+0015.801 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_qm_audit_trail.table.gz (13/35): adding to final database dump
+0015.806 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_questions.table.gz (14/35): adding to final database dump
+0015.812 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_quizzes.table.gz (15/35): adding to final database dump
+0015.815 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_mlw_results.table.gz (16/35): adding to final database dump
+0015.819 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_action_meta.table.gz (17/35): adding to final database dump
+0015.822 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_actions.table.gz (18/35): adding to final database dump
+0015.824 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_field_meta.table.gz (19/35): adding to final database dump
+0015.827 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_fields.table.gz (20/35): adding to final database dump
+0015.832 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_form_meta.table.gz (21/35): adding to final database dump
+0015.838 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_forms.table.gz (22/35): adding to final database dump
+0015.840 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_object_meta.table.gz (23/35): adding to final database dump
+0015.844 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_objects.table.gz (24/35): adding to final database dump
+0015.847 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_nf3_relationships.table.gz (25/35): adding to final database dump
+0015.855 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form.table.gz (26/35): adding to final database dump
+0015.859 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form_meta.table.gz (27/35): adding to final database dump
+0015.862 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_form_view.table.gz (28/35): adding to final database dump
+0015.866 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_incomplete_submissions.table.gz (29/35): adding to final database dump
+0015.871 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead.table.gz (30/35): adding to final database dump
+0015.875 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_detail.table.gz (31/35): adding to final database dump
+0015.877 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_detail_long.table.gz (32/35): adding to final database dump
+0015.879 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_meta.table.gz (33/35): adding to final database dump
+0015.882 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_rg_lead_notes.table.gz (34/35): adding to final database dump
+0015.889 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db-table-wp_yikes_easy_mc_forms.table.gz (35/35): adding to final database dump
+0015.893 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db.gz: finished writing out complete database file (184 KB)
+0015.922 (0) Total database tables backed up: 35 (backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db.gz, size: 216579, sha256)
+0015.940 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0015.943 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0015.946 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0015.949 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip: others: This file has not yet been successfully uploaded: will queue
+0015.955 (0) backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db.gz: db: This file has not yet been successfully uploaded: will queue
+0015.958 (0) Saving backup history. Total backup size: 85.6 MB
+0015.966 (0) Requesting upload of the files that have not yet been successfully uploaded (5)
+0015.975 (0) Cloud backup selection (1/1): none (last)
+0015.978 (0) No remote despatch: user chose no remote backup service
+0015.986 (0) Recording as successfully uploaded: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-plugins.zip (bdc1be892e7dd61d0ca3b9ac66724904)
+0016.004 (0) Recording as successfully uploaded: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-themes.zip (064a19459e637e85c97bbc9692728cba)
+0016.016 (0) Recording as successfully uploaded: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-uploads.zip (4bdda49fbbad5acecdbd810b56cd0d89)
+0016.033 (0) Recording as successfully uploaded: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-others.zip (0a39e40ce31f2d96e2015a187d463039)
+0016.045 (0) Recording as successfully uploaded: backup_2017-11-30-1948_Passions_with_Purpose_3047b9ad9e81-db.gz (741b7081dafdba1aabf60c5976dd0b2a)
+0016.064 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0016.068 (0) Number of backup sets in history: 3; groups (db): 1
+0016.070 (0) Examining (for databases) backup set with group_id=0, nonce=3047b9ad9e81, datestamp=1512071287 (Nov 30 2017 19:48:07)
+0016.073 (0) This backup set is the backup set just made, so will not be deleted.
+0016.073 (0) Examining (for databases) backup set with group_id=0, nonce=cafbd1abe9cc, datestamp=1511774133 (Nov 27 2017 09:15:33)
+0016.073 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0016.075 (0) Examining (for databases) backup set with group_id=0, nonce=364aba598a64, datestamp=1511770511 (Nov 27 2017 08:15:11)
+0016.075 (0) 1511770511: db: this set includes a database (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-db.gz); db count is now 2
+0016.075 (0) 1511770511: db: over retain limit (2); will delete this database
+0016.076 (0) Delete file: backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-db.gz, service=none
+0016.078 (0) Deleting local copy (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-db.gz)
+0016.087 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0016.092 (0) Number of backup sets in history: 3; groups (files): 1
+0016.095 (0) Examining (for files) backup set with nonce=3047b9ad9e81, datestamp=1512071287 (Nov 30 2017 19:48:07)
+0016.095 (0) This backup set is the backup set just made, so will not be deleted.
+0016.098 (0) This backup set is the backup set just made, so will not be deleted.
+0016.098 (0) This backup set is the backup set just made, so will not be deleted.
+0016.099 (0) This backup set is the backup set just made, so will not be deleted.
+0016.100 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0016.102 (0) Examining (for files) backup set with nonce=cafbd1abe9cc, datestamp=1511774133 (Nov 27 2017 09:15:33)
+0016.102 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0016.103 (0) Examining (for files) backup set with nonce=364aba598a64, datestamp=1511770511 (Nov 27 2017 08:15:11)
+0016.103 (0) plugins: over retain limit (2); will delete this file entity
+0016.103 (0) themes: over retain limit (2); will delete this file entity
+0016.103 (0) uploads: over retain limit (2); will delete this file entity
+0016.103 (0) others: over retain limit (2); will delete this file entity
+0016.103 (0) Delete file: backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-plugins.zip, service=none
+0016.105 (0) Deleting local copy (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-plugins.zip)
+0016.108 (0) Delete file: backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-themes.zip, service=none
+0016.111 (0) Deleting local copy (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-themes.zip)
+0016.114 (0) Delete file: backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-uploads.zip, service=none
+0016.117 (0) Deleting local copy (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-uploads.zip)
+0016.121 (0) Delete file: backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-others.zip, service=none
+0016.128 (0) Deleting local copy (backup_2017-11-27-0815_Passions_with_Purpose_364aba598a64-others.zip)
+0016.135 (0) This backup set is now empty; will remove from history
+0016.137 (0) Deleting log file (log.364aba598a64.txt)
+0016.140 (0) Retain: saving new backup history (sets now: 2) and finishing retain operation
+0016.149 (0) Resume backup (3047b9ad9e81, 0): finish run
+0016.158 (0) Decremented the semaphore (fd) by 1
+0016.162 (0) Semaphore (fd) unlocked
+0016.165 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0016.174 (0) No email will/can be sent - the user has not configured an email address.
+0016.176 (0) The backup apparently succeeded and is now complete

@@ -12,9 +12,9 @@ themifyMediaLib = {
 	mediaUploader: function() {
 
 		// Uploading files
-		var file_frame = '', set_to_post_id = wp.media.model.settings.post.id; // Set this
+		var file_frame = ''; // Set this
 
-		$('.themify-media-lib-browse').on('click', function( event ){
+		$( 'body' ).on( 'click', '.themify-media-lib-browse', function( event ) {
 			var $el = $(this), $data = $el.data('submit'), type = $el.data('type');
 
 			file_frame = wp.media.frames.file_frame = wp.media({
@@ -41,7 +41,7 @@ themifyMediaLib = {
 				$( 'body' ).trigger( 'themify_metabox_lib_selected', [ $el, attachment, file_frame ] );
 
 				// show image preview, only applicable to "image" picker
-				if( type == 'image' ) {
+				if( type === 'image' ) {
 					$.ajax({
 						type: "POST",
 						url: ajaxurl,
@@ -51,6 +51,8 @@ themifyMediaLib = {
 							themifyMediaLib.setPreviewIcon( $el.closest( '.themify_field_row' ), data.thumb );
 						}
 					});
+				} else if( type === 'audio' || type === 'video' ) {
+					$el.closest( '.themify_field_row' ).find( '.themify_featimg_remove' ).removeClass('hide');
 				}
 			});
 

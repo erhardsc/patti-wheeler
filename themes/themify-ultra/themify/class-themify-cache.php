@@ -168,9 +168,8 @@ class TFCache {
      *
      * return boolean
     */
-    private static function is_themify_file($file,$handler){
-        
-        return strpos($handler, 'themify_cache_') === false && strpos($file, 'maps.google.com') === false && (strpos($handler, 'themify') !== false  || strpos($handler, 'builder-') !== false || strpos($file, 'builder-') !== false || strpos($file, THEME_URI) !== false || strpos($file, 'themify-') !== false);
+    public static function is_themify_file($file,$handler){
+        return strpos($handler, 'themify_cache_') === false && strpos($file, 'maps.google.com') === false && (strpos($handler, 'themify') !== false  || strpos($handler, 'themify-builder-') !== false || strpos($file, THEME_URI) !== false || strpos($file, 'themify-') !== false);
     }
 
     /**
@@ -372,7 +371,11 @@ class TFCache {
      * return boolean
      */
     public static function is_ajax() {
-        return defined('DOING_AJAX') || (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+        static $is_ajax = null;
+        if($is_ajax===null){
+            $is_ajax = defined('DOING_AJAX') || (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+        }
+        return $is_ajax;
     }
 
     /**

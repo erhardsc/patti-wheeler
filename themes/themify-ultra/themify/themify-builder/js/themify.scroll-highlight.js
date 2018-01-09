@@ -19,7 +19,7 @@
 				prefix: '.tb_section-',
 				navigation: tbScrollHighlight.navigation,
 				context: 'body',
-				element: '.themify_builder_row',
+				element: '.module_row',
 				scrollRate: 250,
 				considerHeader: false,
 				fixedHeaderHeight: 0,
@@ -30,35 +30,35 @@
 		this.element = element;
 		this.options = $.extend({}, defaults, options);
 		this._defaults = defaults;
-		if ($('#headerwrap').length > 0) {
-			var $fixedheader = $('#headerwrap').clone();
-			$fixedheader.removeClass('fixed-header')
-					.removeAttr('id')
-					.css({position: "absolute", left: "-10000px"})
-					.appendTo("body");
-			this.options.fixedHeaderHeight = $fixedheader.outerHeight(true) + 10;//10 is a range only
+
+		if ( $( 'body' ).hasClass( 'has-fixed-header' ) && $( '#headerwrap' ).length ) {
+			var $fixedheader = $( '#headerwrap' ).clone();
+
+			$fixedheader
+				.css( {visibility: 'hidden', left: '-10000px'} )
+				.appendTo( 'body' );
+			this.options.fixedHeaderHeight = $fixedheader.outerHeight( true );
 			$fixedheader.remove();
 		}
+
 		this.init();
 	}
 
 	/**
 	 * Remove both hash tag and the trailing slash from URL
 	 */
-	function cleanup_url( url ) {
-		return url.replace( /#.*$/, '' ).replace( /\/$/, '' );
+	function cleanup_url(url) {
+		return url.replace(/#.*$/, '').replace(/\/$/, '');
 	}
 
 	Plugin.prototype = {
 		getOffset: function () {
 			var $wpAdminBar = $('#wpadminbar'), $headerWrap = $('#headerwrap'),
-					scrollOffset = parseInt(tbScrollHighlight.scrollOffset);
-			if (this.options.considerHeader && $headerWrap.length > 0 && $('body').hasClass('has-fixed-header')) {
-				scrollOffset = $headerWrap.outerHeight();
-			}
-			if ($wpAdminBar.length > 0) {
-				scrollOffset += $wpAdminBar.outerHeight();
-			}
+				scrollOffset = parseInt( tbScrollHighlight.scrollOffset );
+
+			$( '#headerwrap' ).length && ( scrollOffset += parseInt( $( '#headerwrap' ).parent().css( 'padding-top' ) ) );
+			$wpAdminBar.length && ( scrollOffset += $wpAdminBar.outerHeight() );
+
 			return scrollOffset;
 		},
 		highlightLink: function (hash) {
@@ -86,7 +86,7 @@
 				$(this).parent().removeClass('current_page_item').removeClass('current-menu-item');
 			});
 		},
-		isInViewport: function ( $t ) {
+		isInViewport: function ($t) {
 			if ('undefined' === typeof $t.offset()) {
 				return false;
 			}
@@ -147,9 +147,9 @@
 				}
 			}
 			// Set offset from top
-			var to = obj.offset().top - this.getOffset(),
-					speed = this.options.speed,
-					$scroll = $('html,body');
+			var to = obj.offset().top,
+				speed = this.options.speed,
+				$scroll = $('html,body');
 
 			/**
 			 * Fires event scrollhighlightstart.themify before the scroll begins.
@@ -159,7 +159,8 @@
 
 			if ('internal' === self.options.scroll) {
 				// Complete callback
-				var completeCallback = function () {
+				var timeoutCb,
+					completeCallback = function () {
 					// Highlight link
 					self.highlightLink(hash);
 
@@ -170,21 +171,29 @@
 
 					// Set scrolling state
 					self.scrolling = false;
+
+					// check rellax js
+					if ( 'undefined' !== typeof Rellax && 'function' === typeof Rellax.enableCheckPosition ) {
+						clearTimeout(timeoutCb);
+						timeoutCb = setTimeout(Rellax.enableCheckPosition, 1000);
+					}
 				};
+
+				if (tbScrollHighlight.fixedHeaderSelector != '' && $(tbScrollHighlight.fixedHeaderSelector).length && $(window).scrollTop() > self.options.fixedHeaderHeight) {
+					to = Math.ceil(to - $(tbScrollHighlight.fixedHeaderSelector).outerHeight(true));
+				}
+
 				// Animate scroll
 				$scroll.stop().animate({
 					scrollTop: to
 				}, {
 					duration: speed,
-					complete: function () {
-						if (tbScrollHighlight.fixedHeaderSelector != '' && $(tbScrollHighlight.fixedHeaderSelector).length > 0 && $(window).scrollTop() > self.options.fixedHeaderHeight) {
-							var height = $(tbScrollHighlight.fixedHeaderSelector).outerHeight(true),
-									to = obj.offset().top - self.getOffset(); // the height of the fixed header can change as we scroll, recalculate the scrollTop
-							$scroll.stop().animate({scrollTop: Math.ceil(to - height)}, 300, completeCallback);
-						} else {
-							completeCallback();
+					start: function(){
+						if ( 'undefined' !== typeof Rellax && 'function' === typeof Rellax.disableCheckPosition ) {
+							Rellax.disableCheckPosition();
 						}
-					}
+					},
+					complete: completeCallback
 				});
 			} else {
 				// Highlight link
@@ -206,13 +215,13 @@
 					this.removeHash();
 				} else {
 					var self = this,
-						didHighlight = false,
-						href = '';
+							didHighlight = false,
+							href = '';
 					$.each(elementsToCheck, function (i, el) {
 						if (self.isInViewport(el)) {
 							href = '';
-							if( el.data( 'anchor' ) ) {
-								href = '#' + el.data( 'anchor' );
+							if (el.data('anchor')) {
+								href = '#' + el.data('anchor');
 								// Set highlight state
 								didHighlight = true;
 
@@ -240,17 +249,17 @@
 			var self = this;
 
 			// Smooth Scroll and Link Highlight
-			$(this.options.context).find('a[href*="#"]:not(.themify_lightbox)').not('a[href="#"]').not('a.ab-item').on('click', function (e) {
+			$(this.options.context).find('a[href*="#"]').not('a[href="#"]').not('a.ab-item').on('click', function (e) {
 				// Build class to scroll to
 				var href = $(this).prop('hash'),
-					classToScroll = href.replace(/#/, self.options.prefix);
+						classToScroll = href.replace(/#/, self.options.prefix);
 
 				// If the section exists in this page
-				if ( cleanup_url( window.location.href ) == cleanup_url( $( this ).prop( 'href' ) ) && $( classToScroll ).length > 0 ) {
+				if (cleanup_url(window.location.href) == cleanup_url($(this).prop('href')) && $(classToScroll).length > 0) {
 					// Set state
 					self.scrolling = true;
 					// Perform scroll
-					setTimeout( function() { self.linkScroll(classToScroll, href); }, 100 );
+					self.linkScroll(classToScroll, href);
 					// Avoid link behaviour
 					e.preventDefault();
 				}
@@ -260,7 +269,7 @@
 			var elementsToCheck = [];
 			// Build list of elements to check visibility
 			$('div[class*=' + self.options.prefix.replace('.', '') + ']').not(self.options.exclude).each(function () {
-				elementsToCheck.push( $(this) );
+				elementsToCheck.push($(this));
 			});
 
 			// Setup scroll event
@@ -276,33 +285,35 @@
 			}, self.options.scrollRate);
 
 			// Initial section visibility check and link highlight
-			if (self.isHash(window.location.hash)) {
-				// If there's a hash, scroll to it
-				var hash = window.location.hash,
-					current_url = cleanup_url( window.location.href ),
-					$linkHash = $(self.options.context).find('a[href="' + hash + '"], a[href="' + current_url + hash + '"], a[href="' + current_url + '/' + hash + '"]');
-				if ($linkHash.length > 0) {
-					$linkHash.each(function () {
-						var $link = $(this);
-						if ($link.prop('hash') === hash) {
-							$link.trigger('click');
-							return;
+			$(window).load(function () {
+				if (self.isHash(window.location.hash)) {
+					// If there's a hash, scroll to it
+					var hash = window.location.hash,
+							current_url = cleanup_url(window.location.href),
+							$linkHash = $(self.options.context).find('a[href="' + hash + '"], a[href="' + current_url + hash + '"], a[href="' + current_url + '/' + hash + '"]');
+					if ($linkHash.length > 0) {
+						$linkHash.each(function () {
+							var $link = $(this);
+							if ($link.prop('hash') === hash) {
+								$link.trigger('click');
+								return;
+							}
+						});
+					} else {
+						// Build class to scroll to
+						var classToScroll = hash.replace(/#/, self.options.prefix);
+						// If the section exists in this page
+						if ($(classToScroll).length > 0) {
+							// Set state
+							self.scrolling = true;
+							// Perform scroll
+							self.linkScroll(classToScroll, hash);
 						}
-					});
-				} else {
-					// Build class to scroll to
-					var classToScroll = hash.replace(/#/, self.options.prefix);
-					// If the section exists in this page
-					if ($(classToScroll).length > 0) {
-						// Set state
-						self.scrolling = true;
-						// Perform scroll
-						setTimeout( function() { self.linkScroll(classToScroll, hash); }, 100 );
 					}
+				} else {
+					self.manualScroll(elementsToCheck);
 				}
-			} else {
-				self.manualScroll(elementsToCheck);
-			}
+			});
 		}
 	};
 

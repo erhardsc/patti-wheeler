@@ -228,18 +228,5 @@
         $('input[name="header_wrap"]:checked').trigger('click');
         $('input[name="post_layout"],input[name="setting-default_page_post_layout_type"],input[name="setting-default_post_layout"],input[name="setting-default_portfolio_single_portfolio_layout_type"]').trigger('change');
         
-        // Mobile Menu Customizer)
-        $( 'body' ).on( 'click', '#customize-control-start_mobile_menu_acc_ctrl', function ( e ) {
-            if( $( 'a.themify-suba-toggle' ).is( e.target ) ) {
-                var menuPreview = jQuery('#customize-preview > iframe')[0].contentWindow;
-                var stage = $(this).hasClass('topen') ? 'show' : 'hide';
-                menuPreview.jQuery('#menu-icon').themifySideMenu( stage );
-                if( $( '.preview-desktop' ).hasClass( 'active' ) ) {
-                    $('.preview-mobile').trigger( 'click' );
-                } else {
-                    $( '.preview-desktop' ).trigger( 'click' );
-                }
-            }
-        } )
     });
 }(jQuery));

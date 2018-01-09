@@ -28,7 +28,7 @@ function themify_config_init() {
 
 	/* 	Global Vars
  	***************************************************************************/
-	global $pagenow, $ThemifyConfig, $content_width;
+	global $pagenow, $content_width;
 
 	if ( ! isset( $content_width ) ) {
 		$content_width = 1165;
@@ -36,7 +36,7 @@ function themify_config_init() {
 
 	/*	Activate Theme
  	***************************************************************************/
-	if ( isset( $_GET['activated'] ) && 'themes.php' == $pagenow ) {
+	if ( isset( $_GET['activated'] ) && 'themes.php' === $pagenow ) {
 		themify_maybe_clear_legacy();
 		add_action( 'init', 'themify_theme_first_run', 20 );
 
@@ -51,7 +51,7 @@ function themify_config_init() {
 
 	/* 	Theme Config
  	***************************************************************************/
-	define( 'THEMIFY_VERSION', '3.2.6' ); 
+	define( 'THEMIFY_VERSION', '3.3.9' ); 
 
 	/* 	Run after update
  	***************************************************************************/
@@ -66,6 +66,8 @@ function themify_config_init() {
 
 	/* 	Woocommerce
 	 ***************************************************************************/
+	defined( 'WOOCOMMERCE_VERSION' ) || define( 'WOOCOMMERCE_VERSION', '' );
+	
 	if( themify_is_woocommerce_active() ) {
 		add_theme_support('woocommerce');
 		add_theme_support( 'wc-product-gallery-zoom' );
@@ -164,10 +166,6 @@ add_action( 'admin_notices', 'themify_prompt_message' );
  */
 add_filter( 'themify_google_fonts', 'themify_enqueue_gfonts' );
 
-/**
- * Add "js" classname to html element when JavaScript is enabled
- */
-add_action( 'wp_head', 'themify_html_js_class', 0 );
 
 add_action( 'wp_enqueue_scripts', 'themify_enqueue_common_css', 7 );
 
@@ -177,14 +175,14 @@ add_action( 'wp_enqueue_scripts', 'themify_enqueue_common_css', 7 );
 add_filter( 'the_posts', 'themify_sticky_post_helper' );
 
 /**
- * Allows to query by category slug or id
- */
-add_filter( 'themify_query_posts_page_args', 'themify_framework_query_posts_page_args' );
-
-/**
  * Add support for feeds on the site
  */
 add_theme_support( 'automatic-feed-links' );
+
+/**
+ * Add custom query_posts
+ */
+add_action( 'themify_custom_query_posts', 'themify_custom_query_posts' );
 
 /**
  * Load Themify Hooks
@@ -199,6 +197,17 @@ require_once(THEMIFY_DIR . '/class-hook-contents.php' );
  */
 require_once( THEMIFY_DIR . '/class-themify-access-role.php' );
 
+/**
+ * Load Themify Theme Metabox
+ * @since 2.6.2
+ */
+function themify_use_theme_metabox( $url ) {
+	remove_action( 'site_url', 'themify_builder_plugin_metabox', 20 );
+
+	return $url;
+}
+add_action( 'site_url', 'themify_use_theme_metabox', 10 );
+
 defined( 'THEMIFY_METABOX_URI' ) || define( 'THEMIFY_METABOX_URI', THEMIFY_URI . '/themify-metabox/' );
 defined( 'THEMIFY_METABOX_DIR' ) || define( 'THEMIFY_METABOX_DIR', THEMIFY_DIR . '/themify-metabox/' );
 require_once( THEMIFY_DIR . '/themify-metabox/themify-metabox.php' );
@@ -211,16 +220,13 @@ add_action( 'themify_metabox/field/page_builder', 'themify_meta_field_page_build
 
 require_once( THEMIFY_DIR . '/google-fonts/functions.php' );
 
-// Page Options, disabled at the moment
-// require_once( THEMIFY_DIR . '/page-options/themify-pageoptions.php' );
-
 /**
  * Show recommended or full Google fonts list
  *
  * @since 2.8.9
  */
 function themify_google_fonts_show_full() {
-	return 'full' == themify_get( 'setting-webfonts_list' );
+	return 'full' === themify_get( 'setting-webfonts_list' );
 }
 add_filter( 'themify_google_fonts_full_list', 'themify_google_fonts_show_full' );
 
@@ -307,9 +313,9 @@ function themify_maybe_clear_legacy() {
 		$list = $wp_filesystem->dirlist( THEME_DIR . '/uploads/', true, true );
 		if ( is_array( $list ) ) {
 			foreach ( $list as $item ) {
-				if ( 'd' == $item['type'] ) {
+				if ( 'd' === $item['type'] ) {
 					foreach ( $item['files'] as $subitem ) {
-						if ( 'd' == $subitem['type'] ) {
+						if ( 'd' === $subitem['type'] ) {
 							// There shouldn't be a directory here, let's delete it
 							$del_dir = THEME_DIR . '/uploads/' . $item['name'] . '/' . $subitem['name'];
 							$wp_filesystem->delete( $del_dir, true );
@@ -382,7 +388,7 @@ function themify_flush_rewrite_rules_after_manual_update() {
 add_action( 'init', 'themify_flush_rewrite_rules_after_manual_update', 99 );
 
 /**
- * After a Builder layout is loaded, adjust some page settings for better page display
+ * After a Builder layout is loaded, adjust some page settings for better page display.
  *
  * @since 2.8.9
  */
@@ -392,7 +398,7 @@ function themify_adjust_page_settings_for_layouts( $args ) {
 	$post_id = $args['current_builder_id'];
 	$post = get_post( $post_id );
 	update_post_meta( $post_id, 'content_width', 'full_width' );
-	if( $post->post_type == 'page' ) {
+	if( $post->post_type === 'page' ) {
 		update_post_meta( $post_id, 'page_layout', 'sidebar-none' );
 		update_post_meta( $post_id, 'hide_page_title', 'yes' );
 	} else {
@@ -453,7 +459,7 @@ function themify_deprecated_shortcodes_init() {
 	 * @return html
 	 */
 	function themify_framework_stylesheet_style_tag( $tag, $handle, $href, $media ) {
-		if( 'themify-framework' == $handle ) {
+		if( 'themify-framework' === $handle ) {
 			$tag = '<meta name="themify-framework-css" content="themify-framework-css" id="themify-framework-css">' . "\n";
 		}
 

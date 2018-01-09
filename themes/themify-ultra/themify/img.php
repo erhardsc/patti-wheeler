@@ -64,7 +64,7 @@ if ( ! function_exists( 'themify_do_img' ) ) {
 		}
 		if ( is_null( $height ) || 0 === $height || '0' === $height ) {
 			// If width and height or original image are available as metadata
-			if ( isset( $meta['width'] ) && isset( $meta['height'] ) ) {
+			if ( !empty( $meta['width'] ) && !empty( $meta['height'] ) ) {
 				// Divide width by original image aspect ratio to obtain projected height
 				// The floor function is used so it returns an int and metadata can be written
 				$height = floor( $width / ( $meta['width'] / $meta['height'] ) );
@@ -184,11 +184,11 @@ function themify_img_resize_dimensions( $default, $orig_w, $orig_h, $dest_w, $de
 	$new_h = $dest_h;
 
 	if ( !$new_w ) {
-		$new_w = intval( $new_h * $aspect_ratio );
+		$new_w = (int)( $new_h * $aspect_ratio );
 	}
 
 	if ( !$new_h ) {
-		$new_h = intval( $new_w / $aspect_ratio );
+		$new_h = (int)( $new_w / $aspect_ratio );
 	}
 
 	$size_ratio = max( $new_w / $orig_w, $new_h / $orig_h );
@@ -219,7 +219,7 @@ function themify_get_attachment_id_from_url( $url = '', $base_url = '' ) {
 
 	// Finally, run a custom database query to get the attachment ID from the modified attachment URL
 	global $wpdb;
-	return $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment'", $url ) );
+	return $wpdb->get_var( $wpdb->prepare( "SELECT wposts.ID FROM $wpdb->posts wposts, $wpdb->postmeta wpostmeta WHERE wposts.ID = wpostmeta.post_id AND wpostmeta.meta_key = '_wp_attached_file' AND wpostmeta.meta_value = '%s' AND wposts.post_type = 'attachment' LIMIT 1", $url ) );
 }
 
 /**

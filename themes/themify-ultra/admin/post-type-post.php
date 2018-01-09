@@ -260,6 +260,14 @@ function themify_default_post_layout( $data = array() ){
 	);
 
 	/**
+	 * Entry media position, above or below the title
+	 */
+	$media_position = array(
+		array('name'=>__('Above Post Title', 'themify'), 'value'=>'above'),
+		array('name'=>__('Below Post Title', 'themify'), 'value'=>'below'),
+	);
+
+	/**
 	 * Module markup
 	 * @var string
 	 */
@@ -343,6 +351,17 @@ function themify_default_post_layout( $data = array() ){
 										   <label for="'.$prefix.'display_date_inline"><input type="checkbox" value="1" id="'.$prefix.'display_date_inline" name="'.$prefix.'display_date_inline" ' . checked( themify_get( $prefix.'display_date_inline' ), 1, false ) . '/>'. __('Display post date as inline text instead of circle style', 'themify') .'
 										</span>
 				</p>';
+
+	/**
+	 * Featured Image/Media Position
+	 */
+	$output .= '<p>
+					<span class="label">' . __( 'Featured Image/Media Position', 'themify' ) . '</span>
+					<select name="' . esc_attr( $prefix ) . 'single_media_position">' .
+						themify_options_module( $media_position, $prefix . 'single_media_position' ) . '
+					</select>
+				</p>';
+	
 
 	/**
 	 * Hide Featured Image

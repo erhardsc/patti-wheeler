@@ -617,6 +617,9 @@ body.slide-cart-visible.sidemenu-right {
 	body.slide-cart-visible.mobile_menu_active.sidemenu-right {
 		left: 250px;
 	}
+	.header-minbar #headerwrap .header-bar {
+		width: 200%;
+	}
 }
 
 @media screen and (max-width: 320px) {

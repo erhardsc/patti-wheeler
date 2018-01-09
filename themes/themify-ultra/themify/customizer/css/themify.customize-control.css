@@ -581,6 +581,7 @@ input[type=text].dimension-width,
 	font-size: 17px;
 	color: #000;
 	cursor: pointer;
+	margin-left: -20px;
 }
 .customize-control .themify-contract {
 	top: 10px;
@@ -599,6 +600,9 @@ input[type=text].dimension-width,
 }
 .customcss-expand .customcss {
 	top: -17px;
+}
+.customcss-expand .CodeMirror-wrap {
+	height: 100%;
 }
 
 /* Site Logo
@@ -656,9 +660,18 @@ input[type=text].dimension-width,
 	cursor:pointer;
 }
 
-.customize-import .plupload-upload-uic{
-	display:inline;
-	vertical-align:top;
+.customize-import .plupload-upload-uic .plupload-button {
+	display: inline;
+	vertical-align: top;
+	padding: 0;
+	border: none;
+	color: inherit;
+	background: none;
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	box-shadow: none;
+	font-weight: inherit;
 }
 /* Custom Dropdowns
 ------------------------------------------------------*/
@@ -892,4 +905,15 @@ select.letter_spacing_unit {
 	content: "";
 	display: table;
 	clear: both;
+}
+
+/* Customize Footer Actions
+------------------------------------------------------*/
+.wp-full-overlay .wp-full-overlay-footer .devices {
+	display: block;
+}
+@media screen and (max-width: 782px) {
+	.wp-customizer .wp-full-overlay-footer .button {
+		height: 45px;
+	}
 }

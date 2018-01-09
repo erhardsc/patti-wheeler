@@ -1,259 +1,178 @@
 <?php
 
 class Themify_Builder_Component_Column extends Themify_Builder_Component_Base {
-	public function __construct() {}
 
 	public function get_name() {
 		return 'column';
 	}
+        public function get_label(){
+            return __('Column Styling', 'themify');
+        }
+        
+        
 
-	public function get_style_settings() {
-		$options = apply_filters( 'themify_builder_column_fields', array(
-	
-			// Font
-			array(
-				'id' => 'separator_font',
-				'type' => 'separator',
-				'meta' => array('html' => '<h4>' . __( 'Font', 'themify' ) . '</h4>'),
-			),
-			array(
-				'id' => 'font_family',
-				'type' => 'font_select',
-				'label' => __( 'Font Family', 'themify' ),
-				'class' => 'font-family-select',
-				'prop' => 'font-family',
-				'selector' => array( '.module_column', '.module_column h1', '.module_column h2', '.module_column h3:not(.module-title)', '.module_column h4', '.module_column h5', '.module_column h6' )
-			),
-			array(
-				'id' => 'font_color',
-				'type' => 'color',
-				'label' => __( 'Font Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => array( '.module_column', '.module_column h1', '.module_column h2', '.module_column h3:not(.module-title)', '.module_column h4', '.module_column h5', '.module_column h6' )
-			),
-			array(
-				'id' => 'multi_font_size',
-				'type' => 'multi',
-				'label' => __( 'Font Size', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'font_size',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'font-size',
-						'selector' => '.module_column'
-					),
-					array(
-						'id' => 'font_size_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units(),
-						'default' => 'px',
-					)
-				)
-			),
-			array(
-				'id' => 'multi_line_height',
-				'type' => 'multi',
-				'label' => __( 'Line Height', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'line_height',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'line-height',
-						'selector' => '.module_column'
-					),
-					array(
-						'id' => 'line_height_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units(),
-						'default' => 'px',
-					)
-				)
-			),
-			array(
-				'id' => 'multi_letter_spacing',
-				'type' => 'multi',
-				'label' => __( 'Letter Spacing', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'letter_spacing',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'letter-spacing',
-						'selector' => '.module_row'
-					),
-					array(
-						'id' => 'letter_spacing_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units(),
-						'default' => 'px',
-					)
-				)
-			),
-			array(
-				'id' => 'text_align',
-				'label' => __( 'Text Align', 'themify' ),
-				'type' => 'icon_radio',
-				'meta' => Themify_Builder_Model::get_text_align(),
-				'prop' => 'text-align',
-				'selector' => '.module_column'
-			),
-			array(
-				'id' => 'text_transform',
-				'label' => __( 'Text Transform', 'themify' ),
-				'type' => 'icon_radio',
-				'meta' => Themify_Builder_Model::get_text_transform(),
-				'prop' => 'text-transform',
-				'selector' => '.module_column'
-			),
-			array(
-				'id' => 'multi_font_style',
-				'type' => 'multi',
-				'label' => __( 'Font Style', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'font_style_regular',
-						'type' => 'icon_radio',
-						'meta' => Themify_Builder_Model::get_font_style(),
-						'prop' => 'font-style',
-						'class' => 'inline',
-						'selector' => '.module_column'
-					),
-					array(
-						'id' => 'text_decoration_regular',
-						'type' => 'icon_radio',
-						'meta' => Themify_Builder_Model::get_text_decoration(),
-						'prop' => 'text-decoration',
-						'class' => 'inline',
-						'selector' => '.module_column'
-					),
-				)
-			),
-			// Link
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_link',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Link', 'themify' ) . '</h4>' ),
-			),
-			array(
-				'id' => 'link_color',
-				'type' => 'color',
-				'label' => __( 'Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => '.module_column a'
-			),
-			array(
-				'id' => 'text_decoration',
-				'type' => 'select',
-				'label' => __( 'Text Decoration', 'themify' ),
-				'meta' => Themify_Builder_Model::get_text_decoration( true ),
-				'prop' => 'text-decoration',
-				'selector' => '.module_column a'
-			),
-			// Padding
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_padding',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Padding', 'themify' ) . '</h4>' ),
-			),
-			Themify_Builder_Model::get_field_group( 'padding', '.module_column', 'top' ),
-			Themify_Builder_Model::get_field_group( 'padding', '.module_column', 'right' ),
-			Themify_Builder_Model::get_field_group( 'padding', '.module_column', 'bottom' ),
-			Themify_Builder_Model::get_field_group( 'padding', '.module_column', 'left' ),
-			Themify_Builder_Model::get_field_group( 'padding', '.module_column', 'all' ),
-			// Border
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_border',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Border', 'themify' ) . '</h4>' )
-			),
-			Themify_Builder_Model::get_field_group( 'border', '.module_column', 'top' ),
-			Themify_Builder_Model::get_field_group( 'border', '.module_column', 'right' ),
-			Themify_Builder_Model::get_field_group( 'border', '.module_column', 'bottom' ),
-			Themify_Builder_Model::get_field_group( 'border', '.module_column', 'left' ),
-			Themify_Builder_Model::get_field_group( 'border', '.module_column', 'all' ),
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr/>' )
-			),
-			array(
-				'id' => 'custom_css_column',
-				'type' => 'text',
-				'label' => __( 'Additional CSS Class', 'themify' ),
-				'class' => 'large exclude-from-reset-field',
-				'description' => sprintf('<br/><small>%s</small>', __( 'Add additional CSS class(es) for custom styling', 'themify' ))
-			),
-		));
+	/**
+	 * Get template column.
+	 * 
+	 * @param int $rows Row key
+	 * @param array $row 
+	 * @param array $cols 
+	 * @param array $col 
+	 * @param string $builder_id 
+	 */
+	public static function template( $rows, $row, $cols, $col, $builder_id, $order_classes = array(), $echo = false) {
+		$grid_class = trim(str_replace(array('first','last'),array('',''),$col['grid_class']));
+                $print_column_classes = array('tb-column',$grid_class);
+                $is_styling = !empty($col['styling']);
+                if(!Themify_Builder::$frontedit_active){
+                    if (isset( $order_classes[ $cols ] ) ){
+                        $print_column_classes[] = $order_classes[ $cols ];
+                    }
+                    $print_column_classes[] = 'module_column tb_' . $builder_id . '_column';
+                    if (isset($col['column_order'])) {
+                        $print_column_classes[] = 'module_column_' . $col['column_order'].' module_column_' . $builder_id . '-' . $row['row_order'] . '-' . $col['column_order'];
+                    }
+                }
+                if($is_styling){
+                    if (!empty($col['styling']['background_repeat'])) {
+                            $print_column_classes[] = $col['styling']['background_repeat'];
+                    }
+                    if (!empty($col['styling']['background_image'])  && !empty($col['styling']['background_position'])) {
+                            $print_column_classes[] = 'bg-position-' . $col['styling']['background_position'];
+                    }
+                    if(isset($col['styling']['background_type']) && $col['styling']['background_type']==='image' && isset($col['styling']['background_zoom']) && $col['styling']['background_zoom']==='zoom' && $col['styling']['background_repeat']=='repeat-none'){
+                            $print_column_classes[] = 'themify-bg-zoom';
+                    }
+                    if (!empty($col['styling']['custom_css_column'])) {
+                            $print_column_classes[] = $col['styling']['custom_css_column'];
+                    }
+                    
+                }
+		$print_column_classes = implode(' ', $print_column_classes);
 
-		return $options;
+		// background video
+                $video_data = $is_styling && Themify_Builder_Model::is_premium()?Themify_Builder_Include::get_video_background($col['styling']):'';
+
+		if ( ! $echo ) {
+			$output = PHP_EOL; // add line break
+			ob_start();
+		}
+
+		// Start Column Render ######
+		?>
+
+		<div <?php if(!empty($col['grid_width']) && !Themify_Builder::$frontedit_active):?>style="width:<?php echo $col['grid_width']?>%"<?php endif;?> class="<?php  echo esc_attr($print_column_classes); ?>" <?php echo $video_data; ?>>
+                    <?php
+                        if ($is_styling) {
+                                $column_order = $row['row_order'] . '-' . $col['column_order'];
+                                do_action('themify_builder_background_styling',$builder_id,$col,$column_order,'column');	
+                            }
+                    ?>
+                    <?php if (!empty($col['modules'])):?>
+                        <div class="tb-column-inner">
+                            <?php
+                                foreach ($col['modules'] as $k => $mod) {
+                                    if (isset($mod['mod_name'])) {
+                                        $identifier = array($rows, $cols, $k); // define module id
+                                        Themify_Builder_Component_Module::template($mod, $builder_id, true, $identifier);
+                                    }
+                                    if (!empty($mod['cols'])) {// Check for Sub-rows
+                                        Themify_Builder_Component_SubRow::template( $rows, $cols, $k, $mod, $builder_id, true );	
+                                    }
+                                }
+                            ?>
+                        </div>
+                    <?php endif;?>
+		</div>
+		<!-- /.tb-column -->
+		
+		<?php
+		// End Column Render ######
+
+		if ( ! $echo ) {
+			$output .= ob_get_clean();
+			// add line break
+			$output .= PHP_EOL;
+			return $output;
+		}
+                
 	}
+        
+        
 
-	protected function _form_template() { 
-		$column_settings = $this->get_style_settings();
-	?>
-	
-		<form id="tfb_column_settings">
+	/**
+	 * Get template sub-column
+	 * @param int|string $rows 
+	 * @param int|string $cols 
+	 * @param int|string $modules 
+	 * @param int $col_key 
+	 * @param array $sub_col 
+	 * @param string $builder_id 
+	 * @param boolean $echo 
+	 */
+	public static function template_sub_column( $rows, $cols, $modules, $col_key, $sub_col, $builder_id,$order_classes=array(), $echo = false ) {
+		$print_sub_col_classes = array();
+		$print_sub_col_classes[] = str_replace(array('first','last'),array('',''),$sub_col['grid_class']);
+		$print_sub_col_classes[] = 'sub_column module_column';
+                $is_styling = !empty($sub_col['styling']);
+                if(!Themify_Builder::$frontedit_active){
+                    if (isset( $order_classes[ $col_key ] ) ){
+                        $print_sub_col_classes[] = $order_classes[ $col_key ];
+                    }
+                    $print_sub_col_classes[] = 'sub_column_post_'.$builder_id.' sub_column_' . $rows . '-' . $cols . '-' . $modules . '-' . $col_key;
+                }
+		$sub_row_class = 'sub_row_' . $rows . '-' . $cols . '-' . $modules;
+                if($is_styling){
+                    if (!empty($sub_col['styling']['background_repeat'])) {
+                            $print_sub_col_classes[] = $sub_col['styling']['background_repeat'];
+                    }
+                    if (!empty($sub_col['styling']['background_image']) && !empty($sub_col['styling']['background_position'])) {
+                            $print_sub_col_classes[] = 'bg-position-' . $sub_col['styling']['background_position'];
+                    }
+                    if (!empty($sub_col['styling']['custom_css_column'])) {
+                            $print_sub_col_classes[] = $sub_col['styling']['custom_css_column'];
+                    }
+                    if(isset($sub_col['styling']['background_type']) && $sub_col['styling']['background_type']==='image' && isset($sub_col['styling']['background_zoom']) && $sub_col['styling']['background_zoom']==='zoom' && $sub_col['styling']['background_repeat']=='repeat-none'){
+                        $print_sub_col_classes[] = 'themify-bg-zoom';
+                    }
+                }
+		$print_sub_col_classes = implode(' ', $print_sub_col_classes);
 
-			<div id="themify_builder_lightbox_options_tab_items">
-				<li class="title"><?php _e('Column Styling', 'themify' ); ?></li>
-			</div>
+		// background video
+		$video_data = $is_styling && Themify_Builder_Model::is_premium()?' '.Themify_Builder_Include::get_video_background($sub_col['styling']):'';
 
-			<div id="themify_builder_lightbox_actions_items">
-				<button id="builder_submit_column_settings" class="builder_button"><?php _e('Save', 'themify' ) ?></button>
-			</div>
+		if ( ! $echo ) {
+			$output = PHP_EOL; // add line break
+			ob_start();
+		}
+		?>
+               <div <?php echo !empty($sub_col['grid_width']) && !Themify_Builder::$frontedit_active?'style="width:'.$sub_col['grid_width'].'%;"':''?> class="<?php echo esc_attr($print_sub_col_classes)?>"<?php echo $video_data?>> 
+                   <?php 
+                        if ($is_styling) {
+                            $sub_column_order = $rows . '-' . $cols . '-' . $modules . '-' . $col_key;
+                            do_action('themify_builder_background_styling',$builder_id,$sub_col,$sub_column_order,'sub_column');
+                        }
+                   ?>
+                    <?php if (!empty($sub_col['modules'])):?>
+                       <div class="tb-column-inner">
+                            <?php 
+                                foreach ($sub_col['modules'] as $sub_module_k => $sub_module) {
+                                    $sub_identifier = array($sub_row_class, $col_key, $sub_module_k); // define module id
+                                    Themify_Builder_Component_Module::template($sub_module, $builder_id, true,  $sub_identifier);
+                                }
+                            ?>
+                        </div>
+                    <?php endif;?>
+               </div>
+		<?php
 
-			<div class="themify_builder_options_tab_wrapper themify_builder_style_tab">
-				<div class="themify_builder_options_tab_content">
-					<?php
-					foreach ($column_settings as $styling):
+		// End Sub-Column Render ######
 
-						$wrap_with_class = isset($styling['wrap_with_class']) ? $styling['wrap_with_class'] : '';
-						echo ( $styling['type'] != 'separator' ) ? '<div class="themify_builder_field ' . esc_attr($wrap_with_class) . '">' : '';
-						if (isset($styling['label'])) {
-							echo '<div class="themify_builder_label">' . esc_html($styling['label']) . '</div>';
-						}
-						echo ( $styling['type'] != 'separator' ) ? '<div class="themify_builder_input">' : '';
-						if ($styling['type'] != 'multi') {
-							themify_builder_styling_field($styling);
-						} else {
-							foreach ($styling['fields'] as $field) {
-								themify_builder_styling_field($field);
-							}
-						}
-						echo ( $styling['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_input
-						echo ( $styling['type'] != 'separator' ) ? '</div>' : ''; // themify_builder_field
-
-					endforeach;
-					?>
-
-					<p>
-						<a href="#" class="reset-styling" data-reset="column">
-							<i class="ti ti-close"></i>
-							<?php _e('Reset Styling', 'themify' ) ?>
-						</a>
-					</p>
-
-				</div>
-			</div>
-			<!-- /.themify_builder_options_tab_wrapper -->
-
-		</form>
-
-	<?php
+		if ( ! $echo ) {
+			$output .= ob_get_clean();
+			// add line break
+			$output .= PHP_EOL;
+			return $output;
+		}
 	}
 }

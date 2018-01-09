@@ -206,7 +206,7 @@ BUILDER
     font: italic 1.125em 'Cormorant Garamond';
     text-transform: none;
 }
-.post-content {
+.loops-wrapper .post {
     text-align: left;
 }
 .post-title {
@@ -297,8 +297,8 @@ BUILDER
 .testimonial-author .person-company {
     font: italic 1.125em/1.5em 'Cormorant Garamond';
 }
-.testimonials.module-slider.themify_builder_slider_vertical .carousel-prev,
-.testimonials.module-slider.themify_builder_slider_vertical .carousel-next {
+.testimonials.themify_builder_slider_vertical .carousel-prev,
+.testimonials.themify_builder_slider_vertical .carousel-next {
     background: none;
     border-radius: 0;
     color: #186bb1;
@@ -307,21 +307,22 @@ BUILDER
     height: auto;
 	padding: 0 12px;
 	overflow: visible;
+	outline: none;
 }
-.testimonials.module-slider .carousel-nav-wrap .carousel-prev::before,
-.testimonials.module-slider .carousel-nav-wrap .carousel-next::before {
+.testimonials .carousel-nav-wrap .carousel-prev::before,
+.testimonials .carousel-nav-wrap .carousel-next::before {
     width: 1em;
     height: 1em;
 	border-width: 4px;
 }
-.testimonials.module-slider .carousel-pager a::before {
+.testimonials .carousel-pager a::before {
     background: #dddddd;
     content: "";
     opacity: 1;
     width: 45px;
     height: 3px; 
 }
-.testimonials.module-slider .carousel-pager a.selected::before {
+.testimonials .carousel-pager a.selected::before {
     content: "";
     background: #186bb1;
 }
@@ -539,8 +540,8 @@ MEDIA QUERIES
         padding: 0 1em 0.5em 2.1em;
         width: 100%;
     }
-    .testimonials.module-slider.themify_builder_slider_vertical .carousel-prev,
-    .testimonials.module-slider.themify_builder_slider_vertical .carousel-next {
+    .testimonials.themify_builder_slider_vertical .carousel-prev,
+    .testimonials.themify_builder_slider_vertical .carousel-next {
         color: #000;
         opacity: 0.7;
     }
@@ -554,8 +555,8 @@ MEDIA QUERIES
         width: auto;
         height: auto;
     }
-	.testimonials.module-slider.themify_builder_slider_vertical .carousel-prev,
-	.testimonials.module-slider.themify_builder_slider_vertical .carousel-next {
+	.testimonials.themify_builder_slider_vertical .carousel-prev,
+	.testimonials.themify_builder_slider_vertical .carousel-next {
 		font-size: 1.6em;
 		top: auto;
 		bottom: 23%;

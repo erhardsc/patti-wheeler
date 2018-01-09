@@ -18,10 +18,8 @@ body.fixed-header.page-loaded #headerwrap {
 	font-size: 1.6em;
 	margin: 5px .5em 0 0;
 }
-.fixed-header-on #site-logo img {
+#headerwrap.fixed-header #site-logo img {
 	max-height: 30px;
-	width: auto;
-	transition: all .3s;
 }
 
 /* Header Top Widget site description */
@@ -201,7 +199,7 @@ body.fixed-header.page-loaded #headerwrap {
 	max-height: none !important;
 }
 .header-widget-full {
-    background: #f1f1f1;
+    background: rgba(0,0,0,.05);
     font-size: .9em;
 }
 .header-widget-full .header-widget-inner {

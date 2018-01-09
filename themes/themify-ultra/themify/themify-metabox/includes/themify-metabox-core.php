@@ -15,7 +15,7 @@ class Themify_Metabox {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'pre_post_update', array( $this, 'save_postdata' ), 101 );
 		add_action( 'save_post', array( $this, 'save_postdata' ), 101 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 11 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 1 );
 		add_filter( 'is_protected_meta', array( $this, 'protected_meta' ), 10, 3 );
 	}
 
@@ -77,7 +77,7 @@ class Themify_Metabox {
 	 */
 	function get_meta_box_options( $meta_box, $post_type = null ) {
 		if( ! isset( $this->panel_options[$meta_box] ) ) {
-			if( 'themify-meta-boxes' == $meta_box ) {
+			if( 'themify-meta-boxes' === $meta_box ) {
 				// backward compatibility
 				global $themify_write_panels;
 				if( ! isset( $themify_write_panels ) )
@@ -90,9 +90,11 @@ class Themify_Metabox {
 			}
 		}
 
+		$meta_box_result = $this->panel_options[$meta_box];
+
 		// filter the panels by post type
 		if( $post_type ) {
-			$filtered = array();
+			$meta_box_result = array();
 			foreach( $this->panel_options[$meta_box] as $tab ) {
 				if( isset( $tab['pages'] ) && $tab['pages'] != '' ) {
 					if( ! is_array( $tab['pages'] ) ) {
@@ -100,22 +102,21 @@ class Themify_Metabox {
 					}
 				} else {
 					// use whatever the meta box itself uses
-					if( ( $def = $this->get_meta_box( $meta_box ) ) && isset( $def['screen'] ) ) {
+					if(isset( $def['screen'] ) && ( $def = $this->get_meta_box( $meta_box ) )  ) {
 						$tab['pages'] = $def['screen'];
 					}
 				}
-				if( in_array( $post_type, $tab['pages'] ) ) {
-					$filtered[] = $tab;
-				}
+
+				in_array( $post_type, $tab['pages'], true ) && ( $meta_box_result[] = $tab );
 			}
-			return $filtered;
 		}
 
-		return $this->panel_options[$meta_box];
+		return apply_filters( 'themify_metabox_panel_options', $meta_box_result );
 	}
 
 	function admin_menu() {
-		foreach( $this->get_meta_boxes() as $meta_box ) {
+                $metaboxes = $this->get_meta_boxes();
+		foreach($metaboxes  as $meta_box ) {
 			add_meta_box( $meta_box['id'], $meta_box['title'], array( $this, 'render' ), $meta_box['screen'], $meta_box['context'], $meta_box['priority'] );
 		}
 	}
@@ -131,21 +132,13 @@ class Themify_Metabox {
 		if( function_exists( 'icl_object_id' ) && current_filter() === 'save_post' ) {
 			wp_cache_delete( $post_id, 'post_meta' );
 		}
-
-		if( ! isset( $_POST['post_type'] ) ) {
-			return $post_id;
-		}
-
-		if ( 'page' == $_POST['post_type'] ) {
-			if ( ! current_user_can( 'edit_page', $post_id ) )
-				return $post_id;
-		} else {
-			if ( ! current_user_can( 'edit_post', $post_id ) )
-				return $post_id;
-		}
+		if ( ! isset( $_POST['post_type'] ) || ('page' === $_POST['post_type'] &&  ! current_user_can( 'edit_page', $post_id )) || ('page' !== $_POST['post_type'] && ! current_user_can( 'edit_post', $post_id ))) {
+                        return $post_id;
+		} 
 
 		if( isset( $_POST['themify_proper_save'] ) && $_POST['themify_proper_save'] != '' ) {
-			foreach( $this->get_meta_boxes() as $meta_box ) {
+                        $metaboxes = $this->get_meta_boxes();
+			foreach( $metaboxes as $meta_box ) {
 				$tabs = $this->get_meta_box_options( $meta_box['id'], $_POST['post_type'] );
 				if( empty( $tabs ) )
 					continue;
@@ -153,7 +146,7 @@ class Themify_Metabox {
 				foreach( $tabs as $tab ) {
 					foreach ( $tab['options'] as $field ) {
 
-						if( 'multi' == $field['type'] ) {
+						if( 'multi' === $field['type'] ) {
 							// Grouped fields
 							foreach ( $field['meta']['fields'] as $field ) {
 								$this->_save_meta( $field, $post_id );
@@ -198,12 +191,10 @@ class Themify_Metabox {
 
 	function render( $post, $metabox ) {
 		global $post, $typenow;
-
-		$post_id = $post->ID;
 		$tabs = $this->get_meta_box_options( $metabox['id'], $typenow );
 		if( empty( $tabs ) ) {
 
-			if( $metabox['id'] == 'themify-meta-boxes' ) {
+			if( $metabox['id'] === 'themify-meta-boxes' ) {
 				// this is a hack to prevent Themify Custom Panel from showing up when it has no options to show
 				echo '<style>#themify-meta-boxes, .metabox-prefs label[for="themify-meta-boxes-hide"] { display: none !important; }</style>';
 			}
@@ -271,7 +262,7 @@ class Themify_Metabox {
 						if ( isset( $field['hide'] ) ) {
 							$data_hide = is_array( $field['hide'] ) ? implode( ' ', $field['hide'] ) : $field['hide'];
 						}
-						if( isset($field['default_toggle']) && $field['default_toggle'] == 'hidden' ){
+						if( isset($field['default_toggle']) && $field['default_toggle'] === 'hidden' ){
 							$ext_attr = 'style="display:none;"';
 						}
 						if( isset($field['enable_toggle']) && $field['enable_toggle'] == true ) {
@@ -309,7 +300,7 @@ class Themify_Metabox {
 		$html = '
 		<input type="hidden" name="' . esc_attr( $meta_box_name ) . '_noncename" id="' . esc_attr( $meta_box_name ) . '_noncename" value="' . wp_create_nonce( plugin_basename(__FILE__) ) . '" />
 		<div class="themify_field_row clearfix ' . esc_attr( $toggle_class ) . '" ' . esc_attr( $ext_attr );
-		if ( isset( $args['data_hide'] ) && ! empty( $args['data_hide'] ) ) {
+		if (! empty( $args['data_hide'] ) ) {
 			$html .= ' data-hide="' . esc_attr( $args['data_hide'] ) . '"';
 		}
 		$html .= '>';
@@ -333,23 +324,23 @@ class Themify_Metabox {
 	function admin_enqueue_scripts( $page = '' ) {
 		global $typenow;
 
-		wp_enqueue_style( 'themify-datetimepicker-css', THEMIFY_METABOX_URI . 'css/jquery-ui-timepicker.min.css', array() );
+		wp_register_style( 'themify-datetimepicker', THEMIFY_METABOX_URI . 'css/jquery-ui-timepicker.min.css', array() );
 		wp_register_style( 'themify-colorpicker', THEMIFY_METABOX_URI . 'css/jquery.minicolors.css', array() );
-		wp_register_style( 'themify-metabox', THEMIFY_METABOX_URI . 'css/styles.css', array( 'themify-colorpicker' ) );
+		wp_register_style( 'themify-metabox', THEMIFY_METABOX_URI . 'css/styles.css', array( 'themify-colorpicker', 'themify-datetimepicker' ) );
 
 		wp_register_script( 'meta-box-tabs', THEMIFY_METABOX_URI . 'js/meta-box-tabs.js', array( 'jquery' ), '1.0', true );
 		wp_register_script( 'media-library-browse', THEMIFY_METABOX_URI . 'js/media-lib-browse.js', array( 'jquery'), '1.0', true );
 		wp_register_script( 'themify-colorpicker', THEMIFY_METABOX_URI . 'js/jquery.minicolors.min.js', array( 'jquery' ), null, true );
-		wp_enqueue_script( 'themify-datetimepicker-js', THEMIFY_METABOX_URI . 'js/jquery-ui-timepicker.min.js', array( 'jquery', 'jquery-ui-datepicker'/*, 'jquery-ui-slider'*/ ), false, true );
-		wp_register_script( 'themify-metabox', THEMIFY_METABOX_URI . 'js/scripts.js', array( 'jquery', 'meta-box-tabs', 'media-library-browse', 'jquery-ui-tabs', 'themify-colorpicker', 'themify-datetimepicker-js' ), '1.0', true );
-		wp_register_script( 'themify-plupload', THEMIFY_METABOX_URI . 'js/plupload.js', array( 'jquery', 'themify-metabox' ) );
+		wp_register_script( 'themify-datetimepicker', THEMIFY_METABOX_URI . 'js/jquery-ui-timepicker.min.js', array( 'jquery', 'jquery-ui-datepicker'/*, 'jquery-ui-slider'*/ ), false, true );
+		wp_register_script( 'themify-metabox', THEMIFY_METABOX_URI . 'js/scripts.js', array( 'jquery', 'meta-box-tabs', 'media-library-browse', 'jquery-ui-tabs', 'themify-colorpicker', 'themify-datetimepicker' ), '1.0', true );
+		wp_register_script( 'themify-plupload', THEMIFY_METABOX_URI . 'js/plupload.js', array( 'jquery', 'themify-metabox' ), null, true );
 
 		// Inject variable for Plupload
 		$global_plupload_init = array(
 			'runtimes'				=> 'html5,flash,silverlight,html4',
 			'browse_button'			=> 'plupload-browse-button', // adjusted by uploader
 			'container' 			=> 'plupload-upload-ui', // adjusted by uploader
-			'drop_element' 			=> 'drag-drop-area', // adjusted by uploader
+			'drop_element' 			=> 'plupload-upload-ui', // adjusted by uploader
 			'file_data_name' 		=> 'async-upload', // adjusted by uploader
 			'multiple_queues' 		=> true,
 			'max_file_size' 		=> wp_max_upload_size() . 'b',
@@ -367,8 +358,8 @@ class Themify_Metabox {
 			'multi_selection' 		=> false, // added by uploader
 			 // additional post data to send to our ajax hook
 			'multipart_params' 		=> array(
-				'_ajax_nonce' => '', // added by uploader
-				'imgid' => 0 // added by uploader
+                        '_ajax_nonce' => '', // added by uploader
+                        'imgid' => 0 // added by uploader
 			)
 		);
 		wp_localize_script( 'themify-metabox', 'global_plupload_init', $global_plupload_init );
@@ -376,13 +367,14 @@ class Themify_Metabox {
 		do_action( 'themify_metabox_register_assets' );
 
 		// attempt to enqueue Metabox API assets automatically when needed
-		if( ( $page == 'post.php' || $page == 'post-new.php' ) ) {
-			foreach( $this->get_meta_boxes() as $meta_box ) {
-				if( isset( $meta_box['screen'] ) && in_array( $typenow, $meta_box['screen'] ) ) {
-					$this->enqueue();
-					break;
-				}
-			}
+		if( ( $page === 'post.php' || $page === 'post-new.php' ) ) {
+                    $metaboxes = $this->get_meta_boxes();
+                    foreach( $metaboxes as $meta_box ) {
+                            if( isset( $meta_box['screen'] ) && in_array( $typenow, $meta_box['screen'],true ) ) {
+                                    $this->enqueue();
+                                    break;
+                            }
+                    }
 		}
 	}
 
@@ -411,12 +403,13 @@ class Themify_Metabox {
 
 		static $protected_metas = array();
 		if( $protected_metas == null ) {
-			foreach( $this->get_meta_boxes() as $meta_box ) {
-				$protected_metas = array_merge( themify_metabox_get_field_names( $this->get_meta_box_options( $meta_box['id'], $typenow ) ), $protected_metas );
-			}
+                    $metaboxes =$this->get_meta_boxes();
+                    foreach( $metaboxes as $meta_box ) {
+                            $protected_metas = array_merge( themify_metabox_get_field_names( $this->get_meta_box_options( $meta_box['id'], $typenow ) ), $protected_metas );
+                    }
 		}
 
-		if( is_array( $protected_metas ) && in_array( $meta_key, $protected_metas ) ) {
+		if( is_array( $protected_metas ) && in_array( $meta_key, $protected_metas,true) ) {
 			$protected = true;
 		}
 

@@ -152,7 +152,7 @@
     list-style: none;
     padding: 8px 1em;
     margin: 0;
-	display: block;
+    display: block;
 }
 /**
  * On Active
@@ -213,59 +213,59 @@
 .themify_builder_font_preview>span{
     min-height: 32px;
     display: block;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .themify_builder_font_preview .themify_show_wait {
-	display: inline-block;
-	vertical-align: middle;
-	text-indent: -1110000px;
+    display: inline-block;
+    vertical-align: middle;
+    text-indent: -1110000px;
 }
 .themify_builder_font_preview .themify_show_wait {
-	width: 20px;
-	height: 20px;
-	min-height: inherit;
-	background-color: #666;
-	background-color: rgba(0,0,0,.6);
-	border-radius: 50%;
-	box-sizing: border-box;
-	position: relative;
-	margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    min-height: inherit;
+    background-color: #666;
+    background-color: rgba(0,0,0,.6);
+    border-radius: 50%;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 10px;
 }
 .themify_builder_font_preview .themify_show_wait:before {
-	width: 80%;
-	height: 80%;
-	border: 3px solid transparent;
+    width: 80%;
+    height: 80%;
+    border: 3px solid transparent;
     border-top-color: #fff;
     border-radius: 50%;
-	box-sizing: border-box;
-	position: absolute;
-	top: 10%;
-	left: 10%;
-	content: '';
-	-webkit-animation: circle-loader 1.4s infinite linear;
-	animation: circle-loader 1.4s infinite linear;
+    box-sizing: border-box;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    content: '';
+    -webkit-animation: circle-loader 1.4s infinite linear;
+    animation: circle-loader 1.4s infinite linear;
 }
 @-webkit-keyframes circle-loader {
-	0% {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
-	}
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 @keyframes circle-loader {
-	0% {
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-		transform: rotate(360deg);
-	}
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 .themify_builder_font_preview_wrapper{
     font: 100% Helvetica, Arial, Sans-serif;

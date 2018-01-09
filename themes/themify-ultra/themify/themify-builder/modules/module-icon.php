@@ -7,66 +7,63 @@ if (!defined('ABSPATH'))
  * Description: Display Icon content
  */
 
-class TB_Icon_Module extends Themify_Builder_Module {
+class TB_Icon_Module extends Themify_Builder_Component_Module {
 
 	function __construct() {
 		parent::__construct(array(
-			'name' => __( 'Icon', 'themify' ),
+			'name' => __('Icon', 'themify'),
 			'slug' => 'icon'
 		));
 	}
 
-	public function get_title($module) {
-		$text = isset( $module['mod_settings']['mod_title_icon'] ) ? $module['mod_settings']['mod_title_icon'] : '';
-		$return = wp_trim_words( $text, 100 );
-		return $return;
-	}
-
 	public function get_options() {
+		$colors = Themify_Builder_Model::get_colors();
+		$colors[] = array('img' => 'transparent', 'value' => 'transparent', 'label' => __('Transparent', 'themify'));
+
 		return array(
 			array(
 				'id' => 'icon_size',
 				'type' => 'radio',
-				'label' => __( 'Size', 'themify' ),
+				'label' => __('Size', 'themify'),
 				'options' => array(
-					'normal' => __( 'Normal', 'themify' ),
-					'small' => __( 'Small', 'themify' ),
-					'large' => __( 'Large', 'themify' ),
-					'xlarge' => __( 'xLarge', 'themify' )
+					'normal' => __('Normal', 'themify'),
+					'small' => __('Small', 'themify'),
+					'large' => __('Large', 'themify'),
+					'xlarge' => __('xLarge', 'themify')
 				),
-				'default' => 'normal',
+				'default' => 'normal'
 			),
 			array(
 				'id' => 'icon_style',
 				'type' => 'radio',
-				'label' => __( 'Icon Background Style', 'themify' ),
+				'label' => __('Icon Background Style', 'themify'),
 				'options' => array(
-					'circle' => __( 'Circle', 'themify' ),
-					'rounded' => __( 'Rounded', 'themify' ),
-					'squared' => __( 'Squared', 'themify' ),
-					'none' => __( 'None', 'themify' )
+					'circle' => __('Circle', 'themify'),
+					'rounded' => __('Rounded', 'themify'),
+					'squared' => __('Squared', 'themify'),
+					'none' => __('None', 'themify')
 				),
-				'default' => 'circle',
+				'default' => 'circle'
 			),
 			array(
 				'id' => 'icon_arrangement',
 				'type' => 'radio',
-				'label' => __( 'Arrangement ', 'themify' ),
+				'label' => __('Arrangement ', 'themify'),
 				'options' => array(
-					'icon_horizontal' => __( 'Horizontally', 'themify' ),
-					'icon_vertical' => __( 'Vertically', 'themify' ),
+					'icon_horizontal' => __('Horizontally', 'themify'),
+					'icon_vertical' => __('Vertically', 'themify'),
 				),
 				'default' => 'icon_horizontal'
 			),
 			array(
 				'id' => 'content_icon',
 				'type' => 'builder',
-				'new_row_text' => __( 'Add new icon', 'themify' ),
+				'new_row_text' => __('Add new icon', 'themify'),
 				'options' => array(
 					array(
 						'id' => 'icon_container',
 						'type' => 'multi',
-						'label' => __( 'Icon', 'themify' ),
+						'label' => __('Icon', 'themify'),
 						'wrap_with_class' => 'fullwidth',
 						'options' => array(
 							array(
@@ -83,8 +80,10 @@ class TB_Icon_Module extends Themify_Builder_Module {
 							array(
 								'id' => 'icon_color_bg',
 								'type' => 'layout',
+								'mode' => 'sprite',
+								'class' => 'tb-colors',
 								'label' => '',
-								'options' => Themify_Builder_Model::get_colors(),
+								'options' => $colors,
 								'bottom' => false,
 								'wrap_with_class' => 'fullwidth',
 								'render_callback' => array(
@@ -96,7 +95,7 @@ class TB_Icon_Module extends Themify_Builder_Module {
 					array(
 						'id' => 'label',
 						'type' => 'text',
-						'label' => __( 'Label', 'themify' ),
+						'label' => __('Label', 'themify'),
 						'class' => 'fullwidth',
 						'render_callback' => array(
 							'repeater' => 'content_icon'
@@ -105,7 +104,7 @@ class TB_Icon_Module extends Themify_Builder_Module {
 					array(
 						'id' => 'link',
 						'type' => 'text',
-						'label' => __( 'Link', 'themify' ),
+						'label' => __('Link', 'themify'),
 						'class' => 'fullwidth',
 						'binding' => array(
 							'empty' => array(
@@ -122,11 +121,11 @@ class TB_Icon_Module extends Themify_Builder_Module {
 					array(
 						'id' => 'link_options',
 						'type' => 'radio',
-						'label' => __( 'Open Link In', 'themify' ),
+						'label' => __('Open Link In', 'themify'),
 						'options' => array(
-							'regular' => __( 'Same window', 'themify' ),
-							'lightbox' => __( 'Lightbox ', 'themify' ),
-							'newtab' => __( 'New tab ', 'themify' )
+							'regular' => __('Same window', 'themify'),
+							'lightbox' => __('Lightbox ', 'themify'),
+							'newtab' => __('New tab ', 'themify')
 						),
 						'new_line' => false,
 						'default' => 'regular',
@@ -139,7 +138,7 @@ class TB_Icon_Module extends Themify_Builder_Module {
 					array(
 						'id' => 'lightbox_size',
 						'type' => 'multi',
-						'label' => __( 'Lightbox Dimension', 'themify' ),
+						'label' => __('Lightbox Dimension', 'themify'),
 						'options' => array(
 							array(
 								'id' => 'lightbox_width',
@@ -155,8 +154,8 @@ class TB_Icon_Module extends Themify_Builder_Module {
 								'type' => 'select',
 								'label' => __( 'Units', 'themify' ),
 								'options' => array(
-									'pixels' => __( 'px ', 'themify' ),
-									'percents' => __( '%', 'themify' )
+									'pixels' => __('px ', 'themify'),
+									'percents' => __('%', 'themify')
 								),
 								'default' => 'pixels',
 								'render_callback' => array(
@@ -177,8 +176,8 @@ class TB_Icon_Module extends Themify_Builder_Module {
 								'type' => 'select',
 								'label' => __( 'Units', 'themify' ),
 								'options' => array(
-									'pixels' => __( 'px ', 'themify' ),
-									'percents' => __( '%', 'themify' )
+									'pixels' => __('px ', 'themify'),
+									'percents' => __('%', 'themify')
 								),
 								'default' => 'pixels',
 								'render_callback' => array(
@@ -186,29 +185,29 @@ class TB_Icon_Module extends Themify_Builder_Module {
 								)
 							)
 						),
-						'wrap_with_class' => 'tf-group-element tf-group-element-lightbox'
+						'wrap_with_class' => 'tb-group-element tb-group-element-lightbox'
 					)
 				)
 			),
 			// Additional CSS
 			array(
 				'type' => 'separator',
-				'meta' => array( 'html' => '<hr/>')
+				'meta' => array('html' => '<hr/>')
 			),
 			array(
 				'id' => 'css_icon',
 				'type' => 'text',
-				'label' => __( 'Additional CSS Class', 'themify' ),
+				'label' => __('Additional CSS Class', 'themify'),
 				'class' => 'large exclude-from-reset-field',
-				'help' => sprintf('<br/><small>%s</small>', __( 'Add additional CSS class(es) for custom styling', 'themify' ))
+				'help' => sprintf('<br/><small>%s</small>', __('Add additional CSS class(es) for custom styling', 'themify'))
 			)
 		);
 	}
 
 	public function get_default_settings() {
-		$settings = array(
+		return array(
 			'content_icon' => array(
-				array(
+				array( 
 					'icon' => 'fa-home',
 					'label' => esc_html__( 'Icon label', 'themify' ),
 					'icon_color_bg' => 'blue',
@@ -216,328 +215,55 @@ class TB_Icon_Module extends Themify_Builder_Module {
 				)
 			)
 		);
-		return $settings;
 	}
-
-	public function get_animation() {
-		$animation = array(
-			array(
-				'type' => 'separator',
-				'meta' => array('html' => '<h4>' . esc_html__( 'Appearance Animation', 'themify' ) . '</h4>')
-			),
-			array(
-				'id' => 'multi_Animation Effect',
-				'type' => 'multi',
-				'label' => __( 'Effect', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'animation_effect',
-						'type' => 'animation_select',
-						'label' => __( 'Effect', 'themify' )
-					),
-					array(
-						'id' => 'animation_effect_delay',
-						'type' => 'text',
-						'label' => __( 'Delay', 'themify' ),
-						'class' => 'xsmall',
-						'description' => __( 'Delay (s)', 'themify' ),
-					),
-					array(
-						'id' => 'animation_effect_repeat',
-						'type' => 'text',
-						'label' => __( 'Repeat', 'themify' ),
-						'class' => 'xsmall',
-						'description' => __( 'Repeat (x)', 'themify' ),
-					),
-				)
-			)
-		);
-
-		return $animation;
-	}
+        
+        public function get_visual_type() {
+            return 'ajax';            
+        }
 
 	public function get_styling() {
 		$general = array(
 			// Background
-			array(
-				'id' => 'separator_image_background',
-				'title' => '',
-				'description' => '',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Background', 'themify' ) . '</h4>' )
-			),
-			array(
-				'id' => 'background_image',
-				'type' => 'image_and_gradient',
-				'label' => __( 'Background Image', 'themify' ),
-				'class' => 'xlarge',
-				'prop' => 'background-image',
-				'selector' => ' div.module-icon',
-				'option_js' => true
-			),
-			array(
-				'id' => 'background_color',
-				'type' => 'color',
-				'label' => __( 'Background Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'background-color',
-				'selector' => array(' div.module-icon'),
-			),
+                        self::get_seperator('image_bacground',__( 'Background', 'themify' ),false),
+                        self::get_image(' div.module-icon'),
+						self::get_color(' div.module-icon', 'background_color',__( 'Background Color', 'themify' ),'background-color'),
+						self::get_repeat(' div.module-icon'),
 			// Font
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />')
-			),
-			array(
-				'id' => 'separator_font',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Font', 'themify' ) . '</h4>' )
-			),
-			array(
-				'id' => 'font_family',
-				'type' => 'font_select',
-				'label' => __( 'Font Family', 'themify' ),
-				'class' => 'font-family-select',
-				'prop' => 'font-family',
-				'selector' => ' div.module-icon',
-			),
-			array(
-				'id' => 'font_color',
-				'type' => 'color',
-				'label' => __( 'Font Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => array(' div.module-icon')
-			),
-			array(
-				'id' => 'multi_font_size',
-				'type' => 'multi',
-				'label' => __( 'Font Size', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'font_size',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'font-size',
-						'selector' => array(' div.module-icon i', ' div.module-icon a', ' div.module-icon span'),
-					),
-					array(
-						'id' => 'font_size_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units()
-					)
-				)
-			),
-			array(
-				'id' => 'multi_line_height',
-				'type' => 'multi',
-				'label' => __( 'Line Height', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'line_height',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'line-height',
-						'selector' => array(' div.module-icon i', ' div.module-icon a', ' div.module-icon span'),
-					),
-					array(
-						'id' => 'line_height_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units()
-					)
-				)
-			),
-			array(
-				'id' => 'multi_letter_spacing',
-				'type' => 'multi',
-				'label' => __( 'Letter Spacing', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'letter_spacing',
-						'type' => 'text',
-						'class' => 'xsmall',
-						'prop' => 'letter-spacing',
-						'selector' => '.module_row'
-					),
-					array(
-						'id' => 'letter_spacing_unit',
-						'type' => 'select',
-						'meta' => Themify_Builder_Model::get_css_units(),
-						'default' => 'px',
-					)
-				)
-			),
-			array(
-				'id' => 'text_align',
-				'label' => __( 'Text Align', 'themify' ),
-				'type' => 'icon_radio',
-				'meta' => Themify_Builder_Model::get_text_align(),
-				'prop' => 'text-align',
-				'selector' => ' div.module-icon',
-			),
-			array(
-				'id' => 'text_transform',
-				'label' => __( 'Text Transform', 'themify' ),
-				'type' => 'icon_radio',
-				'meta' => Themify_Builder_Model::get_text_transform(),
-				'prop' => 'text-transform',
-				'selector' => 'div.module-icon'
-			),
-			array(
-				'id' => 'multi_font_style',
-				'type' => 'multi',
-				'label' => __( 'Font Style', 'themify' ),
-				'fields' => array(
-					array(
-						'id' => 'font_style_regular',
-						'type' => 'icon_radio',
-						'meta' => Themify_Builder_Model::get_font_style(),
-						'prop' => 'font-style',
-						'class' => 'inline',
-						'selector' => 'div.module-icon'
-					),
-					array(
-						'id' => 'text_decoration_regular',
-						'type' => 'icon_radio',
-						'meta' => Themify_Builder_Model::get_text_decoration(),
-						'prop' => 'text-decoration',
-						'class' => 'inline',
-						'selector' => 'div.module-icon'
-					),
-				)
-			),
+                        self::get_seperator('font',__('Font', 'themify')),
+                        self::get_font_family(' div.module-icon'),
+                        self::get_color('div.module-icon','font_color',__('Font Color', 'themify')),
+                        self::get_font_size(array(' div.module-icon i', ' div.module-icon a', ' div.module-icon span')),
+                        self::get_line_height(array(' div.module-icon i', ' div.module-icon a', ' div.module-icon span')),
+                        self::get_letter_spacing(' div.module-icon'),
+                        self::get_text_align(' div.module-icon'),
+                        self::get_text_transform('div.module-icon'),
+                        self::get_font_style('div.module-icon'),
 			// Link
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_link',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Link', 'themify' ) . '</h4>' )
-			),
-			array(
-				'id' => 'link_color',
-				'type' => 'color',
-				'label' => __( 'Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => ' div.module-icon span'
-			),
-			array(
-				'id' => 'link_color_hover',
-				'type' => 'color',
-				'label' => __( 'Color Hover', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => ' div.module-icon .module-icon-item:hover span'
-			),
-			array(
-				'id' => 'text_decoration',
-				'type' => 'select',
-				'label' => __( 'Text Decoration', 'themify' ),
-				'meta' => Themify_Builder_Model::get_text_decoration( true ),
-				'prop' => 'text-decoration',
-				'selector' => array(' div.module-icon a span', ' div.module-icon a i')
-			),
-			// Padding
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_padding',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Padding', 'themify' ) . '</h4>' ),
-			),
-			Themify_Builder_Model::get_field_group( 'padding', ' .module-icon', 'top' ),
-			Themify_Builder_Model::get_field_group( 'padding', ' .module-icon', 'right' ),
-			Themify_Builder_Model::get_field_group( 'padding', ' .module-icon', 'bottom' ),
-			Themify_Builder_Model::get_field_group( 'padding', ' .module-icon', 'left' ),
-			Themify_Builder_Model::get_field_group( 'padding', ' .module-icon', 'all' ),
+                        self::get_seperator('link',__('Link', 'themify')),
+                        self::get_color( ' div.module-icon span','link_color'),
+                        self::get_color(' div.module-icon .module-icon-item:hover span','link_color_hover',__('Color Hover', 'themify')),
+                        self::get_text_decoration(array(' div.module-icon a span', ' div.module-icon a i')),
+                        // Padding
+                        self::get_seperator('padding',__('Padding', 'themify')),
+                        self::get_padding(' div.module-icon'),
 			// Margin
-			array(
-				'type' => 'separator',
-				'meta' => array('html'=>'<hr />')
-			),
-			array(
-				'id' => 'separator_margin',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Margin', 'themify') . '</h4>' ),
-			),
-			Themify_Builder_Model::get_field_group( 'margin', ' .module-icon', 'top' ),
-			Themify_Builder_Model::get_field_group( 'margin', ' .module-icon', 'right' ),
-			Themify_Builder_Model::get_field_group( 'margin', ' .module-icon', 'bottom' ),
-			Themify_Builder_Model::get_field_group( 'margin', ' .module-icon', 'left' ),
-			Themify_Builder_Model::get_field_group( 'margin', ' .module-icon', 'all' ),
-			// Border
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_border',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Border', 'themify' ) . '</h4>' )
-			),
-			Themify_Builder_Model::get_field_group( 'border', ' .module-icon', 'top' ),
-			Themify_Builder_Model::get_field_group( 'border', ' .module-icon', 'right' ),
-			Themify_Builder_Model::get_field_group( 'border', ' .module-icon', 'bottom' ),
-			Themify_Builder_Model::get_field_group( 'border', ' .module-icon', 'left' ),
-			Themify_Builder_Model::get_field_group( 'border', ' .module-icon', 'all' )
+                        self::get_seperator('margin',__('Margin', 'themify')),
+                        self::get_margin(' div.module-icon'),
+                        // Border
+                        self::get_seperator('border',__('Border', 'themify')),
+                        self::get_border(' div.module-icon')
 		);
 
 		$icon = array(
 			// Background
-			array(
-				'id' => 'separator_image_background',
-				'title' => '',
-				'description' => '',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Background', 'themify' ) . '</h4>' )
-			),
-			array(
-				'id' => 'background_color_icon',
-				'type' => 'color',
-				'label' => __( 'Background Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'background-color',
-				'selector' => ' div.module-icon .module-icon-item i'
-			),
-			array(
-				'id' => 'background_color_icon_hover',
-				'type' => 'color',
-				'label' => __( 'Background Hover', 'themify' ),
-				'class' => 'small',
-				'prop' => 'background-color',
-				'selector' => ' div.module-icon .module-icon-item:hover i'
-			),
+                        self::get_seperator('image_bacground',__( 'Background', 'themify' ),false),
+                        self::get_color(' div.module-icon .module-icon-item i', 'background_color_icon',__( 'Background Color', 'themify' ),'background-color'),
+                        self::get_color(' div.module-icon .module-icon-item:hover i', 'background_color_icon_hover',__( 'Background Hover', 'themify' ),'background-color'),
+			
 			// Font
-			array(
-				'type' => 'separator',
-				'meta' => array( 'html' => '<hr />' )
-			),
-			array(
-				'id' => 'separator_font',
-				'type' => 'separator',
-				'meta' => array( 'html' => '<h4>' . __( 'Color', 'themify' ) . '</h4>' )
-			),
-			array(
-				'id' => 'font_color_icon',
-				'type' => 'color',
-				'label' => __( 'Color', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => ' div.module-icon .module-icon-item i'
-			),
-			array(
-				'id' => 'font_color_icon_hover',
-				'type' => 'color',
-				'label' => __( 'Color Hover', 'themify' ),
-				'class' => 'small',
-				'prop' => 'color',
-				'selector' => ' div.module-icon .module-icon-item:hover i'
-			),
+                        self::get_seperator('font',__('Color', 'themify')),
+                        self::get_color(' div.module-icon .module-icon-item i','font_color_icon',__('Color', 'themify')),
+                        self::get_color(' div.module-icon .module-icon-item:hover i','font_color_icon_hover',__('Color Hover', 'themify'))
 		);
 
 		return array(
@@ -546,15 +272,15 @@ class TB_Icon_Module extends Themify_Builder_Module {
 				'id' => 'module-styling',
 				'tabs' => array(
 					'general' => array(
-						'label' => __( 'General', 'themify' ),
+						'label' => __('General', 'themify'),
 						'fields' => $general
 					),
 					'icon' => array(
-						'label' => __( 'Icon', 'themify' ),
+						'label' => __('Icon', 'themify'),
 						'fields' => $icon
 					)
 				)
-			),
+			)
 		);
 	}
 
@@ -563,4 +289,4 @@ class TB_Icon_Module extends Themify_Builder_Module {
 ///////////////////////////////////////
 // Module Options
 ///////////////////////////////////////
-Themify_Builder_Model::register_module( 'TB_Icon_Module' );
+Themify_Builder_Model::register_module('TB_Icon_Module');

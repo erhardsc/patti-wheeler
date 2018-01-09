@@ -7,7 +7,6 @@ function themify_create_pluploader(obj) {
 		imgId = id1.replace("plupload-upload-ui", ""),
 		haspreset = false,
 		haspreview = false,
-		tomedia = false,
 		topost = false,
 		$j = jQuery;
 	
@@ -28,7 +27,6 @@ function themify_create_pluploader(obj) {
 		pconfig["multipart_params"]['haspreview'] = 'haspreview'; 
 	}
 	if($this.hasClass('add-to-media')){
-		tomedia = true;
 		pconfig["multipart_params"]['tomedia'] = 'tomedia';
 	}
 	if($this.data('postid')) {
@@ -108,30 +106,21 @@ function themify_create_pluploader(obj) {
 		}
 		
 		$j('#' + file.id).fadeOut();
-		
+
 		var response_file = json.file,
 		response_url = json.url,
 		response_type = json.type;
 		
-		if('zip' == response_type || 'rar' == response_type || 'plain' == response_type)
+		if('zip' === response_type || 'rar' === response_type || 'plain' === response_type)
 			window.location = location.href.replace(location.hash, '');
 		else
 			$j('#' + imgId).val(response_url);
-		if(topost){
-			var thumb_url = json.thumb;
-			var post_image_preview = $j('<a href="' + response_url + '" target="_blank"><img src="' + thumb_url + '" width="40" /></a>')
-			.fadeIn(1000)
-			.css('display', 'inline-block');
-			
-			if($j('#' + imgId + 'plupload-upload-ui').closest('.themify_field').children('.themify_upload_preview').find('a').length > 0){
-				$j('#' + imgId + 'plupload-upload-ui').closest('.themify_field').children('.themify_upload_preview').find('a').remove();
-			}
-			$j('#' + imgId + 'plupload-upload-ui').closest('.themify_field').children('.themify_upload_preview').fadeIn().append(post_image_preview);
-			$this.closest('.themify_field').children('.themify_featimg_remove').removeClass('hide');
 
+		if ( typeof json.thumb !== 'undefined' ) {
+			themifyMediaLib.setPreviewIcon( $this.closest( '.themify_field_row' ), json.thumb );
 			$j( 'body' ).trigger( 'themify_plupload_selected', [ $this, json ] );
 		}
-		
+
 		if(haspreset){
 			$j('#' + imgId).closest('fieldset').children('.preset').find('img').removeClass('selected');
 			

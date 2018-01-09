@@ -126,6 +126,26 @@ function themify_theme_query_post_meta_box($args = array()) {
 			'type'		=> 'query_category',
 			'meta'		=> array()
 		),
+		// Query All Post Types
+		array(
+			'name' => 'query_all_post_types',
+			'type' => 'dropdown',
+			'title' => __( 'Query All Post Types', 'themify'),
+			'meta' =>array(
+				array(
+				'value' => '',
+				'name' => '',
+				),
+				array(
+				'value' => 'yes',
+				'name' => 'Yes',
+				),
+				array(
+				'value' => 'no',
+				'name' => 'No',
+				),
+			)
+		),
 		// Descending or Ascending Order for Posts
 		array(
 			'name' 		=> 'order',
@@ -1012,6 +1032,16 @@ function themify_theme_page_theme_design_meta_box( $args = array() ) {
 		array(
 			'name'        => 'fixed_header',
 			'title'       => __( 'Sticky Header', 'themify' ),
+			'description' => '',
+			'type'		  => 'radio',
+			'meta'		  => themify_ternary_options(),
+			'class'		  => 'hide-if none header-leftpane header-minbar boxed-content header-rightpane header-slide-out',
+			'default' => 'default',
+		),
+		// Shrinking Logo
+		array(
+			'name'        => 'shrinking_logo',
+			'title'       => __( 'Shrinking logo', 'themify' ),
 			'description' => '',
 			'type'		  => 'radio',
 			'meta'		  => themify_ternary_options(),

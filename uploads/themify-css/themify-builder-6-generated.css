@@ -1,133 +1,45 @@
-/* .themify_builder_6_row.module_row_0 Style */
-.themify_builder_6_row.module_row_0.module_row {
-	text-align: center;
-	
-	color: rgba(255,255,255, 1.00);
-	padding-top : 8%;
-	padding-bottom : 18%
+.themify_builder_6_row.module_row_0.module_row{background-image: url("http://localhost/passionswithpurpose/wp-content/uploads/2017/11/banner.png"); text-align: center; padding-top:13%; padding-bottom:13%; }
+.themify_builder_6_row.module_row_0.module_row>.builder_row_cover:before{background-image:-webkit-linear-gradient(180deg,rgba(255, 255, 255, 0.15) 0%,rgba(255, 255, 255, 0.66) 100%);
+background-image:-moz-linear-gradient(180deg,rgba(255, 255, 255, 0.15) 0%,rgba(255, 255, 255, 0.66) 100%);
+background-image:-o-linear-gradient(180deg,rgba(255, 255, 255, 0.15) 0%,rgba(255, 255, 255, 0.66) 100%);
+background-image:-ms-linear-gradient(180deg,rgba(255, 255, 255, 0.15) 0%,rgba(255, 255, 255, 0.66) 100%);
+background-image:linear-gradient(180deg,rgba(255, 255, 255, 0.15) 0%,rgba(255, 255, 255, 0.66) 100%);
 }
-.themify_builder_6_row.module_row_0.module_row h1 {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row h2 {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row h3:not(.module-title) {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row h4 {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row h5 {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row h6 {
-	
-	color: rgba(255,255,255, 1.00)
-}
-.themify_builder_6_row.module_row_0.module_row>.builder_row_cover {
-	background:linear-gradient( 180deg, rgba(0, 0, 0, 0.15) 0%, rgb(255, 255, 255) 98% )
-}
-.themify_builder_6_row.module_row_0.module_row> div > .builder_row_cover {
-	background:linear-gradient( 180deg, rgba(0, 0, 0, 0.15) 0%, rgb(255, 255, 255) 98% )
-}
-
-.themify_builder .text-6-0-0-0.module.module-text h1 { color: #403e3e;  } 
-.themify_builder .text-6-0-0-1.module-text { padding-right: 8%; padding-left: 8%;  } 
-.themify_builder .text-6-0-0-1.module.module-text h3 { color: #777777; font-size: 1.5em;  } 
-.themify_builder .icon-6-0-0-2 .module-icon { margin-bottom: 70px;  } 
-.themify_builder .icon-6-0-0-2 div.module-icon .module-icon-item i { background-color: #000000; background-color: rgba(0,0,0, 0.00); color: #a89078;  } 
-/* .themify_builder_6_row.module_row_1 Style */
-.themify_builder_6_row.module_row_1.module_row {
-	background-image: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/09/background-white.png);
-	text-align: center;
-	padding-top : 10%;
-	padding-right : 10%;
-	padding-bottom : 10%;
-	padding-left : 40%
-}
-.themify_builder_6_row.module_row_1.module_row>.builder_row_cover {
-	background:linear-gradient( 0deg, rgba(0, 0, 0, 0.09) 0%, rgba(255, 255, 255, 0.2) 100% )
-}
-.themify_builder_6_row.module_row_1.module_row> div > .builder_row_cover {
-	background:linear-gradient( 0deg, rgba(0, 0, 0, 0.09) 0%, rgba(255, 255, 255, 0.2) 100% )
-}
-
-/* .module_row_1 .module_column_0.tb_6_column Style */
-.module_row_1 .module_column_0.tb_6_column.module_column {
-	
-	background-color: rgba(255,250,250, 1.00);
-	padding-right : 5em;
-	padding-left : 5em
-}
-
-.themify_builder .text-6-1-0-0.module-text { padding-top: 5%;  } 
-.themify_builder .text-6-1-0-0.module.module-text h2 { color: #a89078;  } 
-.themify_builder .text-6-1-0-1.module-text { padding-right: 10%; padding-left: 10%;  } 
-.themify_builder .buttons-6-1-0-2.module.module-buttons { padding-bottom: 5%;  } 
-.themify_builder .buttons-6-1-0-2 .module-buttons .module-buttons-item a { background-color: #000000; background-color: rgba(0,0,0, 0.00); color: #a89078; border-top-color: #a89078; border-top-width: 1px; border-top-style: solid; border-right-color: #a89078; border-right-width: 1px; border-right-style: solid; border-bottom-color: #a89078; border-bottom-width: 1px; border-bottom-style: solid; border-left-color: #a89078; border-left-width: 1px; border-left-style: solid;  } 
-.themify_builder .buttons-6-1-0-2 .module-buttons .module-buttons-item a:hover { background-color: #a89078; color: #ffffff;  } 
-/* .themify_builder_6_row.module_row_2 Style */
-.themify_builder_6_row.module_row_2.module_row {
-	background-image: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/09/background-white.png);
-	text-align: center;
-	padding-top : 10%;
-	padding-bottom : 10%
-}
-.themify_builder_6_row.module_row_2.module_row>.builder_row_cover {
-	background:linear-gradient( 0deg, rgba(0, 0, 0, 0.09) 0%, rgba(255, 255, 255, 0.2) 100% )
-}
-.themify_builder_6_row.module_row_2.module_row> div > .builder_row_cover {
-	background:linear-gradient( 0deg, rgba(0, 0, 0, 0.09) 0%, rgba(255, 255, 255, 0.2) 100% )
-}
-
-/* .module_row_2 .module_column_0.tb_6_column Style */
-.module_row_2 .module_column_0.tb_6_column.module_column {
-	
-	background-color: rgba(255,250,250, 1.00)
-}
-
-.themify_builder .text-6-2-0-0.module-text { padding-top: 5%;  } 
-.themify_builder .text-6-2-0-0.module.module-text h2 { color: #a89078;  } 
-.themify_builder .text-6-2-0-1.module-text { padding-right: 10%; padding-left: 10%;  } 
-.themify_builder .buttons-6-2-0-2.module.module-buttons { padding-bottom: 5%;  } 
-.themify_builder .buttons-6-2-0-2 .module-buttons .module-buttons-item a { background-color: #000000; background-color: rgba(0,0,0, 0.00); color: #a89078; border-top-color: #a89078; border-top-width: 1px; border-top-style: solid; border-right-color: #a89078; border-right-width: 1px; border-right-style: solid; border-bottom-color: #a89078; border-bottom-width: 1px; border-bottom-style: solid; border-left-color: #a89078; border-left-width: 1px; border-left-style: solid;  } 
-.themify_builder .buttons-6-2-0-2 .module-buttons .module-buttons-item a:hover { background-color: #a89078; color: #ffffff;  } 
-/* .themify_builder_6_row.module_row_3 Style */
-.themify_builder_6_row.module_row_3.module_row {
-	padding-top : 7%;
-	padding-bottom : 5%
-}
-
-.themify_builder .image-6-3-0-0.module-image .image-title { font-size: 1.6em;  } 
-.themify_builder .buttons-6-3-0-1 div.module-buttons { text-align: center;  } 
-.themify_builder .buttons-6-3-0-1.module.module-buttons { padding-bottom: 5%;  } 
-.themify_builder .buttons-6-3-0-1 .module-buttons .module-buttons-item a { background-color: #000000; background-color: rgba(0,0,0, 0.00); color: #a89078; border-top-color: #a89078; border-top-width: 1px; border-top-style: solid; border-right-color: #a89078; border-right-width: 1px; border-right-style: solid; border-bottom-color: #a89078; border-bottom-width: 1px; border-bottom-style: solid; border-left-color: #a89078; border-left-width: 1px; border-left-style: solid;  } 
-.themify_builder .buttons-6-3-0-1 .module-buttons .module-buttons-item a:hover { background-color: #a89078; color: #ffffff;  } 
-.themify_builder .testimonial-slider-6-3-1-0.module-testimonial-slider .testimonial-content { text-align: center;  } 
-/* .themify_builder_6_row.module_row_4 Style */
-.themify_builder_6_row.module_row_4.module_row {
-	
-	background-color: rgba(233,228,224, 1);
-	text-align: center;
-	padding-top : 3%;
-	padding-bottom : 3%
-}
-
-.themify_builder .fancy-heading-6-4-0-0.module-fancy-heading { padding-bottom: 3%;  } 
-/* .themify_builder_6_row.module_row_5 Style */
-.themify_builder_6_row.module_row_5.module_row {
-	
-	background-color: rgba(72,72,72, 1.00);
-	padding-top : 3%;
-	padding-bottom : 3%
-}
-
-.themify_builder .text-6-5-0-0.module-text { text-align: center; padding-top: 3%;  } 
-.themify_builder .text-6-5-0-0.module.module-text h2 { color: #a89078; font-size: 5em;  } 
-.themify_builder .widget-6-5-0-1.module-widget { text-align: center; padding-bottom: 3%;  } 
+.module_row_0 .module_column_0.tb_6_column.module_column{background-color:rgba(255,255,255, 0.90); padding-top:3%; padding-bottom:3%; }
+.themify_builder .fancy-heading-6-0-0-0.module-fancy-heading{background-repeat: repeat; }
+.themify_builder .fancy-heading-6-0-0-0.module .main-head{color:#a89078; }
+.themify_builder .fancy-heading-6-0-0-0.module .sub-head{color:#aaaaaa; }
+.themify_builder .buttons-6-0-0-1.module.module-buttons{background-repeat: repeat; }
+.themify_builder .buttons-6-0-0-1 div.module-buttons{text-align: center; }
+.themify_builder .buttons-6-0-0-1 .module-buttons .module-buttons-item a{background-color:rgba(255,255,255, 0.00); color:#aaaaaa; border-top:1px solid #a89078; border-right:1px solid #a89078; border-bottom:1px solid #a89078; border-left:1px solid #a89078; }
+.themify_builder .buttons-6-0-0-1 .module-buttons .module-buttons-item a:hover{background-color:#a89078; color:#ffffff; }
+.themify_builder_6_row.module_row_1.module_row{background-color:#f9f9fa; padding-right:1px; }
+.themify_builder .image-6-1-0-0.module-image{background-repeat: repeat; }
+.themify_builder .text-6-1-1-0.module-text{background-repeat: repeat; text-align: center; }
+.themify_builder .text-6-1-1-2.module-text{background-repeat: repeat; padding-right:15px; padding-left:15px; }
+.themify_builder .buttons-6-1-1-3.module.module-buttons{background-repeat: repeat; }
+.themify_builder .buttons-6-1-1-3 div.module-buttons{text-align: center; padding-bottom:15px; }
+.themify_builder .buttons-6-1-1-3 .module-buttons .module-buttons-item a{background-color:rgba(255,255,255, 0.00); color:#aaaaaa; border-top:1px solid #a89078; border-right:1px solid #a89078; border-bottom:1px solid #a89078; border-left:1px solid #a89078; }
+.themify_builder .buttons-6-1-1-3 .module-buttons .module-buttons-item a:hover{background-color:#a89078; color:#ffffff; }
+.themify_builder_6_row.module_row_2.module_row{background-color:#f9f9fa; text-align: center; padding-top:3%; padding-bottom:3%; }
+.themify_builder .fancy-heading-6-2-0-0.module-fancy-heading{background-repeat: repeat; padding-bottom:3%; }
+.themify_builder .fancy-heading-6-2-0-0.module .main-head{color:#a89078; }
+.themify_builder .fancy-heading-6-2-0-0.module .sub-head{color:#aaaaaa; }
+.themify_builder_6_row.module_row_3.module_row{padding-top:7%; padding-bottom:7%; }
+.themify_builder .image-6-3-0-0.module-image{background-repeat: repeat; }
+.themify_builder .image-6-3-0-0.module.module-image .module-title{color:#a89078; }
+.themify_builder .image-6-3-0-0.module-image .image-title,.themify_builder .image-6-3-0-0.module-image .image-title a{color:#a89078; }
+.themify_builder .image-6-3-0-0.module-image .image-title{font-size:1.6em; }
+.themify_builder .image-6-3-0-0.module-image .image-content .image-caption{color:#aaaaaa; }
+.themify_builder .buttons-6-3-0-1 div.module-buttons{text-align: center; padding-bottom:5%; }
+.themify_builder .buttons-6-3-0-1 .module-buttons .module-buttons-item a{background-color:rgba(0,0,0, 0.00); color:#a89078; border-top:1px solid #a89078; border-right:1px solid #a89078; border-bottom:1px solid #a89078; border-left:1px solid #a89078; }
+.themify_builder .buttons-6-3-0-1 .module-buttons .module-buttons-item a:hover{background-color:#a89078; color:#ffffff; }
+.themify_builder .testimonial-slider-6-3-1-0.module-testimonial-slider .testimonial-content{text-align: center; color:#aaaaaa; }
+.themify_builder .testimonial-slider-6-3-1-0.module-testimonial-slider .testimonial-content .testimonial-title,.themify_builder .testimonial-slider-6-3-1-0.module-testimonial-slider .testimonial-content .testimonial-title a{color:#a89078; }
+.themify_builder_6_row.module_row_4.module_row{text-align: center; }
+.themify_builder_6_row.module_row_5.module_row{background-image: url("http://localhost/passionswithpurpose/wp-content/uploads/2017/11/SubscribeBackground.png"); text-align: center; padding-top:3%; padding-bottom:3%; }
+.themify_builder .image-6-5-0-0.module-image{background-repeat: repeat; }
+.themify_builder .fancy-heading-6-5-0-1.module-fancy-heading{background-repeat: repeat; }
+.themify_builder .fancy-heading-6-5-0-1.module .main-head{color:#a89078; }
+.themify_builder .fancy-heading-6-5-0-1.module .sub-head{color:#aaaaaa; }
+.themify_builder .text-6-5-0-2.module-text{background-repeat: repeat; }

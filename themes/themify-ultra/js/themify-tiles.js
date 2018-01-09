@@ -264,14 +264,13 @@
             // when the window resizes, redraw the grid
             $(window).on('debouncedresize', function (e) {
                 if (!e.isTrigger) {
-                    $this.grid.template = $this.get_template();
-
-                    $this.grid.isDirty = true;
-
-                    $this.grid.resize();
-                    $this.addClass('tiles_resing');
-                    $this.grid.redraw(opts.animate_resize, $this.onresize, $this);
-
+                    setTimeout( function() {
+						$this.grid.template = $this.get_template();
+						$this.grid.isDirty = true;
+						$this.grid.resize();
+						$this.addClass('tiles_resing');
+						$this.grid.redraw(opts.animate_resize, $this.onresize, $this);
+					}, 100 );
                 }
             });
 

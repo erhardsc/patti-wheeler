@@ -8,11 +8,13 @@
  */
 function themify_metabox_get_field_names( $arr ) {
 	$list = array();
-	if( ! empty( $arr ) ) : foreach( $arr as $metabox ) :
+	if( ! empty( $arr ) ) {
+            foreach( $arr as $metabox ) {
 		if( ! empty( $metabox['options'] ) ) {
 			$list = array_merge( $list, wp_list_pluck( themify_metabox_make_flat_fields_array( $metabox['options'] ), 'name' ) );
 		}
-	endforeach; endif;
+            }
+        }
 
 	return apply_filters( 'themify_metabox_get_field_names', array_unique( $list ), $arr );
 }
@@ -25,9 +27,9 @@ function themify_metabox_get_field_names( $arr ) {
  */
 function themify_metabox_make_flat_fields_array( $arr ) {
 	$list = array();
-	foreach( $arr as $key => $field ) {
-		if( $field['type'] == 'multi' ) {
-			foreach( $field['meta']['fields'] as $_key => $_field ) {
+	foreach( $arr as $field ) {
+		if( $field['type'] === 'multi' ) {
+			foreach( $field['meta']['fields'] as $_field ) {
 				$list[] = $_field;
 			}
 		} else {
@@ -58,15 +60,15 @@ function themify_verify_assignments( $assignments ) {
 		$visible = false; // if any condition is set for a hook, hide it on all pages of the site except for the chosen ones.
 
 		if (
-			( is_front_page() && isset($assignments['general']['home']) )
-			|| ( is_page() && isset( $assignments['general']['page'] ) && ! is_front_page() )
-			|| ( is_single() && isset($assignments['general']['single']) )
-			|| ( is_search() && isset($assignments['general']['search']) )
-			|| ( is_author() && isset($assignments['general']['author']) )
-			|| ( is_category() && isset($assignments['general']['category']) )
-			|| ( is_tag() && isset($assignments['general']['tag']) )
-			|| ( is_singular() && isset($assignments['general'][$query_object->post_type]) && $query_object->post_type != 'page' && $query_object->post_type != 'post' )
-			|| ( is_tax() && isset($assignments['general'][$query_object->taxonomy]) )
+			( isset($assignments['general']['home'])  && is_front_page() )
+			|| (isset( $assignments['general']['page'] ) && is_page() &&  ! is_front_page() )
+			|| (isset($assignments['general']['single']) && is_single())
+			|| ( isset($assignments['general']['search']) && is_search())
+			|| ( isset($assignments['general']['author'])&& is_author())
+			|| (isset($assignments['general']['category']) && is_category() )
+			|| (isset($assignments['general']['tag']) && is_tag())
+			|| (isset($assignments['general'][$query_object->post_type]) && $query_object->post_type !== 'page' && $query_object->post_type !== 'post' &&  is_singular())
+			|| (isset($assignments['general'][$query_object->taxonomy]) && is_tax())
 		) {
 			$visible = true;
 		} else { // let's dig deeper into more specific visibility rules
@@ -76,7 +78,7 @@ function themify_verify_assignments( $assignments ) {
 						$cat = get_the_category();
 						if ( ! empty( $cat ) ) {
 							foreach ( $cat as $c ) {
-								if ( $c->taxonomy == 'category' && isset( $assignments['tax']['category_single'][$c->slug] ) ) {
+								if ( $c->taxonomy === 'category' && isset( $assignments['tax']['category_single'][$c->slug] ) ) {
 									$visible = true;
 									break;
 								}
@@ -86,7 +88,7 @@ function themify_verify_assignments( $assignments ) {
 				} else {
 					foreach ( $assignments['tax'] as $tax => $terms ) {
 						$terms = array_keys( $terms );
-						if ( ( $tax == 'category' && is_category($terms) ) || ( $tax == 'post_tag' && is_tag( $terms ) ) || ( is_tax( $tax, $terms ) )
+						if ( ( $tax === 'category' && is_category($terms) ) || ( $tax === 'post_tag' && is_tag( $terms ) ) || ( is_tax( $tax, $terms ) )
 						) {
 							$visible = true;
 							break;
@@ -97,7 +99,7 @@ function themify_verify_assignments( $assignments ) {
 			if ( ! $visible && ! empty( $assignments['post_type'] ) ) {
 				foreach ( $assignments['post_type'] as $post_type => $posts ) {
 					$posts = array_keys( $posts );
-					if ( ( $post_type == 'post' && is_single() && is_single($posts) ) || ( $post_type == 'page' && (
+					if ( ( $post_type === 'post' && is_single() && is_single($posts) ) || ( $post_type === 'page' && (
 							( is_page() && is_page( $posts ) ) || ( ! is_front_page() && is_home() && in_array( get_post_field( 'post_name', get_option('page_for_posts' ) ), $posts ) ) // check for Posts page
 							) ) || ( is_singular( $post_type ) && in_array( $query_object->post_name, $posts ) )
 					) {

@@ -5,6 +5,10 @@
  * @package Themify
  */
 
+if( file_exists( THEMIFY_DIR . '/promotion/themify-promotion.php' ) ) {
+	include( THEMIFY_DIR . '/promotion/themify-promotion.php' );
+}
+
 ///////////////////////////////////////////
 // Create Nav Options
 ///////////////////////////////////////////
@@ -42,46 +46,16 @@ function themify_admin_nav() {
 	 * @since 2.0.2
 	 */
 	add_submenu_page( 'themify', $theme->display('Name'), __('Documentation', 'themify'), 'manage_options', 'themify_docs', 'themify_docs' );
-
-	/*
-	if( $plugins = themify_get_theme_recommended_plugins() ) {
-		// show the list only if all the recommended plugins are not active
-		if( ! themify_are_plugins_active( wp_list_pluck( $plugins, 'path' ) ) ) {
-			call_user_func( 'add_sub' . $do, 'themify', $theme->display('Name'), __('Recommended Plugins', 'themify'), 'manage_options', 'themify_recommended_plugins', 'themify_recommended_plugins_callback' );
-		}
-	}
-	*/
 }
 
-function themify_get_theme_recommended_plugins() {
-	$info = get_file_data( trailingslashit( get_template_directory() ) . 'style.css', array( 'Recommended Plugins' ) );
-	$recommended_plugins = false;
+function themify_get_theme_required_plugins() {
+	$info = get_file_data( trailingslashit( get_template_directory() ) . 'style.css', array( 'Required Plugins' ) );
 	if( isset( $info[0] ) ) {
-		$recommended_plugins = array_map( 'trim', explode( ',', $info[0] ) );
-		$recommended_plugins = array_map( 'themify_get_known_plugin_info', $recommended_plugins );
+		return $info[0];
 	}
 
-	return $recommended_plugins;
+	return false;
 }
-
-function themify_recommended_plugins_callback() {
-	if ( ! current_user_can( 'manage_options' ) )
-		wp_die( __( 'Sneaky, eh?', 'themify' ) );
-	
-	$plugins = themify_get_theme_recommended_plugins();
-	include_once get_template_directory() . '/themify/includes/themify-recommended-plugins.php';
-}
-
-function themify_admin_promotion() {
-	$theme = wp_get_theme();
-	
-	/**
-	 * Add submenu entry that opens a new window with featured themes
-	 */
-	call_user_func( 'add_submenu_page', 'themify', $theme->display('Name'), __('More Themes', 'themify'), 'manage_options', 'more_themes', 'themify_more_themes' );
-	
-}
-add_action( 'admin_menu', 'themify_admin_promotion', 12 );
 
 /*  Pages
 /***************************************************************************/
@@ -95,16 +69,6 @@ function themify_docs() {
 	?>
 	<script type="text/javascript">window.location = "http://themify.me/docs/<?php echo $doc_path; ?>-documentation";</script>
 	<?php
-}
-
-///////////////////////////////////////////
-// More Themes
-///////////////////////////////////////////
-function themify_more_themes() {
-	if ( ! current_user_can( 'manage_options' ) )
-		wp_die( __( 'You do not have sufficient permissions to update this site.', 'themify' ) );
-	
-	include_once get_template_directory() . '/themify/includes/themify-featured-themes.php';
 }
 
 ///////////////////////////////////////////
@@ -140,7 +104,7 @@ function themify_page() {
 	$skins_and_demos = apply_filters( 'themify_show_skins_and_demos_admin', false );
 
 	/** whether the theme has sample data to import */
-	$sample_data = file_exists( THEME_DIR . '/sample/sample-content.zip' );
+	$sample_data = file_exists( THEME_DIR . '/sample/import.php' );
 	?>
 	<!-- alerts -->
 	<div class="alert"></div>
@@ -486,6 +450,13 @@ WordPress <a href="%s">Tools &gt; Import</a>.', 'themify' ), 'http://themify.me/
 			update_option( get_template() . '_themify_import_notice', 0 ); ?>
 	<?php endif; ?>
 
+		<?php
+		$required_plugins = themify_get_theme_required_plugins();
+		if( ! empty( $required_plugins ) ) {
+			echo themify_required_plugins_modal( $required_plugins );
+		}
+		?>
+
 	<!-- footer -->
 	<div id="bottomtab">
 	   <p id="logo"><a href="<?php echo themify_https_esc( 'http://themify.me/logs/framework-changelogs/' ); ?>" data-changelog="<?php echo themify_https_esc( 'http://themify.me/changelogs/themify.txt' ); ?>" target="_blank" class="themify_changelogs">v<?php echo THEMIFY_VERSION; ?></a></p>
@@ -553,7 +524,7 @@ function themify_get_skins(){
 							'version' => $info[1],
 							'description' => $info[2],
 							'screenshot' => is_file( $path . '/screenshot.png' ) ? get_template_directory_uri().'/skins/'. $dirTwo . '/screenshot.png' : get_template_directory_uri() . '/themify/img/screenshot-na.png',
-							'has_demo' => is_file( $path . '/sample-content.zip' ),
+							'has_demo' => is_file( $path . '/import.php' ),
 							'demo_uri' => $info[3],
 							'required_plugins' => $info[4]
 						);
@@ -598,32 +569,38 @@ function themify_get_skins_admin(){
 					$output .= ' <a href="#" class="skin-demo-import">' . __( 'Import', 'themify' ) . '</a> <a href="#" class="skin-erase-demo">' . __( 'Erase', 'themify' ) . '</a>';
 				$output .= '</div>';
 				$required_plugins = $skin['required_plugins'];
-				if( ! empty( $required_plugins ) ) {
-					$required_plugins = array_map( 'trim', explode( ',', $required_plugins ) );
-					$required_plugins = array_map( 'themify_get_known_plugin_info', $required_plugins );
-				}
-				if( ! empty( $required_plugins ) && ! themify_are_plugins_active( wp_list_pluck( $required_plugins, 'path' ) ) ) {
-					$all_plugins = get_plugins();
-					$output .= '<div class="required-addons themify-modal" style="display: none;">';
-						$output .= '<p>' . __( 'This demo requires these plugins/addons:', 'themify' ) . '</p>';
-						$output .= '<ul>';
-						foreach( $required_plugins as $plugin ) {
-							$state = isset( $all_plugins[$plugin['path']] ) ? is_plugin_active( $plugin['path'] ) ? __( '<span class="ti-check"></span>', 'themify' ) : __( 'installed, but not active', 'themify' ) : __( 'not installed', 'themify' );
-							$output .= '<li>' . sprintf( "<a href='%s' class='external-link'>%s</a> (%s)", $plugin['page'], $plugin['name'], $state ) . '</li>';
-						}
-						$output .= '</ul>';
-						$output .= '<p class="themify-import-warning">' . __( 'Proceed import without the required addons/plugins might show incomplete/missing content.', 'themify' ) . '</p>';
-						$output .= '<p>' . sprintf( __( 'If you have an active Themify membership, download the missing addons from the <a href="https://themify.me/member" target="_blank">Member Area</a>. Then install and activate them at <a href="%s" class="external-link">WP Admin > Plugins</a>.', 'themify' ), admin_url( 'plugins.php' ) ) . '</p>';
-						$output .= '<a href="#" class="proceed-import button big-button">' . __( 'Proceed Import', 'themify' ) . '</a>';
-						$output .= '<a href="#" class="close"><i class="ti-close"></i></a>';
-					$output .= '</div>';
-				}
+				$output .= themify_required_plugins_modal( $required_plugins, $id );
 			}
 
 			$output .= '</div>';
 		}
 	}
 
+	return $output;
+}
+
+function themify_required_plugins_modal( $required_plugins, $skin = '' ) {
+	$output = '';
+	if( ! empty( $required_plugins ) ) {
+		$required_plugins = array_map( 'trim', explode( ',', $required_plugins ) );
+		$required_plugins = array_map( 'themify_get_known_plugin_info', $required_plugins );
+	}
+	if( ! empty( $required_plugins ) && ! themify_are_plugins_active( wp_list_pluck( $required_plugins, 'path' ) ) ) {
+		$all_plugins = get_plugins();
+		$output .= '<div class="required-addons themify-modal" style="display: none;" data-skin="' . $skin . '">';
+			$output .= '<p>' . __( 'This demo requires these plugins/addons:', 'themify' ) . '</p>';
+			$output .= '<ul>';
+			foreach( $required_plugins as $plugin ) {
+				$state = isset( $all_plugins[$plugin['path']] ) ? is_plugin_active( $plugin['path'] ) ? __( '<span class="ti-check"></span>', 'themify' ) : __( 'installed, but not active', 'themify' ) : __( 'not installed', 'themify' );
+				$output .= '<li>' . sprintf( "<a href='%s' class='external-link'>%s</a> (%s)", $plugin['page'], $plugin['name'], $state ) . '</li>';
+			}
+			$output .= '</ul>';
+			$output .= '<p class="themify-import-warning">' . __( 'Proceed import without the required addons/plugins might show incomplete/missing content.', 'themify' ) . '</p>';
+			$output .= '<p>' . sprintf( __( 'If you have an active Themify membership, download the missing addons from the <a href="https://themify.me/member" target="_blank">Member Area</a>. Then install and activate them at <a href="%s" class="external-link">WP Admin > Plugins</a>.', 'themify' ), admin_url( 'plugins.php' ) ) . '</p>';
+			$output .= '<a href="#" class="proceed-import button big-button">' . __( 'Proceed Import', 'themify' ) . '</a>';
+			$output .= '<a href="#" class="close dismiss-import-notice"><i class="ti-close"></i></a>';
+		$output .= '</div>';
+	}
 	return $output;
 }
 
@@ -900,6 +877,13 @@ function themify_get_known_plugin_info( $name = '' ) {
 			'page' => 'https://themify.me/themify-product-filter',
 			'path' => 'themify-wc-product-filter/themify-wc-product-filter.php'
 		),
+		'themify-shortcodes' => array(
+			'name' => __( 'Themify Shortcodes', 'themify' ),
+			'image' => 'https://themify.me/wp-content/product-img/addons/themify-shortcodes.jpg',
+			'desc' => '',
+			'page' => 'https://wordpress.org/plugins/themify-shortcodes/',
+			'path' => 'themify-shortcodes/init.php'
+		),
 	);
 
 	if( empty( $name ) ) {
@@ -969,67 +953,80 @@ function themify_check_update_link( $plugin, $type ) {
 
 // Themify News Admin Widget
 function themify_updates_admin_widget() {
-	$versions_url = 'http://themify.me/versions/versions.xml';
-	$response = wp_remote_get( $versions_url, array( 'sslverify' => false ) );
-	if( is_wp_error( $response ) ) {
-		return;
-	}
+	$cached_data = get_transient( 'themify_widget_current_updates' );
 
-	if( !empty( $response['body'] ) ) {
-		$versions = themify_xml2array( $response['body'] );
-		$current_theme = wp_get_theme();
-		$current_theme_name = is_child_theme() ? $current_theme->parent()->Name : $current_theme->get( 'Name' );
-		$current_theme_version = is_child_theme() ? $current_theme->parent()->Version : $current_theme->get( 'Version' );
-		$current_theme_version = intval( str_replace( '.', '', trim( $current_theme_version ) ) );
-		$installed_plugins = get_plugins();
-		$update_items = '';
-		$update_theme = '';
-		foreach( $versions['versions']['_c']['version'] as $update ) {
-			$latest_version = intval( str_replace( '.', '', trim( $update['_v'] ) ) );
-			if( strpos( $update['_a']['name'], strtolower( str_replace( ' ', '-', $current_theme_name ) ) ) !== false 
-				&& $current_theme_version < $latest_version ) {
-				$update_theme = sprintf( '<li class="themify-update-theme">
-						<div class="themify-theme-thumb"><img src="%s"/></div>
-						<div class="themify-theme-meta">
-							<h2>%s<span>V. %s</span></h2>
-							<p>%s</p>
-							<a href="%s" class="themify-update-button">%s</a>
-							<a href="%s" target="_blank">%s</a>
-						</div>	
-					</li>'
-					, $current_theme->get_screenshot()
-					, $current_theme_name
-					, trim( $update['_v'] )
-					, $current_theme->get( 'Description' ) 
-					, esc_url( admin_url( 'admin.php?page=themify#update-check' ) )
-					, esc_html__( 'Update now', 'themify' )
-					, esc_url( '//themify.me/changelogs/' . $update['_a']['name'] . '.txt' )
-					, esc_html__( 'Changelog', 'themify' ) );
-			}
+	if( empty( $cached_data ) ) {
+		$versions_url = 'http://themify.me/versions/versions.xml';
+		$response = wp_remote_get( $versions_url, array( 'sslverify' => false ) );
+		if( is_wp_error( $response ) ) {
+			return;
+		}
 
-			if( !empty( $installed_plugins ) ) {
-				foreach( $installed_plugins as $key => $plugin ) {
-					if( strpos( $update['_a']['name'], dirname( $key ) ) !== false 
-						&& intval( str_replace( '.', '', trim( $plugin['Version'] ) ) ) < $latest_version ) {
-						$update_items .= sprintf( '<li class="themify-update-plugins">
+		if( !empty( $response['body'] ) ) {
+			$versions = themify_xml2array( $response['body'] );
+			$current_theme = wp_get_theme();
+			$current_theme_name = is_child_theme() ? $current_theme->parent()->Name : $current_theme->get( 'Name' );
+			$current_theme_version = is_child_theme() ? $current_theme->parent()->Version : $current_theme->get( 'Version' );
+			$current_theme_version = intval( str_replace( '.', '', trim( $current_theme_version ) ) );
+			$installed_plugins = get_plugins();
+			$update_items = '';
+			$update_theme = '';
+			foreach( $versions['versions']['_c']['version'] as $update ) {
+				$latest_version = intval( str_replace( '.', '', trim( $update['_v'] ) ) );
+				if( strpos( $update['_a']['name'], strtolower( str_replace( ' ', '-', $current_theme_name ) ) ) !== false 
+					&& $current_theme_version < $latest_version ) {
+					$update_theme = sprintf( '<li class="themify-update-theme">
+							<div class="themify-theme-thumb"><img src="%s"/></div>
+							<div class="themify-theme-meta">
 								<h2>%s<span>V. %s</span></h2>
-								<a href="%s" target="_blank">%s</a>
+								<p>%s</p>
 								<a href="%s" class="themify-update-button">%s</a>
-							</li>'
-							, $plugin['Name']
-							, $plugin['Version']
-							, esc_url( '//themify.me/changelogs/' . $update['_a']['name'] . '.txt' )
-							, esc_html__( 'Changelog', 'themify' ) 
-							, themify_check_update_link( dirname( $key ), $update['_a']['type'] )
-							, esc_html__( 'Update', 'themify' ) );
+								<a href="%s" target="_blank">%s</a>
+							</div>	
+						</li>'
+						, $current_theme->get_screenshot()
+						, $current_theme_name
+						, trim( $update['_v'] )
+						, $current_theme->get( 'Description' ) 
+						, esc_url( admin_url( 'admin.php?page=themify#update-check' ) )
+						, esc_html__( 'Update now', 'themify' )
+						, esc_url( '//themify.me/changelogs/' . $update['_a']['name'] . '.txt' )
+						, esc_html__( 'Changelog', 'themify' ) );
+				}
+
+				if( !empty( $installed_plugins ) ) {
+					foreach( $installed_plugins as $key => $plugin ) {
+						if( strpos( $update['_a']['name'], dirname( $key ) ) !== false 
+							&& intval( str_replace( '.', '', trim( $plugin['Version'] ) ) ) < $latest_version ) {
+							$update_items .= sprintf( '<li class="themify-update-plugins">
+									<h2>%s<span>V. %s</span></h2>
+									<a href="%s" target="_blank">%s</a>
+									<a href="%s" class="themify-update-button">%s</a>
+								</li>'
+								, $plugin['Name']
+								, $plugin['Version']
+								, esc_url( '//themify.me/changelogs/' . $update['_a']['name'] . '.txt' )
+								, esc_html__( 'Changelog', 'themify' ) 
+								, themify_check_update_link( dirname( $key ), $update['_a']['type'] )
+								, esc_html__( 'Update', 'themify' ) );
+						}
 					}
 				}
 			}
-		}
 
-		if( !empty( $update_theme ) || !empty( $update_items ) ) {
-			printf( '<ul>%s</ul>', $update_theme . $update_items );
+			$content = '';
+
+			if( !empty( $update_theme ) || !empty( $update_items ) ) {
+				$content = sprintf( '<ul>%s</ul>', $update_theme . $update_items );
+			} else {
+				$content = __( 'No updates available.', 'themify' );
+			}
+
+			echo $content;
+			set_transient( 'themify_widget_current_updates', $content, HOUR_IN_SECONDS );
 		}
+	} else {
+		printf( '<ul>%s</ul>', $cached_data );
 	}
 
 } 
@@ -2788,8 +2785,8 @@ if(!function_exists('themify_manage_script_minification_settings')) {
 	 */
 	function themify_manage_script_minification_settings($data = array()){
                 $output = '<span class="label">' . __( 'Minify &amp; Compile Scripts', 'themify' ) . '</span>';
+                 $key = 'setting-script_minification';
                 if(TFCache::check_version()){
-                    $key = 'setting-script_minification';
                     $value = themify_get( $key );
                     if(!$value){
                         $value = 'disable';

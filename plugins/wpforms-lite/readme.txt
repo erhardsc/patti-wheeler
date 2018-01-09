@@ -1,9 +1,10 @@
 === Contact Form by WPForms - Drag & Drop Form Builder for WordPress ===
-Contributors: wpforms, jaredatch, smub
+Contributors: wpforms, jaredatch, smub, slaFFik
 Tags: contact form, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, Akismet, email form, web form, feedback form, payment form, survey form, donation form, email submit form, message form, mailchimp, mailchimp form, aweber, aweber form, paypal, paypal form, stripe, stripe form, getresponse, getresponse form, email subscription, contact form widget, user registration form, wordpress registration, wordpress login form
-Requires at least: 4.5
-Tested up to: 4.8.1
+Requires at least: 4.6
+Tested up to: 4.9
 Stable tag: trunk
+Requires PHP: 5.2.4
 License: GNU General Public License v2.0 or later
 
 The best WordPress contact form plugin. Drag & Drop online form builder that helps you create beautiful contact forms with just a few clicks.
@@ -209,6 +210,39 @@ Syed Balkhi
 
 == Changelog ==
 
+= 1.4.2.1 =
+- Added: Setting to hide Announcement feed
+
+= 1.4.2 =
+- Added: Import your old Ninja Forms or Contact Form 7 forms! (WPForms > Tools > Import)
+- Changed: Dropdown/Checkbox/Multiple Choice "Show Values" setting has been hidden by default to avoid confusion, can be re-enabled using the `wpforms_fields_show_options_setting` filter
+- Fixed: reCATCHA now showing in the Form Builder preview when enabled
+- Fixed: Encoded/escaped entities in email notifications
+- Fixed: German translation issue
+
+= 1.4.1.1 =
+- Changed: Improved the loading order of javascript files for forms builder
+- Changed: Update some strings for Russian translation
+
+= 1.4.1 =
+- Added: Ability to rename Form>Settings>Notifications>Single notification panels
+- Added: Define a minimum PHP version support in plugin readme.txt file
+- Added: Display a friendly link to a full page version, when form is previewed on AMP pages
+- Added: Ability to collapse Form>Settings>Notifications>Single notification panels
+- Added: Russian translation
+- Added: Allow more than 1 default selection for checkboxes fields
+- Changed: Bump minimum WordPress version to 4.6
+- Changed: Improved localization support of the plugin
+- Changed: Improved texts in various places
+- Changed: Code style improvements throughout the plugin
+- Changed: Combine WPFORMS_DEBUG and WPFORMS_DEVELOPMENT into one, use `wpforms_debug()` to check
+- Changed: All HTTP requests now validate target sites SSL certificates with WP bundled certificates (since 3.7)
+- Fixed: Notification email is empty if submitted form has no user values (displaying user friendly message instead)
+- Fixed: Pressing enter in "Enter a notification name" popup does nothing
+- Fixed: Fancy Fields can be dragged into form, but then get stuck
+- Fixed: Deprecate a misspelled `wpforms_csv_export_seperator` filter, introduced a proper name for it
+- Fixed: Conditional logic comparison issues if rule contained special characters
+
 = 1.4.0.1 =
 - Added: Non-dismissible Dashboard page admin only notice about PHP 5.2.
 - Changed: Updated FontAwesome library
@@ -216,6 +250,7 @@ Syed Balkhi
 - Fixed: CSV exports missing line breaks
 
 = 1.4.0 =
+- Added: Announcement feed
 - Changed: Core form templates are now displayed separate in the form builder from other custom templates
 - Changed: Refactored CSV exporting for better support
 - Fixed: Dynamic Choices large items modal render issue

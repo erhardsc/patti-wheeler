@@ -14,10 +14,11 @@ var ytp = ytp || {};
             videoID: null,
             startAt: 0,
             stopAt: 0,
+            fs:0,
             autoPlay: true,
             vol: 100, // 1 to 100
             addRaster: false,
-            quality: "default", //or "small", "medium", "large", "hd720", "hd1080", "highres"
+            quality: "default", //or “small”, “medium”, “large”, “hd720”, “hd1080”, “highres”
             mute: false,
             loop: true,
             showYTLogo: false,
@@ -50,21 +51,17 @@ var ytp = ytp || {};
                         'showinfo': 0,
                         'rel': 0,
                         'disablekb': '',
-                        'fs': false,
-                        'loop': YTPlayer.opt.loop,
+                        'fs': 0,
+                        'loop': YTPlayer.opt.loop?1:0,
                         'enablejsapi': 1,
                         'version': 3,
                         'playerapiid': playerId,
                         'origin': '*',
                         'allowfullscreen': false,
                         'wmode': 'transparent',
-                        'iv_load_policy': 3
+                        'iv_load_policy': 3,
+                        'html5': 1
                     };
-            if (document.createElement('video').canPlayType) {
-                $.extend(playerVars, {
-                    'html5': 1
-                });
-            }
             YTPlayer.opt.autoPlay = typeof YTPlayer.opt.autoPlay === "undefined" ? false : YTPlayer.opt.autoPlay;
 
             YTPlayer.opt.vol = YTPlayer.opt.vol ? YTPlayer.opt.vol : 100;
@@ -108,15 +105,9 @@ var ytp = ytp || {};
                             YTPlayer.player = event.target;
                             YTPlayer.isReady = YTPlayer.isPlayer && !YTPlayer.opt.autoPlay ? false : true;
                             YTPlayer.playerEl = YTPlayer.player.getIframe();
-
-                            $(YTPlayer.playerEl).css({
-                                "-moz-user-select": "none",
-                                "-webkit-user-select": "none",
-                                "user-select": "none"
-                            }).prop("unselectable", "on");
-
+                            $(YTPlayer.playerEl).attr("unselectable", "on");
                             $YTPlayer.optimizeDisplay();
-                            $(window).off("resize." + playerId).on("resize." + playerId, function () {
+                            $(window).off("tfsmartresize." + playerId).on("tfsmartresize." + playerId, function () {
                                 $YTPlayer.optimizeDisplay();
                             });
 
@@ -131,6 +122,7 @@ var ytp = ytp || {};
                                 YTPlayer.preventTrigger = false;
                                 return;
                             }
+
                             YTPlayer.state = state;
 
                             var eventType;
@@ -146,7 +138,7 @@ var ytp = ytp || {};
                                     break;
                                 case 1: //------------------------------------------------ play
                                     eventType = "YTPPlay";
-                                    break;
+
                                 case 2: //------------------------------------------------ pause
                                     eventType = "YTPPause";
                                     break;
@@ -156,6 +148,8 @@ var ytp = ytp || {};
                                     break;
                                 case 5: //------------------------------------------------ cued
                                     eventType = "YTPCued";
+                                    break;
+                                default:
                                     break;
                             }
 
@@ -472,8 +466,9 @@ var ytp = ytp || {};
             YTPlayer.player.setVolume(0);
             var YTPEvent = $.Event("YTPMuted");
             YTPEvent.time = YTPlayer.currentTime;
-            if (YTPlayer.canTrigger)
+            if (YTPlayer.canTrigger){
                 $(YTPlayer).trigger(YTPEvent);
+            }
             return this;
         },
         /**
@@ -506,7 +501,7 @@ var ytp = ytp || {};
             if (YTPlayer.opt.mute) {
                 $(YTPlayer).ThemifyYTBMute();
             }
-            YTPlayer.player.seekTo((YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1), false);
+            YTPlayer.player.seekTo((YTPlayer.opt.startAt ? YTPlayer.opt.startAt : 1), true);
         },
         /**
          *
@@ -549,43 +544,86 @@ var ytp = ytp || {};
     };
 
     /**
-     
+     *
+     * @param align
+     * can be center, top, bottom, right, left; (default is center,center)
      */
-    $.fn.optimizeDisplay = function () {
-        var YTPlayer = this.get(0);
+    $.fn.optimizeDisplay = function (align) {
+        var YTPlayer = this.get(0),
+                vid = {};
+
+        YTPlayer.opt.align = align || YTPlayer.opt.align;
+
+        YTPlayer.opt.align = typeof YTPlayer.opt.align !== "undefined " ? YTPlayer.opt.align : "center,center";
+        var YTPAlign = YTPlayer.opt.align.split(",");
 
         if (YTPlayer.opt.optimizeDisplay) {
-            var el = YTPlayer.wrapper,
-            containerW = el.outerWidth(),
-            containerH = el.outerHeight();
-			containerW = containerW < $(window).width() ? containerW : $(window).width();
-			containerH = containerH < $(window).height() ?containerH : $(window).height();
-			
-			var top = 0,
-				left = 0,
-				width = '',
-				height = '',
-				mediaAspect = YTPlayer.opt.ratio === "16/9"?16/9:YTPlayer.opt.ratio,
-				containerAspect = containerW/containerH;
-				if (containerAspect < mediaAspect) {
-					top = 0;
-					left = -(containerH*mediaAspect-containerW)/2;
-					width = containerH*mediaAspect;
-					height = containerH;
-				}
-				else{
-					top = -(containerW/mediaAspect-containerH)/2;
-					left = 0;
-					width = containerW;
-					height = containerW/mediaAspect;
-				}
-				YTPlayer.wrapper.find('.themify_ytb_playerbox').css({
-					top: top,
-					left: left,
-					width: width,
-					height: height
-				});
-		}
+            var win = {};
+            var el = YTPlayer.wrapper;
+
+            win.width = el.outerWidth();
+            win.height = el.outerHeight();
+
+            vid.width = win.width + 100;
+            vid.height = YTPlayer.opt.ratio === "16/9" ? Math.ceil(vid.width * (9 / 16)) : Math.ceil(vid.width * (3 / 4));
+            vid.marginTop = -((vid.height - win.height) / 2);
+            vid.marginLeft = 0;
+
+            var lowest = vid.height < win.height;
+
+            if (lowest) {
+
+                vid.height = win.height;
+                vid.width = YTPlayer.opt.ratio === "16/9" ? Math.floor(win.height * (16 / 9)) : Math.floor(win.height * (4 / 3));
+
+                vid.marginTop = 0;
+                vid.marginLeft = -((vid.width - win.width) / 2);
+
+            }
+
+            for (var a in YTPAlign) {
+
+                //var al = YTPAlign[ a ].trim();
+                var al = YTPAlign[ a ].replace(/ /g, "");
+
+                switch (al) {
+
+                    case "top":
+                        vid.marginTop = lowest ? -((vid.height - win.height) / 2) : 0;
+                        break;
+
+                    case "bottom":
+                        vid.marginTop = lowest ? 0 : -(vid.height - win.height);
+                        break;
+
+                    case "left":
+                        vid.marginLeft = 0;
+                        break;
+
+                    case "right":
+                        vid.marginLeft = lowest ? -(vid.width - win.width) : 0;
+                        break;
+
+                    default:
+                        break;
+                }
+
+            }
+
+        } else {
+            vid.width = "100%";
+            vid.height = "100%";
+            vid.marginTop = 0;
+            vid.marginLeft = 0;
+        }
+
+        $(YTPlayer.playerEl).css({
+            width: vid.width,
+            height: vid.height,
+            marginTop: vid.marginTop,
+            marginLeft: vid.marginLeft
+        });
+
     };
 
 

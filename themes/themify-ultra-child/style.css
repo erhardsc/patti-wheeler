@@ -11,23 +11,116 @@ Template: themify-ultra
   Base Layout Styles
 ==================================== */
 
+/*@font-face {*/
+    /*font-family: "REIS-Regular";*/
+    /*src: url("../themify-ultra-child/fonts/REIS-Regular.ttf"),*/
+    /*url("../themify-ultra-child/fonts/REIS-Regular.otf");*/
+/*}*/
+
 @font-face {
-    font-family: "REIS-Regular";
-    src: url("../themify-ultra-child/fonts/REIS-Regular.ttf"),
-    url("../themify-ultra-child/fonts/REIS-Regular.otf");
+    font-family: "Roboto-Light", Montserrat, sans-serif;
+    src: url("../themify-ultra-child/fonts/Roboto-Light.ttf");
 }
 
-.RIES-Regular h1 {
-    font-size: 4em;
+@font-face {
+    font-family: "Roboto-Regular", Montserrat, sans-serif;
+    src: url("../themify-ultra-child/fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Medium", Montserrat, sans-serif;
+    src: url("../themify-ultra-child/fonts/Roboto-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Luna", Montserrat, sans-serif;
+  src: url("../themify-ultra-child/fonts/Luna.ttf");
+}
+
+.luna {
+  font-family: "Luna" !important;
+}
+
+#menu-item-21 a {
+  border: 1px solid #A89078;
+  border-radius: 5px;
+}
+#menu-item-21 a:hover {
+  color: white !important;
+  background: #A89078;
+}
+
+
+
+.box-shadow img {
+    box-shadow: 0 2px 16px 0 rgba(232,232,232,0.50);
+}
+
+.roboto-light h1, .roboto-light h2 .roboto-light h3, .roboto-light p, .roboto-light span {
+    font-family: "Roboto-Light";
+}
+
+.module_column_6-0-0 {
+    border-radius: 20px;
+    box-shadow: 0 2px 16px 0 rgba(232,232,232,0.50);
+}
+
+h2 a {
+    font-family: "Roboto-Light";
+    color: #ab9279 !important;
+}
+
+#headerwrap {
+    box-shadow: 0 2px 16px 0 rgba(232,232,232,0.50);
+}
+
+.main-nav {
+    font-family: "Roboto-Medium";
+}
+
+#mobile-menu .main-nav li a {
+    color: #A89078;
+}
+
+.home .module_row_6-1 {
+    padding-top: 20px;
+}
+
+.home .module_row_6-1 .row_inner {
+    background: white;
+    position: relative;
+    border-radius: 20px;
+    padding: 40px 40px 40px 40px;
+
+}
+
+#mc_embed_signup input[type=email] {
+    border: none;
+    border-bottom: solid 1px #A89078;
+    background: none;
+}
+
+#mc_embed_signup input[type=submit] {
+    margin-top: 45px;
+    background: none;
+    color: #A89078;
+    border: solid 1px #A89078;
+}
+
+#mc_embed_signup input[type=submit]:hover {
+    background: #A89078;
+    color: white;
+}
+
+.home .module_row_6-1 .module_column_6-1-0 {
+    display: flex;
+     flex-direction: column;
+     justify-content: center;
+     resize: vertical;
 }
 
 #site-logo {
     font-size: 1.2em !important;
-}
-
-.RIES-Regular h1,
-.RIES-Regular h2 {
-    font-family: REIS-Regular !important;
 }
 
 time.post-date.entry-date.updated {
@@ -43,14 +136,13 @@ time.post-date.entry-date.updated {
     background-color: #A89078;
 }
 
-header.header-on-scroll nav,
-header.header-on-scroll #site-logo span {
-    color: white;
-}
-
 .home .module_column_6-3-0 {
     border: none;
     padding: 0;
+}
+
+.slide-content {
+    display: none;
 }
 
 .home .testimonial-content {
@@ -72,6 +164,13 @@ header.header-on-scroll #site-logo span {
     font-size: 1.5em;
 }
 
+.image-6-5-0-0 {
+    position: absolute !important;
+    left: 0;
+    right: 0;
+    top: -85px;
+}
+
 .quiz_section input[type=text],
 .quiz_section input[type=email] {
     border: none  !important;
@@ -85,11 +184,42 @@ header.header-on-scroll #site-logo span {
 
 }
 
+.fancy-heading-6-5-0-1.module-fancy-heading {
+    padding-top: 12%;
+}
+
 
 
 /* =================================
   About Page Styles
 ==================================== */
+
+.module_row_0 .module_column_0.tb_8_column.module_column {
+  border-radius: 10px;
+}
+
+.themify_builder_row.module_row.clearfix.builder-parallax-scrolling.bg-position-center-center.fullwidth_row_container.module_row_0.themify_builder_8_row.module_row_8-0::after {
+  content: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/11/certifiedCoach-120x119.png);
+  position: absolute;
+  bottom: -76px;
+  left: 50%;
+  margin-left: -65px;
+  max-width: 120px;
+}
+
+.themify_builder_8_row.module_row_6.module_row::before {
+  content: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/11/certifiedCoach-120x119.png);
+  position: absolute;
+  top: -54px;
+  left: 50%;
+  margin-left: -65px;
+  max-width: 120px;
+}
+
+div#fancy-heading-8-6-0-0,
+div#text-8-1-0-0 {
+  padding-top: 12%;
+}
 
 /* =================================
   Unlock my Potential Page Styles
@@ -110,8 +240,19 @@ header.header-on-scroll #site-logo span {
 ==================================== */
 
 @media (min-width: 680px) {
+
+    .home .module_row_6-1 {
+        padding-top: 0px;
+    }
+    .home .module_row_6-1 .row_inner {
+        top: -50px;
+        padding: 40px 60px 40px 0;
+        box-shadow: 0 2px 16px 0 rgba(232,232,232,0.50);
+
+    }
+
     .home .module_column_6-3-0 {
-        border-right: rgba(209,209,209, 1.00) 1px solid;
+        border-right: rgba(168,144,120,1) 1px solid;
         padding-right: 5%;
     }
 
@@ -119,15 +260,26 @@ header.header-on-scroll #site-logo span {
         margin: 0 4em 2em 4em;
     }
 
-    .RIES-Regular h1 {
-        font-size: 5em;
-    }
-
     #site-logo {
-        font-size: 1.5em !important;
+        font-size:1.5em !important;
     }
 
+    .slide-content {
+        display: block;
+    }
 
+    .fancy-heading-6-5-0-1.module-fancy-heading {
+        padding-top: 5%;
+    }
+
+  .themify_builder_row.module_row.clearfix.builder-parallax-scrolling.bg-position-center-center.fullwidth_row_container.module_row_0.themify_builder_8_row.module_row_8-0::after {
+    content: url(http://localhost/passionswithpurpose/wp-content/uploads/2017/11/certifiedCoach-150x150.png);
+    margin-left: -75px;
+  }
+  div#fancy-heading-8-6-0-0,
+  div#text-8-1-0-0 {
+    padding-top: 5%;
+  }
 }
 
 
@@ -135,4 +287,20 @@ header.header-on-scroll #site-logo span {
   Desktop Layout Styles
 ==================================== */
 
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+
+    .home .module_row_6-1 .row_inner {
+        top: -100px;
+
+    }
+
+    .image-6-5-0-0 {
+        top: -100px;
+    }
+
+  div#fancy-heading-8-6-0-0,
+  div#text-8-1-0-0 {
+    padding-top: 3%;
+  }
+
+}

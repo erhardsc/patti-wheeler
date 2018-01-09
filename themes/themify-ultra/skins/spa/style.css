@@ -558,6 +558,14 @@ WOOCOMMERCE
     padding: 0.955em 0.5em;
 }
 
+.woocommerce #content table.cart td.actions .coupon .input-text,
+.woocommerce table.cart td.actions .coupon .input-text,
+.woocommerce-page #content table.cart td.actions .coupon .input-text,
+.woocommerce-page table.cart td.actions .coupon .input-text {
+	padding: 0.85em;
+	width: 8.5em;
+}
+
 /************************************************************************************
 MEDIA QUERIES
 *************************************************************************************/
@@ -605,7 +613,14 @@ MEDIA QUERIES
     }
     .newsletter-block h2 {
         font-size: 1.6em;
-    }
+	}
+	
+	.woocommerce #content table.cart td.actions .coupon .input-text,
+	.woocommerce table.cart td.actions .coupon .input-text,
+	.woocommerce-page #content table.cart td.actions .coupon .input-text,
+	.woocommerce-page table.cart td.actions .coupon .input-text {
+		width: 48%;
+	}
 }
 
 @media screen and (max-width: 680px) {
@@ -632,5 +647,12 @@ MEDIA QUERIES
     }
     .mc4wp-form input[type="email"] {
         max-width: 100%;
-    }    
+	}
+	
+	.woocommerce #content table.cart td.actions .coupon .input-text,
+	.woocommerce table.cart td.actions .coupon .input-text,
+	.woocommerce-page #content table.cart td.actions .coupon .input-text,
+	.woocommerce-page table.cart td.actions .coupon .input-text {
+		width: 100%;
+	}
 }

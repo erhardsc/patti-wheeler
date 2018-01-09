@@ -17,6 +17,10 @@ $taxonomy_type = 'tag' == themify_get( $key ) ? 'tag' : 'category';
 // Number of entries to display
 $number_of_entries = themify_check( $key.'_entries' ) ? themify_get( $key.'_entries' ) : 3;
 
+// Featured Image Size
+$img_width = themify_check( $key . '_image_width' ) ? themify_get( $key . '_image_width' ) : 394;
+$img_height = themify_check( $key . '_image_height' ) ? themify_get( $key . '_image_height' ) : 330;
+
 // Content to display
 $content_display = themify_get( $key . '_display_content' );
 
@@ -50,7 +54,7 @@ if ( ! is_wp_error( $terms ) && is_array( $terms ) ) {
 					<?php
 					global $themify;
 					if ( ! themify_check( $key . '_hide_image' ) && ( has_post_thumbnail() || themify_check( 'setting-auto_featured_image' ) ) ) :
-						if ( $post_image = themify_get_image( $themify->auto_featured_image . 'setting=image_post_single&w=394&h=330&ignore=true' ) ) : ?>
+						if ( $post_image = themify_get_image( $themify->auto_featured_image . 'setting=image_post_single&w=' . $img_width . '&h=' . $img_height . '&ignore=true' ) ) : ?>
 							<figure class="post-image clearfix">
 								<a href="<?php echo themify_get_featured_image_link(); ?>"><?php echo $post_image; ?><?php themify_zoom_icon(); ?></a>
 							</figure>

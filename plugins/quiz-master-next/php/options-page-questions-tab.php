@@ -29,7 +29,7 @@ function qsm_options_questions_tab_content() {
 	<?php
 	wp_enqueue_script('qmn_admin_question_js', plugins_url( '../js/qsm-admin-question.js' , __FILE__ ), array( 'jquery-ui-sortable' ) );
 	wp_enqueue_style('qmn_admin_question_css', plugins_url( '../css/qsm-admin-question.css' , __FILE__ ) );
-	wp_enqueue_script( 'math_jax', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' );
+	wp_enqueue_script( 'math_jax', '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML' );
 
 	global $wpdb;
 	global $mlwQuizMasterNext;
@@ -77,12 +77,12 @@ function qsm_options_questions_tab_content() {
 		$edit_question_order = intval( $_POST["new_question_order"] );
 		$total_answers = intval( $_POST["new_question_answer_total"] );
 
-    // Checks if a category was selected or entered
+		// Checks if a category was selected or entered
 		if ( isset( $_POST["new_category"] ) ) {
 
 			$edit_category = sanitize_text_field( $_POST["new_category"] );
 
-      // Checks if the new category radio was selected
+			// Checks if the new category radio was selected
 			if ( 'new_category' == $edit_category ) {
 				$edit_category = sanitize_text_field( stripslashes( $_POST["new_new_category"] ) );
 			}
@@ -90,7 +90,7 @@ function qsm_options_questions_tab_content() {
 			$edit_category = '';
 		}
 
-    // Retrieves question settings and sets required field
+		// Retrieves question settings and sets required field
 		$row_settings = $wpdb->get_row( $wpdb->prepare( "SELECT question_settings FROM {$wpdb->prefix}mlw_questions WHERE question_id=%d", $edit_question_id ) );
 		if ( is_serialized( $row_settings->question_settings ) && is_array( @unserialize( $row_settings->question_settings ) ) ) {
 			$question_settings = @unserialize( $row_settings->question_settings );
@@ -104,26 +104,26 @@ function qsm_options_questions_tab_content() {
 		$question_settings['required'] = intval( $_POST["required"] );
 		$question_settings = serialize( $question_settings );
 
-    // Cycles through answers
+		// Cycles through answers
 		$i = 1;
 		$answer_array = array();
 		while ( $i <= $total_answers ) {
 
-      // Checks if that answer exists and it's not empty
-			if ( isset( $_POST["answer_$i"] ) && ! empty( $_POST["answer_$i"] ) ) {
+			// Checks if that answer exists and it's not empty
+			if ( isset( $_POST["answer_$i"] ) && ( '0' == $_POST["answer_$i"] || ! empty( $_POST["answer_$i"] ) ) ) {
 
-        // Checks if the answer was marked as correct
+				// Checks if the answer was marked as correct
 				$correct = 0;
 				if ( isset( $_POST["answer_$i"."_correct"] ) && 1 == $_POST["answer_$i"."_correct"] ) {
 					$correct = 1;
 				}
 
-        // Prepares this answer array
+				// Prepares this answer array
 				$answer_array[] = array(
-          htmlspecialchars( stripslashes( $_POST["answer_$i"] ), ENT_QUOTES ),
-          floatval( $_POST["answer_".$i."_points"] ),
-          $correct
-        );
+					htmlspecialchars( stripslashes( $_POST["answer_$i"] ), ENT_QUOTES ),
+					floatval( $_POST["answer_".$i."_points"] ),
+					$correct
+				);
 			}
 			$i++;
 		}
@@ -131,7 +131,7 @@ function qsm_options_questions_tab_content() {
 		$answer_array = serialize( $answer_array );
 		$quiz_id = intval( $_POST["quiz_id"] );
 
-    // Updates question row in table
+		// Updates question row in table
 		$results = $wpdb->update(
 			$wpdb->prefix . "mlw_questions",
 			array(
@@ -281,12 +281,12 @@ function qsm_options_questions_tab_content() {
 		$new_question_order = intval( $_POST["new_question_order"] );
 		$total_answers = intval( $_POST["new_question_answer_total"] );
 
-    // Checks if a category was selected or entered
+		// Checks if a category was selected or entered
 		if ( isset( $_POST['new_category'] ) ) {
 
 			$qmn_category = sanitize_text_field( $_POST["new_category"] );
 
-      // Checks if the new category radio was selected
+			// Checks if the new category radio was selected
 			if ( 'new_category' == $qmn_category ) {
 				$qmn_category = sanitize_text_field( stripslashes( $_POST["new_new_category"] ) );
 			}
@@ -294,31 +294,31 @@ function qsm_options_questions_tab_content() {
 			$qmn_category = '';
 		}
 
-    // Creates question settings array
+		// Creates question settings array
 		$question_settings = array();
 		$question_settings['required'] = intval($_POST["required"]);
 		$question_settings = serialize($question_settings);
 
-    // Cycles through answers
+		// Cycles through answers
 		$i = 1;
 		$answer_array = array();
 		while ( $i <= $total_answers ) {
 
-      // Checks if that answer exists and it's not empty
-			if ( isset( $_POST["answer_$i"] ) && ! empty( $_POST["answer_$i"] ) ) {
+			// Checks if that answer exists and it's not empty
+			if ( isset( $_POST["answer_$i"] ) && ( '0' == $_POST["answer_$i"] || ! empty( $_POST["answer_$i"] ) ) ) {
 
-        // Checks if the answer was marked as correct
+				// Checks if the answer was marked as correct
 				$correct = 0;
 				if ( isset( $_POST["answer_".$i."_correct"] ) && 1 == $_POST["answer_".$i."_correct"] ) {
 					$correct = 1;
 				}
 
-        // Prepares answer array
+				// Prepares answer array
 				$answer_array[] = array(
-          htmlspecialchars( stripslashes( $_POST["answer_".$i] ), ENT_QUOTES ),
-          floatval( $_POST["answer_".$i."_points"] ),
-          $correct
-        );
+					htmlspecialchars( stripslashes( $_POST["answer_".$i] ), ENT_QUOTES ),
+					floatval( $_POST["answer_".$i."_points"] ),
+					$correct
+				);
 			}
 			$i++;
 		}
@@ -326,12 +326,12 @@ function qsm_options_questions_tab_content() {
 		$answer_array = serialize( $answer_array );
 		$quiz_id = intval( $_POST["quiz_id"] );
 
-    // Inserts new question into table
+		// Inserts new question into table
 		$results = $wpdb->insert(
-  		$wpdb->prefix."mlw_questions",
-  		array(
-  			'quiz_id' => $quiz_id,
-  			'question_name' => $question_name,
+			$wpdb->prefix."mlw_questions",
+			array(
+				'quiz_id' => $quiz_id,
+				'question_name' => $question_name,
   			'answer_array' => $answer_array,
   			'question_answer_info' => $question_answer_info,
   			'comments' => $comments,
@@ -545,9 +545,8 @@ function qsm_options_questions_tab_content() {
 						<label class="option_label"><?php _e('Question Type', 'quiz-master-next'); ?></label>
 						<select class="option_input" name="question_type" id="question_type">
 							<?php
-							foreach($qmn_question_types as $type)
-							{
-								echo "<option value='".$type['slug']."'>".$type['name']."</option>";
+							foreach( $qmn_question_types as $type ) {
+								echo "<option value='{$type['slug']}'>{$type['name']}</option>";
 							}
 							?>
 						</select>
@@ -560,21 +559,21 @@ function qsm_options_questions_tab_content() {
 					<div id="answer_area">
 						<div class="answer_headers">
 							<div class="answer_number">&nbsp;</div>
-							<div class="answer_text"><?php _e('Answers', 'quiz-master-next'); ?></div>
-							<div class="answer_points"><?php _e('Points Worth', 'quiz-master-next'); ?></div>
-							<div class="answer_correct"><?php _e('Correct Answer', 'quiz-master-next'); ?></div>
+							<div class="answer_text"><?php _e( 'Answers', 'quiz-master-next' ); ?></div>
+							<div class="answer_points"><?php _e( 'Points Worth', 'quiz-master-next' ); ?></div>
+							<div class="answer_correct"><?php _e( 'Correct Answer', 'quiz-master-next' ); ?></div>
 						</div>
 						<div class="answers" id="answers">
 
 						</div>
-						<a href="#" class="button" id="new_answer_button"><?php _e('Add New Answer!', 'quiz-master-next'); ?></a>
+						<a href="#" class="button" id="new_answer_button"><?php _e( 'Add New Answer!', 'quiz-master-next' ); ?></a>
 					</div>
 				</fieldset>
 				<fieldset>
 					<legend>Question Options</legend>
 					<div id="correct_answer_area" class="row">
 						<label class="option_label"><?php _e('Correct Answer Info', 'quiz-master-next'); ?></label>
-						<input class="option_input" type="text" name="correct_answer_info" value="" id="correct_answer_info" />
+						<textarea class="option_input" type="text" name="correct_answer_info" value="" id="correct_answer_info"></textarea>
 					</div>
 
 					<div id="hint_area" class="row">
@@ -608,10 +607,8 @@ function qsm_options_questions_tab_content() {
 						<label class="option_label"><?php _e('Category', 'quiz-master-next'); ?></label>
 						<div class="option_input">
 							<?php
-							foreach($qmn_quiz_categories as $category)
-							{
-								if ($category->category != '')
-								{
+							foreach( $qmn_quiz_categories as $category ) {
+								if ( $category->category != '' ) {
 									?>
 									<input type="radio" class="category_radio" name="new_category" id="new_category<?php echo esc_attr($category->category); ?>" value="<?php echo esc_attr($category->category); ?>">
 									<label for="new_category<?php echo esc_attr($category->category); ?>"><?php echo $category->category; ?></label>

@@ -2,15 +2,14 @@
 /**
 * Plugin Name: Quiz And Survey Master
 * Description: Easily and quickly add quizzes and surveys to your website.
-* Version: 5.0.6
+* Version: 5.1.5
 * Author: Frank Corso
-* Author URI: http://www.quizandsurveymaster.com/
-* Plugin URI: http://www.quizandsurveymaster.com/
+* Author URI: https://www.quizandsurveymaster.com/
+* Plugin URI: https://www.quizandsurveymaster.com/
 * Text Domain: quiz-master-next
-* Domain Path: /languages
 *
 * @author Frank Corso
-* @version 5.0.6
+* @version 5.1.5
 */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -30,7 +29,7 @@ class MLWQuizMasterNext {
 	 * @var string
 	 * @since 4.0.0
 	 */
-	public $version = '5.0.6';
+	public $version = '5.1.5';
 
 	/**
 	 * QSM Alert Manager Object
@@ -124,7 +123,7 @@ class MLWQuizMasterNext {
 			include( "php/help-page.php" );
 			include( "php/dashboard-widgets.php" );
 			include( "php/options-page-questions-tab.php" );
-      include("php/options-page-contact-tab.php");
+			include("php/options-page-contact-tab.php");
 			include( "php/options-page-text-tab.php" );
 			include( "php/options-page-option-tab.php" );
 			include( "php/options-page-leaderboard-tab.php" );
@@ -138,7 +137,7 @@ class MLWQuizMasterNext {
 			include( "php/class-qmn-tracking.php" );
 			include( "php/class-qmn-review-message.php" );
 		}
-    include( "php/class-qsm-contact-manager.php" );
+		include( "php/class-qsm-contact-manager.php" );
 		include( "php/class-qmn-quiz-manager.php" );
 
 		include( "php/leaderboard-shortcode.php" );
@@ -147,6 +146,7 @@ class MLWQuizMasterNext {
 		include( "php/adverts-generate.php" );
 		include( "php/question-types.php" );
 		include( "php/default-templates.php" );
+		include( "php/shortcodes.php" );
 
 		include( "php/class-qmn-alert-manager.php" );
 		$this->alertManager = new MlwQmnAlertManager();
@@ -174,7 +174,6 @@ class MLWQuizMasterNext {
 		add_action( 'admin_head', array( $this, 'admin_head' ), 900 );
 		add_action( 'widgets_init', create_function( '', 'return register_widget("Mlw_Qmn_Leaderboard_Widget");' ) );
 		add_shortcode( 'mlw_quizmaster_leaderboard', 'mlw_quiz_leaderboard_shortcode' );
-		add_action( 'plugins_loaded',  array( $this, 'setup_translations' ) );
 		add_action( 'init', array( $this, 'register_quiz_post_types' ) );
 	}
 
@@ -211,7 +210,7 @@ class MLWQuizMasterNext {
 		$settings = (array) get_option( 'qmn-settings' );
 
 		// Checks if admin turned off archive
-    if ( isset( $settings['cpt_archive'] ) && '1' == $settings['cpt_archive'] ) {
+		if ( isset( $settings['cpt_archive'] ) && '1' == $settings['cpt_archive'] ) {
 			$has_archive = false;
 		}
 
@@ -233,7 +232,7 @@ class MLWQuizMasterNext {
 			'labels' => $quiz_labels,
 			'publicly_queryable' => true,
 			'exclude_from_search' => $exclude_search,
-			'label'  => 'Quizzes',
+			'label'  => __( 'Quizzes', 'quiz-master-next' ),
 			'rewrite' => array( 'slug' => $cpt_slug ),
 			'has_archive'        => $has_archive,
 			'supports'           => array( 'title', 'author', 'comments' )
@@ -254,18 +253,18 @@ class MLWQuizMasterNext {
 	public function setup_admin_menu() {
 		if ( function_exists( 'add_menu_page' ) ) {
 			add_menu_page( 'Quiz And Survey Master', __( 'Quizzes/Surveys', 'quiz-master-next' ), 'moderate_comments', __FILE__, 'qsm_generate_quizzes_surveys_page', 'dashicons-feedback' );
-			add_submenu_page( __FILE__, __( 'Settings', 'quiz-master-next' ), __( 'Settings', 'quiz-master-next' ), 'moderate_comments', 'mlw_quiz_options', 'mlw_generate_quiz_options' );
+			add_submenu_page( __FILE__, __( 'Settings', 'quiz-master-next' ), __( 'Settings', 'quiz-master-next' ), 'moderate_comments', 'mlw_quiz_options', 'qsm_generate_quiz_options' );
 			add_submenu_page( __FILE__, __( 'Results', 'quiz-master-next' ), __( 'Results', 'quiz-master-next' ), 'moderate_comments', 'mlw_quiz_results', 'qsm_generate_admin_results_page' );
 			add_submenu_page( __FILE__, __( 'Result Details', 'quiz-master-next' ), __( 'Result Details', 'quiz-master-next' ), 'moderate_comments', 'mlw_quiz_result_details', 'mlw_generate_result_details' );
 			add_submenu_page( __FILE__, __( 'Settings', 'quiz-master-next' ), __( 'Settings', 'quiz-master-next' ), 'manage_options', 'qmn_global_settings', array( 'QMNGlobalSettingsPage', 'display_page' ) );
 			add_submenu_page( __FILE__, __( 'Tools', 'quiz-master-next' ), __( 'Tools', 'quiz-master-next' ), 'manage_options', 'mlw_quiz_tools', 'mlw_generate_quiz_tools' );
 			add_submenu_page( __FILE__, __( 'Stats', 'quiz-master-next' ), __( 'Stats', 'quiz-master-next' ), 'moderate_comments', 'qmn_stats', 'qmn_generate_stats_page' );
-			add_submenu_page( __FILE__, __( 'Addon Settings', 'quiz-master-next' ), __( 'Addon Settings', 'quiz-master-next' ), 'manage_options', 'qmn_addons', 'qmn_addons_page' );
+			add_submenu_page( __FILE__, __( 'Addon Settings', 'quiz-master-next' ), __( 'Addon Settings', 'quiz-master-next' ), 'moderate_comments', 'qmn_addons', 'qmn_addons_page' );
 			add_submenu_page( __FILE__, __( 'Help', 'quiz-master-next' ), __( 'Help', 'quiz-master-next' ), 'moderate_comments', 'mlw_quiz_help', 'mlw_generate_help_page' );
 
 			add_dashboard_page(
-				__( 'QSM About', 'quiz' ),
-				__( 'QSM About', 'quiz' ),
+				__( 'QSM About', 'quiz-master-next' ),
+				__( 'QSM About', 'quiz-master-next' ),
 				'manage_options',
 				'qsm_about',
 				'mlw_generate_about_page'
@@ -286,18 +285,9 @@ class MLWQuizMasterNext {
 		remove_submenu_page( 'quiz-master-next/mlw_quizmaster2.php', 'mlw_quiz_options' );
 		remove_submenu_page( 'quiz-master-next/mlw_quizmaster2.php', 'mlw_quiz_result_details' );
 	}
-
-	/**
-	  * Loads the plugin language files
-	  *
-	  * @since 3.6.1
-	  * @return void
-	  */
-	public function setup_translations() {
-		load_plugin_textdomain( 'quiz-master-next', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
 }
 
+global $mlwQuizMasterNext;
 $mlwQuizMasterNext = new MLWQuizMasterNext();
 register_activation_hook( __FILE__, array( 'QSM_Install', 'install' ) );
 ?>

@@ -61,7 +61,7 @@ function themify_meta_field_image( $args ) {
 		<span class="themify_field_description"><?php echo wp_kses_post( $meta_box['description'] ); ?></span>
 	<?php endif; // meta_box description ?>
 
-	<script type="text/javascript">
+	<script type="text/javascript" defer>
 		jQuery(function($){
 			var $remove = $('#remove-<?php echo esc_js( $meta_box['name'] ); ?>');
 			$remove.find('a').on('click', function(e){
@@ -89,59 +89,53 @@ function themify_meta_field_image( $args ) {
 }
 
 function themify_meta_field_audio( $args ) {
+	$meta_box = $args['meta_box'];
+	$sanitized_name = sanitize_html_class( $meta_box['name'] );
 	extract( $args, EXTR_OVERWRITE );
 
 	/** Parameters for the uploader @var Array */
 	$featimg_uploader_args = array(
-		'tomedia'  => true,
-		'topost'   => $post_id,
-		'medialib' => true,
-		'fields'   => $meta_box['name'],
-		'formats'  => 'mp3,m4a,ogg,wav,wma',
-		'type'     => 'audio',
+		'tomedia'	=> true,
+		'topost'	=> $post_id,
+		'medialib'	=> true,
+		'fields'	=> $sanitized_name,
+		'formats'	=> 'mp3,m4a,ogg,wav,wma',
+		'type'		=> 'audio',
 	);
-	?>
 
-	<div id="<?php echo esc_attr( 'remove-' . $meta_box['name'] ); ?>" class="themify_featimg_remove themify_video_remove <?php if( $meta_value == '' ) echo 'hide' ?>">
-		<a href="#"><?php _e('Remove Audio', 'themify'); ?></a>
+	$remove_data = array(
+		'postid'		=> esc_js( $post_id ),
+		'customfield'	=> esc_js( $meta_box['name'] ),
+		'nonce'			=> esc_js( $themify_custom_panel_nonce )
+	); ?>
+
+	<div
+		id="<?php echo esc_attr( 'remove-' . $sanitized_name ); ?>"
+		class="themify_featimg_remove themify_video_remove <?php $meta_value == '' && print( 'hide' ); ?>"
+		data-audio-remove='<?php echo json_encode( $remove_data ); ?>'>
+			<a href="#"><?php _e( 'Remove Audio', 'themify' ); ?></a>
 	</div>
 
 	<!-- Field storing URL -->
-	<input type="text" id="<?php echo esc_attr( $meta_box['name'] ); ?>" name="<?php echo esc_attr( $meta_box['name'] ); ?>" value="<?php echo esc_attr( $meta_value ); ?>" size="55" class="themify_input_field themify_upload_field" />
+	<input
+		size="55"
+		type="text"
+		value="<?php echo esc_attr( $meta_value ); ?>"
+		id="<?php echo esc_attr( $sanitized_name ); ?>"
+		class="themify_input_field themify_upload_field"
+		name="<?php echo esc_attr( $meta_box['name'] ); ?>">
 
 	<div class="themify_upload_buttons">
-		<?php themify_uploader($meta_box['name'], $featimg_uploader_args) ?>
+		<?php themify_uploader( $sanitized_name, $featimg_uploader_args) ?>
 	</div>
 
 	<?php if ( isset( $meta_box['description'] ) ) : ?>
-		<span class="themify_field_description"><?php echo wp_kses_post( $meta_box['description'] ); ?></span>
-	<?php endif; // meta_box description ?>
+		<span class="themify_field_description">
+			<?php echo wp_kses_post( $meta_box['description'] ); ?>
+		</span>
+	<?php endif; // meta_box description
 
-	<script type="text/javascript">
-	jQuery(function($){
-		$('#remove-<?php echo esc_js( $meta_box['name'] ); ?> a').on('click', function(e){
-			e.preventDefault();
-			var $self = $(this).parent();
-			$self.parent().find('.themify_upload_field').val('');
-			$self.addClass('hide');
-
-			$.post(
-				ajaxurl, {
-					'action': 'themify_remove_audio',
-					'postid': <?php echo esc_js( $post_id ); ?>,
-					'customfield' : '<?php echo esc_js( $meta_box['name'] ); ?>',
-					'nonce' : '<?php echo esc_js( $themify_custom_panel_nonce ); ?>'
-				},
-				function() {
-					$self.parent().find('.themify_upload_field').val('');
-					$self.addClass('hide');
-				}
-			);
-		});
-	});
-	</script>
-
-	<?php
+	if( ! empty( $meta_box['after'] ) ) echo $meta_box['after'];
 }
 
 function themify_meta_field_postmeta( $args ) {
@@ -455,14 +449,16 @@ function themify_meta_field_radio( $args ) {
 	$html = '';
 	foreach ( $meta_box['meta'] as $k => $option ) {
 		$radio_selected = ( isset( $option['selected'] ) && $option['selected'] && '' == $meta_value ) || ( isset( $meta_box['default'] ) && $option['value'] == $meta_box['default'] && '' == $meta_value ) ? 'checked="checked"' : checked( $meta_value, esc_attr( $option['value'] ), false );
+		$disabled = isset( $option['disabled'] ) && $option['disabled'] == true ? 'disabled="disabled"' : '';
 
 		$rid = $meta_box['name'] . '-' . esc_attr( $option['value'] );
-		$html .= sprintf( '<input type="radio" name="%s" id="%s" value="%s" %s /><label for="%s" class="selectit">%s</label>',
+		$html .= sprintf( '<input type="radio" name="%s" id="%s" value="%s" %s %s /><label for="%s" class="selectit">%s</label>',
 			// radio
 			esc_attr( $meta_box['name'] ),
 			esc_attr( $rid ),
 			esc_attr( $option['value'] ),
 			$radio_selected,
+			$disabled,
 			// label
 			esc_attr( $rid ),
 			esc_html( $option['name'] )
@@ -553,8 +549,8 @@ function themify_meta_field_textbox( $args ) {
 		$meta_value = $meta_box['default'];
 	}
 
-	if ( isset( $meta_box['meta'] ) && isset( $meta_box['meta']['size'] ) && '' != $meta_box['meta']['size'] && 'small' == $meta_box['meta']['size'] ) {
-		$class = 'small';
+	if ( isset( $meta_box['meta']['size'] ) && '' != $meta_box['meta']['size'] ) {
+		$class = $meta_box['meta']['size'];
 	} else {
 		$class = '';
 	}
@@ -639,7 +635,7 @@ function themify_meta_field_video( $args ) {
 		<?php themify_uploader($meta_box['name'], $featimg_uploader_args) ?>
 	</div>
 
-	<script type="text/javascript">
+	<script type="text/javascript" defer>
 		jQuery(function($){
 			$('#remove-<?php echo esc_js( $meta_box['name'] ); ?>').find('a').on('click', function(e){
 				e.preventDefault();
@@ -1050,14 +1046,14 @@ function themify_wp_ajax_plupload_image() {
 			
 			$full = wp_get_attachment_image_src( $attach_id, 'full' );
 			
-			update_post_meta($postid, $_POST['fields'], $full[0]);
-			update_post_meta($postid, '_'.$_POST['fields'] . '_attach_id', $attach_id);
-			
-			$thumb = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
-			
-			//Return URL for the image field in meta box
-			$file['thumb'] = $thumb[0];
+			update_post_meta( $postid, $_POST['fields'], $full[0] );
+			update_post_meta( $postid, '_'.$_POST['fields'] . '_attach_id', $attach_id );
 		}
+
+		$thumb = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
+
+		//Return URL for the image field in meta box
+		$file['thumb'] = $thumb[0];
 	}
 	$file['type'] = $ext[1];
 	// send the uploaded file url in response
@@ -1220,9 +1216,11 @@ endif;
 
 function themify_meta_field_repeater_template( $meta_box, $data, $id ) {
 	echo '<div class="themify-repeater-row" data-id="'. $id .'">';
+	echo '<div class="themify-repeater-remove-row"><a href="#"></a></div>';
 	foreach ( $meta_box['fields'] as $field ) {
 		if ( is_callable( 'themify_meta_field_'.$field['type'] ) ) {
-			echo '<br>' . $field['title'] . '<br>'; // remove
+			echo '<div class="themify_field_row clearfix ">';
+			! empty( $field['title'] ) && printf( '<div class="themify_field_title">%s</div>', $field['title'] );
 			$field_id = $field['name'];
 			$field['name'] = $meta_box['name'] . '[' . $id . '][' . $field['name'] . ']';
 
@@ -1242,8 +1240,10 @@ function themify_meta_field_repeater_template( $meta_box, $data, $id ) {
 				echo '<div class="themify-toggle ' . $field_toggle . '">';
 			}
 
-			// Render the field
-			call_user_func('themify_meta_field_'.$field['type'], $call_args);
+			printf( '<div class="themify_field themify_field-%s">', $field['type'] );
+				// Render the field
+				call_user_func('themify_meta_field_'.$field['type'], $call_args);
+			echo '</div>';
 
 			// End nested toggle for multi fields
 			if ( isset( $field['enable_toggle'] ) ) {
@@ -1254,6 +1254,8 @@ function themify_meta_field_repeater_template( $meta_box, $data, $id ) {
 			if ( ! ( $field === end( $meta_box['fields'] ) ) ) {
 				echo isset( $meta_box['meta']['separator'] ) ? $meta_box['meta']['separator'] : '';
 			}
+
+			echo '</div>';
 		}
 	}
 	echo '</div>';
@@ -1342,4 +1344,3 @@ function themify_meta_field_image_radio( $args ) {
 
 	echo $html;
 }
-

@@ -38,11 +38,8 @@ HEADER STRIPE
 	background-color: #f03009;
 	color: #FFF;
 	line-height: normal;
-}
-.fixed-header-on #site-logo img {
-	height: 30px;
-	width: auto;
-	transition: all .3s;
+	min-height: 67px;
+	box-sizing: border-box;
 }
 
 /* header stripe site description */
@@ -179,7 +176,7 @@ body:not(.slide-cart):not(.mobile_menu_active) #main-nav {
 .header-widget {
 	display: none;
 	text-align:  center;
-	border-top: 1px solid #e7e7e7;
+	border-top: 1px solid rgba(0,0,0,.1);
 }
 .header-widget .header-widget-inner {
 	height: 100%;
@@ -212,6 +209,15 @@ body:not(.slide-cart):not(.mobile_menu_active) #main-nav {
 #headerwrap.fixed-header #main-nav {
 	-webkit-flex: inherit;
 	flex: inherit;
+}
+
+/* transparent header */
+.transparent-header #header {
+	background-color: transparent;
+	box-shadow: none;
+}
+.transparent-header .header-widget {
+	background-color: rgba(0,0,0,.3)
 }
 
 /* MOBILE MENU ACTIVE */

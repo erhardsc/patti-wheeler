@@ -36,10 +36,8 @@ body:not(.fixed-header-on) #pagewrap #headerwrap {
 	display: inline-block;
 	vertical-align: middle;
 }
-.fixed-header-on #site-logo img {
-	height: 30px;
-	width: auto;
-	transition: all .3s;
+#headerwrap.fixed-header #site-logo img {
+	max-height: 30px;
 }
 
 /* boxed compact site description */
@@ -195,7 +193,7 @@ body:not(.slide-cart):not(.mobile_menu_active) #main-nav {
 }
 /* boxed compact social widget */
 .mobile_menu_active #header .social-widget {
-	margin: 0 0 1em;
+	margin: 0;
 	float: none;
 	display: block;
 }
@@ -206,6 +204,7 @@ body:not(.slide-cart):not(.mobile_menu_active) #main-nav {
 .mobile_menu_active #headerwrap #searchform-wrap {
 	float: none;
 	display: block;
+	margin: 0;
 }
 .mobile_menu_active #headerwrap #searchform #s {
 	width: 100%;

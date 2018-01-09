@@ -36,9 +36,7 @@ add_filter( 'themify_theme_google_fonts', 'themify_theme_restaurant_google_fonts
  * @since 1.1
  */
 function themify_theme_restaurant_custom_modules() {
-	global $ThemifyBuilder;
-
-	$ThemifyBuilder->register_directory( 'templates', dirname( __FILE__ ) . '/templates' );
+	Themify_Builder_Model::register_directory( 'templates', dirname( __FILE__ ) . '/templates' );
 }
 add_action( 'themify_builder_setup_modules', 'themify_theme_restaurant_custom_modules' );
 

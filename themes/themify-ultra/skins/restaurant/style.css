@@ -86,9 +86,20 @@ h2 {
 h2.fancy-heading {
 	font-size: 2.85em;	
 }
+
+h3.fancy-heading {
+	position: relative;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 0.055em;
+	margin: 0 0 .7em;
+}
+
 h2 i,
 h2 em,
-.module-fancy-heading h2 .sub-head {
+.module-fancy-heading h2 .sub-head,
+.module-fancy-heading h3 .sub-head {
 	color: #dfa300;
 	font-family: 'Playfair Display', serif;
 	font-weight: 700;
@@ -152,9 +163,6 @@ h5 {
 	font: italic 1.3em/1.6em 'Playfair Display', serif;
 	letter-spacing: 0.02em;
 	margin: 0 0 1em;
-}
-.module-fancy-heading span {
-	display: initial;
 }
 .module-fancy-heading .sub-head {
 	padding-top: 0;

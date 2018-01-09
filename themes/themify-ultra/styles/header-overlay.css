@@ -12,11 +12,14 @@ body.fixed-header.page-loaded #headerwrap {
 }
 .mobile-menu-visible #headerwrap {
 	height: 100vh;
-	background-color: #5a408e;
-	background-color: rgba(90,64,142,0.94);
 	top: 0;
 	color: #fff;
 	min-height: 300px;
+}
+.transparent-header #headerwrap.fixed-header,
+.mobile-menu-visible #headerwrap {
+	background-color: #5a408e;
+	background-color: rgba(90,64,142,0.94);
 }
 body.mobile-menu-visible:not(.fixed-header-on):not(.transparent-header) #headerwrap {
 	position: fixed !important;
@@ -189,6 +192,17 @@ body.mobile-menu-visible:not(.fixed-header-on):not(.transparent-header) #headerw
 /* header overlay body overlay */
 .header-overlay .body-overlay.body-overlay-on {
 	display: none;
+}
+
+.header-overlay.mobile-menu-visible.announcement-bar-collapsed,
+.header-overlay.mobile-menu-visible.announcement-bar-showing {
+	margin-top: 0 !important;
+}
+
+.header-overlay.mobile-menu-visible.announcement-bar-collapsed .themify_announcement,
+.header-overlay.mobile-menu-visible.announcement-bar-showing .themify_announcement {
+	opacity: 0;
+	visibility: hidden;
 }
 
 /* header overlay main nav */

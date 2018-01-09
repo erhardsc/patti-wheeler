@@ -1,7 +1,7 @@
 /*
 Theme Name: Themify Ultra
 Theme URI: http://themify.me/themes/ultra
-Version: 1.8.5
+Version: 1.9.1
 Description: Created by <a href="http://www.themify.me">Themify</a>.
 Author: Themify
 Author URI: http://www.themify.me
@@ -444,12 +444,7 @@ body:not(.sidebar2):not(.sidebar-left) #sidebar {
 body.fixed-header.page-loaded #headerwrap {
 	position: absolute;
 }
-body.fixed-header.page-loaded.admin-bar:not(.header-block) #headerwrap {
-	top: 32px;
-}
-body.no-fixed-header #pagewrap {
-	padding-top: 0 !important;
-}
+body.no-fixed-header #pagewrap,
 body:not(.page-loaded) #pagewrap {
 	padding-top: 0 !important; /* prevent header jumps when sticky header JS fails */
 }
@@ -509,12 +504,17 @@ body:not(.page-loaded) #pagewrap {
 #headerwrap.fixed-header #sticky_header_logo,
 #headerwrap.fixed-header #sticky_header_logo + span,
 #headerwrap.fixed-header #sticky_header_logo + img,
+#headerwrap #fixedheaderheaderwrapsitelogoa + img,
 #headerwrap #fixedheaderheaderwrapsitelogoa ~ #sticky_header_logo {
 	display: none;
 }
 #headerwrap.fixed-header #sticky_header_logo,
 #headerwrap.fixed-header #fixedheaderheaderwrapsitelogoa {
 	display:block;
+}
+.no-shrinking-logo #headerwrap.fixed-header #site-logo img {
+	max-height: none;
+	height: auto;
 }
 
 /* site description */
@@ -587,7 +587,7 @@ body:not(.page-loaded) #pagewrap {
 	padding: 0;
 	display: inline;
 }
-.social-widget ul li {
+.social-widget .social-links.horizontal li {
 	padding: 0 2px 5px 0;
 	margin: 0 7px 2px 0;
 	display: inline-block;
@@ -810,6 +810,14 @@ body:not(.page-loaded) #pagewrap {
 #main-nav .has-mega-column > .sub-menu .sub-arrow {
 	display: none;
 }
+#main-nav .sub-arrow {
+    border-radius: 100%;
+	padding: 0 7px;
+	margin-left: 7px;
+}
+#main-nav .sub-arrow:hover {
+    background: rgba(214,214,214,.4);
+}
 
 /* Edge Menu */
 #main-nav li.edge > ul {
@@ -854,11 +862,13 @@ body:not(.page-loaded) #pagewrap {
 }
 #main-nav .has-mega-sub-menu,
 #main-nav .has-mega-column,
-#main-nav .has-mega-column ul {
+#main-nav .has-mega-column ul,
+#main-nav li.menu-item-object-tbuilder_layout_part {
 	position: static;
 }
 #main-nav .has-mega-sub-menu .mega-sub-menu,
-#main-nav .has-mega-column > .sub-menu {
+#main-nav .has-mega-column > .sub-menu,
+#main-nav li.menu-item-object-tbuilder_layout_part > .sub-menu {
 	color: #484848;
 	border: 1px solid rgba(138, 138, 138, 0.35);
 	display: none;
@@ -1014,7 +1024,8 @@ body:not(.page-loaded) #pagewrap {
 }
 
 /* mega column */
-#main-nav .has-mega-column > .sub-menu {
+#main-nav .has-mega-column > .sub-menu,
+#main-nav li.menu-item-object-tbuilder_layout_part > .sub-menu {
 	padding: 2% 3% 3%;
 	max-height: 70vh;
 	overflow: auto;
@@ -1269,9 +1280,6 @@ body.mobile-menu-visible {
 body.fixed-header.page-loaded #headerwrap.fixed-header {
     position: fixed; /* prevent snappy sticky header */
 }
-body.admin-bar #headerwrap.fixed-header {
-	top: 32px;
-}
 .iphone #headerwrap.fixed-header {
 	transition: none;
 }
@@ -1311,9 +1319,16 @@ body.admin-bar #headerwrap.fixed-header {
 	top: 0;
 	left: 0;
 }
+.transparent-header #headerwrap .themify-widget-menu {
+	color: #666;
+}
 .transparent-header #pagewrap {
 	padding-top: 0 !important;
 }
+.transparent-header #content {
+	padding: 0;
+}
+
 /* prevent transparent header overlap builder */
 .transparent-header.themify_builder_active #pagewrap {
 	padding-top: 0 !important;	
@@ -1418,13 +1433,18 @@ HEADER VIDEO BACKGROUND
 	left: 0;
 	z-index: 0;
 	position: absolute;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        pointer-events: none;
 }
-.big-video-vid, .big-video-image {
+video.tf-video{
+    position: absolute;
+    display: block;
+}
+.big-video-image {
 	position: absolute;
 	z-index: -2;
-}
-.vjs-big-play-button, .vjs-control-bar, .vjs-error-display, .vjs-text-track-display {
-	display:none !important;
 }
 /* Hide semi-transparent border when video and image are enabled so image isn't visible behind the video */
 #headerwrap[data-fullwidthvideo][data-bg] {
@@ -2489,6 +2509,10 @@ CLEAR GRID FLOAT
 	clear: left;
 }
 
+.post-filter + .loops-wrapper.masonry-done .post {
+	margin-left: 0;
+}
+
 /*
 LIST-THUMB-IMAGE POST
 ================================================ */
@@ -3114,9 +3138,7 @@ RELATED POSTS
 	margin: 0 0 .8em 0;
 	min-width: 0;
 }
-.related-posts .post-image img {
-	width: 100%;
-}
+
 .related-posts .post-meta {
 	margin: 0 0 .5em;
 	font-size: .73em;
@@ -3189,20 +3211,25 @@ MASONRY LAYOUT
 .masonry-done.loops-wrapper.grid2 .post {
 	margin-right: 0;
 	margin-left: 0;
-	animation-name:none !important;/*conflict with masonry on resize*/
+	-webkit-animation-fill-mode: backwards;
+	animation-fill-mode: backwards;
 }
 .masonry-done.list-thumb-image .grid-sizer,
-.masonry-done.list-post .grid-sizer {
+.masonry-done.list-post .grid-sizer,
+.masonry-done.ptb_list-post .grid-sizer {
 	width: 100%;
 }
-.masonry-done.grid4 .grid-sizer {
+.masonry-done.grid4 .grid-sizer,
+.masonry-done.ptb_grid4 .grid-sizer {
 	width: 22.6%;
 }
-.masonry-done.grid3 .grid-sizer {
+.masonry-done.grid3 .grid-sizer,
+.masonry-done.ptb_grid3 .grid-sizer {
 	width: 31.2%;
 }
 .masonry-done.grid2-thumb .grid-sizer,
-.masonry-done.grid2 .grid-sizer {
+.masonry-done.grid2 .grid-sizer,
+.masonry-done.ptb_grid2 .grid-sizer {
 	width: 48.4%;
 }
 .masonry-done .gutter-sizer{
@@ -3543,6 +3570,7 @@ iframe[src*="facebook"] {
 #footer .back-top.back-top-float{
 	background-color: rgba(251,9,48,.8);
 	border-radius: 100%;
+	color: #fff;
 	cursor:pointer;
 	position: fixed;
 	right: 20px;
@@ -3569,12 +3597,15 @@ iframe[src*="facebook"] {
 }
 #footer .back-top.back-top-float .arrow-up a {
 	background: none;
+	color: inherit;
 }
 .back-top:not(.back-top-float) .arrow-up a {
 	text-decoration: none;
 	display: inline-block;
 	position: relative;
 	bottom: 0;
+	padding: .4em;
+	line-height: 1;
 	z-index: 10;
 	color: inherit;
 	-webkit-transition: all .5s;
@@ -3586,7 +3617,7 @@ iframe[src*="facebook"] {
 	bottom: 25px;
 }
 .back-top a:before {
-	font-size: 3.5rem;
+	font-size: 3rem;
 	font-family: 'themify_theme_icon';
 	content: "\e807"; /* ti-angle-up */
 	font-style: normal;
@@ -3632,6 +3663,9 @@ iframe[src*="facebook"] {
 	top: 14px;
 	left: 50%;
 	margin-left: -7px;
+}
+.themify_builder_active #footer .back-top.back-top-float {
+	bottom: 50px;
 }
 
 /* footer logo */
@@ -3797,7 +3831,7 @@ iframe[src*="facebook"] {
 	width: 60px;
 	height: 25px;
 	line-height: 100%;
-	padding-top: 10px;
+	padding: 10px 0 0;
 }
 .footer-horizontal-left .back-top a:before,
 .footer-horizontal-right .back-top a:before,
@@ -3931,7 +3965,7 @@ NICESCROLL
 *************************************************************************************/
 /* builder row */
 .full_width .themify_builder_row.fullwidth .row_inner {
-	width: auto;
+	width: 100%;
 	max-width: 100%;
 	padding: 0;
 }
@@ -3944,7 +3978,7 @@ NICESCROLL
 .col3-2 .loops-wrapper .post,
 .col2-1 .loops-wrapper .post {
 	text-align: inherit; /* reset text center */
-	margin: 0 0 1em;
+	margin-bottom: 1em;
 }
 .col4-3 .loops-wrapper.list-post .post-title,
 .col4-2 .loops-wrapper.list-post .post-title,
@@ -3971,8 +4005,7 @@ a.shortcode.button {
 	padding: .65em 1em;
 }
 
-.full-section-scrolling .themify_builder .themify_builder_row {
-	min-height: 100vh;
+.full-section-scrolling .themify_builder .module_row {
 	display:-webkit-flex;
 	display:-webkit-box;
 	display:-moz-flex;
@@ -3981,35 +4014,36 @@ a.shortcode.button {
 	display: flex;
 }
 
+.full-section-scrolling .themify_builder:not(.not_editable_builder) .module_row {
+	min-height: 100vh;
+}
+
 /* Set full width column */
-.full-section-scrolling .themify_builder .themify_builder_row,
-.full-section-scrolling.themify_builder_active .row_inner_wrapper,
+.full-section-scrolling .themify_builder .module_row,
+.full-section-scrolling.themify_builder_active .row_inner,
 .full-section-scrolling .themify_builder_row .fp-tableCell {
 	width: 100%;
 }
 
 /* builder active full section */
-.full-section-scrolling.themify_builder_active .themify_builder_content .themify_builder_row_content .themify_builder_col,
-.full-section-scrolling.themify_builder_active .themify_builder_row,
-.full-section-scrolling.themify_builder_active .themify_builder_row .tb-column-inner .themify_module_holder {
+.full-section-scrolling.themify_builder_active .themify_builder:not(.not_editable_builder) .module_column,
+.full-section-scrolling.themify_builder_active .themify_builder:not(.not_editable_builder) .module_row,
+.full-section-scrolling.themify_builder_active .themify_builder:not(.not_editable_builder) .themify_module_holder {
 	min-height: 100vh;
 }
-.full-section-scrolling .themify_builder .row_inner_wrapper,
-.full-section-scrolling .themify_builder .themify_builder_row .row_inner,
-.full-section-scrolling .themify_builder_row .row_inner > .tb-column {
+.full-section-scrolling .themify_builder:not(.not_editable_builder) .row_inner,
+.full-section-scrolling .row_inner > .tb-column {
 	height: 100%;
 }
-.full-section-scrolling.themify_builder_active .themify_builder_sub_row .tb-column-inner .themify_module_holder,
-.full-section-scrolling.themify_builder_active .themify_builder_content .themify_builder_sub_row_content .themify_builder_col {
+.full-section-scrolling.themify_builder_active .module_subrow .themify_module_holder,
+.full-section-scrolling.themify_builder_active .module_subrow .module_column {
 	min-height: 0;
 	height: auto;
 }
 
 /* set col full section middle aligned */
-.full-section-scrolling.themify_builder_active .themify_builder_row .row_inner .themify_builder_row_content .tb-column .themify_module_holder,
-.full-section-scrolling.themify_builder_active .themify_builder_row .themify_builder_row_content .col-full.tb-column .themify_module_holder,
-.full-section-scrolling .themify_builder_row.fp-table .row_inner .tb-column,
-.full-section-scrolling .themify_builder_row.fp-table .row_inner .col-full.tb-column {
+.full-section-scrolling.themify_builder_active .themify_module_holder,
+.full-section-scrolling .themify_builder_row.fp-table .module_column {
 	-webkit-box-align: center;
 	-moz-box-align: center;
 	-ms-flex-align: center;
@@ -4020,9 +4054,8 @@ a.shortcode.button {
 }
 
 /* set col full sub row section top aligned */
-.full-section-scrolling.themify_builder_active .themify_builder_row .row_inner .themify_builder_row_content .tb-column .themify_builder_sub_row.col_align_top .sub_column .themify_module_holder,
-.full-section-scrolling.themify_builder_active .themify_builder_row .themify_builder_row_content .col-full.tb-column .themify_builder_sub_row.col_align_top .sub_column .themify_module_holder,
-.full-section-scrolling .themify_builder_row.fp-table .row_inner .col-full.tb-column .themify_builder_sub_row.col_align_top .sub_column {
+.full-section-scrolling.themify_builder_active .col_align_top>.module_column>.themify_module_holder,
+.full-section-scrolling .themify_builder_row.fp-table .col_align_top>.module_column {
 	-webkit-flex-align: flex-start;
 	-ms-flex-align: flex-start;
 	-webkit-align-items: flex-start;
@@ -4033,10 +4066,8 @@ a.shortcode.button {
 }
 
 /* set col full sub row section bottom aligned */
-.full-section-scrolling.themify_builder_active .themify_builder_row.col_align_bottom .themify_builder_row_content .tb-column .themify_module_holder,
-.full-section-scrolling.themify_builder_active .themify_builder_row .themify_builder_row_content .col-full.tb-column .themify_builder_sub_row.col_align_bottom .sub_column .themify_module_holder,
-.full-section-scrolling .themify_builder_row.fp-table.col_align_bottom .row_inner .tb-column,
-.full-section-scrolling .themify_builder_row.fp-table .row_inner .col-full.tb-column .themify_builder_sub_row.col_align_bottom .sub_column {
+.full-section-scrolling.themify_builder_active .col_align_bottom>.module_column>.themify_module_holder,
+.full-section-scrolling .themify_builder_row.fp-table .col_align_bottom>.module_column {
 	-webkit-flex-align: flex-end;
 	-ms-flex-align: flex-end;
 	-webkit-align-items: flex-end;
@@ -4045,11 +4076,9 @@ a.shortcode.button {
 	-ms-flex-line-pack: flex-end;
 	align-content: flex-end;
 }
-
 /************************************************************************************
 11. WORDPRESS POST FORMATTING
 *************************************************************************************/
-.sticky {}
 img.alignleft, img.aligncenter, img.alignright, img.alignnone {
 	margin-bottom: 1em;
 }
@@ -4348,15 +4377,15 @@ body .filter-hover-blur img:hover,
 }
 
 body .filter-hover-none img:hover,
-.filter-featured-only.filter-hover-none .post-image:hover,
-.filter-featured-only.filter-hover-none .post-img:hover,
-.filter-featured-only.filter-hover-none .ptb_post_image:hover,
-.filter-featured-only.filter-hover-none .module-feature-image:hover,
-.filter-featured-only.filter-hover-none .slide-image:hover,
+.filter-featured-only.filter-hover-none .post-image img:hover,
+.filter-featured-only.filter-hover-none .post-img img:hover,
+.filter-featured-only.filter-hover-none .ptb_post_image img:hover,
+.filter-featured-only.filter-hover-none .module-feature-image img:hover,
+.filter-featured-only.filter-hover-none .slide-image img:hover,
 .filter-all.filter-hover-none img:hover,
 .filter-all.filter-hover-none .loops-wrapper article:hover img,
-body.filter-all #pagewrap .format-video .post-image,
-body.filter-featured-only #pagewrap .format-video .post-image {
+body.filter-all #pagewrap .format-video .post-image img:hover,
+body.filter-featured-only #pagewrap .format-video .post-image img:hover {
 	-webkit-filter: none;
 	filter: none;
 }
@@ -4376,9 +4405,6 @@ ANNOUNCEMENT BAR PLUGIN
 .boxed-layout.announcement-top.announcement-bar-showing #headerwrap,
 .boxed-compact.announcement-top.announcement-bar-showing #headerwrap {
 	top: 0;
-}
-.boxed-layout.fixed-header-on.announcement-top.announcement-bar-showing #headerwrap {
-	top: 54px;
 }
 .boxed-layout.announcement-top.announcement-bar-showing,
 .boxed-compact.announcement-top.announcement-bar-showing {
@@ -4599,14 +4625,4 @@ TILES LAYOUT
 span#main-nav {
 	display: inline-block;
 	height: 48px;
-}
-
-.themify_builder_row.fullheight .row_inner > .tb-column.col-full,
-.themify_builder_row.fullheight .row_inner > .tb-column,
-.themify_builder .themify_builder_row.fullheight .row_inner > .themify_builder_row_content,
-.themify_builder .themify_builder_row.fullheight .row_inner_wrapper > .row_inner,
-.full-section-scrolling .themify_builder_row.fp-table .row_inner .col-full.tb-column,
-.full_width.full-section-scrolling.mobile_menu_active .themify_builder_row .row_inner {
-	min-height: 100% !important;
-	box-sizing: border-box;
 }

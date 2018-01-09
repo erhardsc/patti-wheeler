@@ -287,17 +287,17 @@ function qsm_results_overview_tab_content() {
 		?>
 		<input type="hidden" name="page" value="mlw_quiz_results">
 		<p class="search-box">
-			<label for="qmn_search_phrase">Search Results:</label>
+			<label for="qmn_search_phrase"><?php _e( 'Search Results', 'quiz-master-next' ); ?></label>
 			<input type="search" id="qmn_search_phrase" name="qmn_search_phrase" value="">
-			<label for="qmn_order_by">Order By:</label>
+			<label for="qmn_order_by"><?php _e( 'Order By', 'quiz-master-next' ); ?></label>
 			<select id="qmn_order_by" name="qmn_order_by">
-				<option value="quiz_name">Quiz Name</option>
-				<option value="name">User Name</option>
-				<option value="point_score">Points</option>
-				<option value="correct_score">Correct Percent</option>
-				<option value="default">Default (time)</option>
+				<option value="quiz_name"><?php _e( 'Quiz Name', 'quiz-master-next' ); ?></option>
+				<option value="name"><?php _e( 'User Name', 'quiz-master-next' ); ?></option>
+				<option value="point_score"><?php _e( 'Points', 'quiz-master-next' ); ?></option>
+				<option value="correct_score"><?php _e( 'Correct Percent', 'quiz-master-next' ); ?></option>
+				<option value="default"><?php _e( 'Default (Time)', 'quiz-master-next' ); ?></option>
 			</select>
-			<button class="button">Search Results</button>
+			<button class="button"><?php _e( 'Search Results', 'quiz-master-next' ); ?></button>
 		</p>
 	</form>
 	<form action="" method="post" name="bulk_delete_form">
@@ -364,7 +364,9 @@ function qsm_results_overview_tab_content() {
 				$quotes_list .= "<td><span style='font-size:16px;'>" . $mlw_quiz_info->business ."</span></td>";
 				$quotes_list .= "<td><span style='font-size:16px;'>" . $mlw_quiz_info->email ."</span></td>";
 				$quotes_list .= "<td><span style='font-size:16px;'>" . $mlw_quiz_info->phone ."</span></td>";
-				$quotes_list .= "<td><span style='font-size:16px;'>" . $mlw_quiz_info->time_taken ."</span></td>";
+				$date = date_i18n( get_option( 'date_format' ), strtotime( $mlw_quiz_info->time_taken ) );
+				$time = date( "h:i:s A", strtotime( $mlw_quiz_info->time_taken ) );
+				$quotes_list .= "<td><span style='font-size:16px;'>$date $time</span></td>";
 				$quotes_list .= "</tr>";
 			}
 			$display .= "<tbody id=\"the-list\">{$quotes_list}</tbody>";

@@ -246,14 +246,30 @@ function mlw_qmn_variable_timer_minutes($content, $mlw_quiz_array)
 	$content = str_replace( "%TIMER_MINUTES%" , $mlw_minutes, $content);
 	return $content;
 }
-function mlw_qmn_variable_date($content, $mlw_quiz_array)
-{
-	$content = str_replace( "%CURRENT_DATE%" , date("F jS Y"), $content);
+
+/**
+ * Replaces the variable %CURRENT_DATE% and displays the current date
+ *
+ * @param string $content The contents of the results page
+ * @param array $results The array of all the results from user taking the quiz
+ * @return string Returns the contents for the results page
+ */
+function mlw_qmn_variable_date( $content, $results ) {
+	$date = date_i18n( get_option( 'date_format' ), time() );
+	$content = str_replace( "%CURRENT_DATE%" , $date, $content);
 	return $content;
 }
 
-function mlw_qmn_variable_date_taken( $content, $mlw_quiz_array ) {
-	$content = str_replace( "%DATE_TAKEN%" , date("m/d/Y", strtotime( $mlw_quiz_array["time_taken"] ) ), $content);
+/**
+ * Replaces the variable %DATE_TAKEN% and returns the date the user submitted his or her responses
+ *
+ * @param string $content The contents of the results page
+ * @param array $results The array of all the results from user taking the quiz
+ * @return string Returns the contents for the results page
+ */
+function mlw_qmn_variable_date_taken( $content, $results ) {
+	$date = date_i18n( get_option( 'date_format' ), strtotime( $results["time_taken"] ) );
+	$content = str_replace( "%DATE_TAKEN%" , $date, $content);
 	return $content;
 }
 

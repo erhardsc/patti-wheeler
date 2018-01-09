@@ -54,12 +54,15 @@ class Themify_Hooks {
 	 */
 	public function check_visibility( $id ) {
 		$visible = true;
+		if ( ! isset( $this->data["{$this->pre}-{$id}-visibility"] ) )
+			return $visible;
+
 		$logic = $this->data["{$this->pre}-{$id}-visibility"];
 		parse_str( $logic, $logic );
 		$query_object = get_queried_object();
 
 		// Logged-in check
-		if( isset( $logic['general']['logged'] ) ) {
+		if ( isset( $logic['general']['logged'] ) ) {
 			if( ! is_user_logged_in() ) {
 				return false;
 			}
@@ -183,6 +186,7 @@ class Themify_Hooks {
 			'post' => __( 'Post', 'themify' ),
 			'comments' => __( 'Comments', 'themify' ),
 			'ecommerce' => __( 'eCommerce', 'themify' ),
+			'ptb' => __( 'Post Type Builder', 'themify' ),
 		);
 	}
 
@@ -227,46 +231,81 @@ class Themify_Hooks {
 		}
 
 		/* register ecommerce hooks group only if current theme supports WooCommerce */
-		if ( ! themify_is_woocommerce_active() ) {
-			return;
+		if ( themify_is_woocommerce_active() ) {
+			foreach ( array(
+				array( 'themify_product_slider_add_to_cart_before', 'product_slider_add_to_cart_before', 'ecommerce' ),
+				array( 'themify_product_slider_add_to_cart_after', 'product_slider_add_to_cart_after', 'ecommerce' ),
+				array( 'themify_product_slider_image_start', 'product_slider_image_start', 'ecommerce' ),
+				array( 'themify_product_slider_image_end', 'product_slider_image_end', 'ecommerce' ),
+				array( 'themify_product_slider_title_start', 'product_slider_title_start', 'ecommerce' ),
+				array( 'themify_product_slider_title_end', 'product_slider_title_end', 'ecommerce' ),
+				array( 'themify_product_slider_price_start', 'product_slider_price_start', 'ecommerce' ),
+				array( 'themify_product_slider_price_end', 'product_slider_price_end', 'ecommerce' ),
+				array( 'themify_product_image_start', 'product_image_start', 'ecommerce' ),
+				array( 'themify_product_image_end', 'product_image_end', 'ecommerce' ),
+				array( 'themify_product_title_start', 'product_title_start', 'ecommerce' ),
+				array( 'themify_product_title_end', 'product_title_end', 'ecommerce' ),
+				array( 'themify_product_price_start', 'product_price_start', 'ecommerce' ),
+				array( 'themify_product_price_end', 'product_price_end', 'ecommerce' ),
+				array( 'themify_product_cart_image_start', 'product_cart_image_start', 'ecommerce' ),
+				array( 'themify_product_cart_image_end', 'product_cart_image_end', 'ecommerce' ),
+				array( 'themify_product_single_image_before', 'product_single_image_before', 'ecommerce' ),
+				array( 'themify_product_single_image_end', 'product_single_image_end', 'ecommerce' ),
+				array( 'themify_product_single_title_before', 'product_single_title_before', 'ecommerce' ),
+				array( 'themify_product_single_title_end', 'product_single_title_end', 'ecommerce' ),
+				array( 'themify_product_single_price_end', 'product_single_price_end', 'ecommerce' ),
+				array( 'themify_shopdock_before', 'shopdock_before', 'ecommerce' ),
+				array( 'themify_checkout_start', 'checkout_start', 'ecommerce' ),
+				array( 'themify_checkout_end', 'checkout_end', 'ecommerce' ),
+				array( 'themify_shopdock_end', 'shopdock_end', 'ecommerce' ),
+				array( 'themify_shopdock_after', 'shopdock_after', 'ecommerce' ),
+				array( 'themify_sorting_before', 'sorting_before', 'ecommerce' ),
+				array( 'themify_sorting_after', 'sorting_after', 'ecommerce' ),
+				array( 'themify_related_products_start', 'related_products_start', 'ecommerce' ),
+				array( 'themify_related_products_end', 'related_products_end', 'ecommerce' ),
+				array( 'themify_breadcrumb_before', 'breadcrumb_before', 'ecommerce' ),
+				array( 'themify_breadcrumb_after', 'breadcrumb_after', 'ecommerce' ),
+				array( 'themify_ecommerce_sidebar_before', 'ecommerce_sidebar_before', 'ecommerce' ),
+				array( 'themify_ecommerce_sidebar_after', 'ecommerce_sidebar_after', 'ecommerce' ),
+			) as $key => $value ) {
+				$this->register_location( $value[0], $value[1], $value[2] );
+			}
 		}
-		foreach ( array(
-			array( 'themify_product_slider_add_to_cart_before', 'product_slider_add_to_cart_before', 'ecommerce' ),
-			array( 'themify_product_slider_add_to_cart_after', 'product_slider_add_to_cart_after', 'ecommerce' ),
-			array( 'themify_product_slider_image_start', 'product_slider_image_start', 'ecommerce' ),
-			array( 'themify_product_slider_image_end', 'product_slider_image_end', 'ecommerce' ),
-			array( 'themify_product_slider_title_start', 'product_slider_title_start', 'ecommerce' ),
-			array( 'themify_product_slider_title_end', 'product_slider_title_end', 'ecommerce' ),
-			array( 'themify_product_slider_price_start', 'product_slider_price_start', 'ecommerce' ),
-			array( 'themify_product_slider_price_end', 'product_slider_price_end', 'ecommerce' ),
-			array( 'themify_product_image_start', 'product_image_start', 'ecommerce' ),
-			array( 'themify_product_image_end', 'product_image_end', 'ecommerce' ),
-			array( 'themify_product_title_start', 'product_title_start', 'ecommerce' ),
-			array( 'themify_product_title_end', 'product_title_end', 'ecommerce' ),
-			array( 'themify_product_price_start', 'product_price_start', 'ecommerce' ),
-			array( 'themify_product_price_end', 'product_price_end', 'ecommerce' ),
-			array( 'themify_product_cart_image_start', 'product_cart_image_start', 'ecommerce' ),
-			array( 'themify_product_cart_image_end', 'product_cart_image_end', 'ecommerce' ),
-			array( 'themify_product_single_image_before', 'product_single_image_before', 'ecommerce' ),
-			array( 'themify_product_single_image_end', 'product_single_image_end', 'ecommerce' ),
-			array( 'themify_product_single_title_before', 'product_single_title_before', 'ecommerce' ),
-			array( 'themify_product_single_title_end', 'product_single_title_end', 'ecommerce' ),
-			array( 'themify_product_single_price_end', 'product_single_price_end', 'ecommerce' ),
-			array( 'themify_shopdock_before', 'shopdock_before', 'ecommerce' ),
-			array( 'themify_checkout_start', 'checkout_start', 'ecommerce' ),
-			array( 'themify_checkout_end', 'checkout_end', 'ecommerce' ),
-			array( 'themify_shopdock_end', 'shopdock_end', 'ecommerce' ),
-			array( 'themify_shopdock_after', 'shopdock_after', 'ecommerce' ),
-			array( 'themify_sorting_before', 'sorting_before', 'ecommerce' ),
-			array( 'themify_sorting_after', 'sorting_after', 'ecommerce' ),
-			array( 'themify_related_products_start', 'related_products_start', 'ecommerce' ),
-			array( 'themify_related_products_end', 'related_products_end', 'ecommerce' ),
-			array( 'themify_breadcrumb_before', 'breadcrumb_before', 'ecommerce' ),
-			array( 'themify_breadcrumb_after', 'breadcrumb_after', 'ecommerce' ),
-			array( 'themify_ecommerce_sidebar_before', 'ecommerce_sidebar_before', 'ecommerce' ),
-			array( 'themify_ecommerce_sidebar_after', 'ecommerce_sidebar_after', 'ecommerce' ),
-		) as $key => $value ) {
-			$this->register_location( $value[0], $value[1], $value[2] );
+
+		/* register hook locations for PTB plugin */
+		if ( class_exists( 'PTB' ) ) {
+			foreach ( array(
+				array( 'ptb_before_author', 'before_author', 'ptb' ),
+				array( 'ptb_after_author', 'after_author', 'ptb' ),
+				array( 'ptb_before_category', 'before_category', 'ptb' ),
+				array( 'ptb_after_category', 'after_category', 'ptb' ),
+				array( 'ptb_before_comment_count', 'before_comment_count', 'ptb' ),
+				array( 'ptb_after_comment_count', 'after_comment_count', 'ptb' ),
+				array( 'ptb_before_comments', 'before_comments', 'ptb' ),
+				array( 'ptb_after_comments', 'after_comments', 'ptb' ),
+				array( 'ptb_before_custom_image', 'before_custom_image', 'ptb' ),
+				array( 'ptb_after_custom_image', 'after_custom_image', 'ptb' ),
+				array( 'ptb_before_custom_text', 'before_custom_text', 'ptb' ),
+				array( 'ptb_after_custom_text', 'after_custom_text', 'ptb' ),
+				array( 'ptb_before_date', 'before_date', 'ptb' ),
+				array( 'ptb_after_date', 'after_date', 'ptb' ),
+				array( 'ptb_before_editor', 'before_content', 'ptb' ),
+				array( 'ptb_after_editor', 'after_content', 'ptb' ),
+				array( 'ptb_before_excerpt', 'before_excerpt', 'ptb' ),
+				array( 'ptb_after_excerpt', 'after_excerpt', 'ptb' ),
+				array( 'ptb_before_permalink', 'before_permalink', 'ptb' ),
+				array( 'ptb_after_permalink', 'after_permalink', 'ptb' ),
+				array( 'ptb_before_post_tag', 'before_post_tag', 'ptb' ),
+				array( 'ptb_after_post_tag', 'after_post_tag', 'ptb' ),
+				array( 'ptb_before_taxonomies', 'before_taxonomies', 'ptb' ),
+				array( 'ptb_after_taxonomies', 'after_taxonomies', 'ptb' ),
+				array( 'ptb_before_thumbnail', 'before_thumbnail', 'ptb' ),
+				array( 'ptb_after_thumbnail', 'after_thumbnail', 'ptb' ),
+				array( 'ptb_before_title', 'before_title', 'ptb' ),
+				array( 'ptb_after_title', 'after_title', 'ptb' ),
+			) as $key => $value ) {
+				$this->register_location( $value[0], $value[1], $value[2] );
+			}
 		}
 	}
 

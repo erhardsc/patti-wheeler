@@ -1,170 +1,227 @@
-// the semi-colon before function invocation is a safety net against concatenated
-// scripts and/or other plugins which may not be closed properly.
-;(function ( $, window, document, undefined ) {
+/*Rellax.js-1.0.0*/
+(function (root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define([], factory);
+	} else if (typeof module === 'object' && module.exports) {
+		// Node. Does not work with strict CommonJS, but
+		// only CommonJS-like environments that support module.exports,
+		// like Node.
+		module.exports = factory();
+	} else {
+		// Browser globals (root is window)
+		root.Rellax = factory();
+	}
+}
+(this, function () {
+	var rellax_items = {};
+	Rellax = function (elements, options) {
+		"use strict";
+		var self = Object.create(Rellax.prototype),
+				posY = 0, // set it to -1 so the animate function gets called at least once
+				screenY = 0,
+				pause = false,
+				checkPosition = true;
 
-	"use strict";
+		// check what requestAnimationFrame to use, and if
+		// it's not supported, use the onscroll event
+		var loop = window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				window.msRequestAnimationFrame ||
+				window.oRequestAnimationFrame ||
+				function (callback) {
+					setTimeout(callback, 1000 / 60);
+				};
 
-		// undefined is used here as the undefined global variable in ECMAScript 3 is
-		// mutable (ie. it can be changed by someone else). undefined isn't really being
-		// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-		// can no longer be modified.
-
-		// window and document are passed through as local variable rather than global
-		// as this (slightly) quickens the resolution process and can be more efficiently
-		// minified (especially when both are regularly referenced in your plugin).
-
-		// Create the defaults once
-		var pluginName = 'themifyParallaxit',
-				defaults = {
-				selectors: 'div',
-				duration: '0.2'
+		// check which transform property to use
+		var transformProp = window.transformProp || (function () {
+			var testEl = document.createElement('div');
+			if (testEl.style.transform === null) {
+				var vendors = ['Webkit', 'Moz', 'ms'];
+				for (var vendor in vendors) {
+					if (testEl.style[ vendors[vendor] + 'Transform' ] !== undefined) {
+						return vendors[vendor] + 'Transform';
+					}
+				}
+			}
+			return 'transform';
+		})();
+		// limit the given number in the range [min, max]
+		var clamp = function (num, min, max) {
+			return (num <= min) ? min : ((num >= max) ? max : num);
 		};
-
-		// The actual plugin constructor
-		function Plugin ( element, options ) {
-				this.element = element;
-				// jQuery has an extend method which merges the contents of two or
-				// more objects, storing the result in the first object. The first object
-				// is generally empty as we don't want to alter the default options for
-				// future instances of the plugin
-				this.settings = $.extend( {}, defaults, options );
-				this._defaults = defaults;
-				this._name = pluginName;
-
-				this.fps = 60;
-				this.now = 0;
-				this.then = Date.now();
-				this.interval = 1000/this.fps;
-				this.delta = 0;
-				this.requestId = undefined;
-				this.parallaxElemns = [];
-				this.init();
+		// Default Settings
+		self.options = {
+			speed: -2,
+			center: false,
+			round: true
+		};
+		// User defined options (might have more in the future)
+		if (options) {
+			Object.keys(options).forEach(function (key) {
+				self.options[key] = options[key];
+			});
 		}
 
-		// Avoid Plugin.prototype conflicts
-		$.extend(Plugin.prototype, {
+		// If some clown tries to crank speed, limit them to +-10
+		self.options.speed = clamp(self.options.speed, -10, 10);
+		var elem = Array.prototype.slice.call(elements);
+		// Let's kick this script off
+		// Build array for cached element values
+		// Bind scroll and resize to animate method
+		var init = function () {
+			screenY = window.innerHeight;
+			setPosition();
+			// Get and cache initial position of all elements
+			for (var i = 0, len = elem.length; i < len; ++i) {
+				var index = elem[i].dataset.rellaxIndex !== undefined ? elem[i].dataset.rellaxIndex : Object.keys(rellax_items).length;
+				elem[i].dataset.rellaxIndex = index;
+				rellax_items[index] = {};
+				rellax_items[index].el = elem[i];
+				rellax_items[index].data = createBlock(elem[i]);
+			}
+			jQuery(window).off('tfsmartresize.tb_parallax').on('tfsmartresize.tb_parallax', animate);
+			// Start the loop
+			update();
+			// The loop does nothing if the scrollPosition did not change
+			// so call animate to make sure every element has their transforms
+			animate();
+		},
+				// We want to cache the parallax blocks'
+				// values: base, top, height, speed
+				// el: is dom object, return: el cache values
+				createBlock = function (el) {
+					var dataPercentage = el.dataset.rellaxPercentage,
+							dataSpeed = el.dataset.parallaxElementSpeed,
+							reverse = el.dataset.parallaxElementReverse?true:false,
+							// initializing at scrollY = 0 (top of browser)
+							// ensures elements are positioned based on HTML layout.
+							//
+							// If the element has the percentage attribute, the posY needs to be
+							// the current scroll position's value, so that the elements are still positioned based on HTML layout
+							posY = dataPercentage || self.options.center ? (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop) : 0,
+							//blockTop = posY + el.getBoundingClientRect().top,
+							blockTop = jQuery(el).offset().top,
+							blockHeight = el.offsetHeight || el.clientHeight || el.scrollHeight,
+							// apparently parallax equation everyone uses
+							percentage = dataPercentage ? dataPercentage : (posY - blockTop + screenY) / (blockHeight + screenY);
+					if (self.options.center) {
+						percentage = 0.5;
+					}
+					// Optional individual block speed as data attr, otherwise global speed
+					// Check if has percentage attr, and limit speed to 5, else limit it to 10
+					var speed = dataSpeed ? clamp(dataSpeed, -10, 10) : self.options.speed;
+					if (dataPercentage || self.options.center) {
+						speed = clamp(dataSpeed || self.options.speed, -5, 5);
+					}
+					var base = updatePosition(percentage, {data: { speed: speed }, el: el });
+					return {
+						base: base,
+						top: blockTop,
+						height: blockHeight,
+						reverse:reverse,
+						speed: speed,
+						fade: el.dataset.parallaxFade ? true : false,
+						style: el.style.cssText
+					};
+				},
+				// set scroll position (posY)
+				// side effect method is not ideal, but okay for now
+				// returns true if the scroll changed, false if nothing happened
+				setPosition = function () {
 
-				lastScrollTop: 0,
+					if ( ! checkPosition ) return true;
 
-				init: function () {
-					
-					this.parallaxElemns = Array.prototype.slice.call(document.querySelectorAll(this.settings.selectors));//convert to array to add/remove an element;
-					for (var i = 0; i < this.parallaxElemns.length; i++) {
-						this.reset(i);
-					}
-					this.start();					
-				},
-				scrollHandler: function(){
-					this.requestId = requestAnimationFrame(this.scrollHandler.bind(this));
-	 
-					this.now = Date.now();
-					this.delta = this.now - this.then;
-					 
-					if (this.delta > this.interval) {
-						// update time stuffs
-						 
-						// Just `then = now` is not enough.
-						// Lets say we set fps at 10 which means
-						// each frame must take 100ms
-						// Now frame executes in 16ms (60fps) so
-						// the loop iterates 7 times (16*7 = 112ms) until
-						// delta > interval === true
-						// Eventually this lowers down the FPS as
-						// 112*10 = 1120ms (NOT 1000ms).
-						// So we have to get rid of that extra 12ms
-						// by subtracting delta (112) % interval (100).
-						// Hope that makes sense.
-						 
-						this.then = this.now - (this.delta % this.interval);
-						 
-						this.parallaxit();
-					}
-				},
-				add:function(el){
-					if(!el.data('current-delta')){
-						this.parallaxElemns.push(el[0]);
-						var i = this.parallaxElemns.length-1;
-						this.reset(i);
-					}
-				},
-				reset:function(i){
-					this.parallaxElemns[i].settings = Object.create(null);
-					this.parallaxElemns[i].settings.speed = this.parallaxElemns[i].getAttribute('data-parallax-element-speed') ? ( this.parallaxElemns[i].getAttribute('data-parallax-element-speed') / 10 ) : this.settings.duration;
-					this.parallaxElemns[i].settings.reverse = this.parallaxElemns[i].getAttribute('data-parallax-element-reverse') ? this.parallaxElemns[i].getAttribute('data-parallax-element-reverse') : false;
-					this.parallaxElemns[i].settings.firstTop = $(this.parallaxElemns[i]).offset().top;
-					this.parallaxElemns[i].setAttribute('data-current-delta', 0);
-				},
-				stop: function() {
-					if (this.requestId) {
-						window.cancelAnimationFrame(this.requestId);
-						this.requestId = undefined;
-					}
-				},
-				start: function() {
-					if (!this.requestId) {
-						this.requestId = requestAnimationFrame(this.scrollHandler.bind(this));
-					}
-				},
-				parallaxit: function() {
-					var scrollTop = window.pageYOffset,
-						$window = $(window);
+					var oldY = posY;
+					posY = window.pageYOffset !== undefined ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+					// scroll changed, return true
+					return oldY !== posY;
 
-					for (var i = 0; i < this.parallaxElemns.length; i++) {
+				},
+				// Ahh a pure function, gets new transform value
+				// based on scrollPostion and speed
+				// Allow for decimal pixel values
+				updatePosition = function (percentage, block) {
+					var currentPos = block.el.dataset.currentPos || 0,
+						newPos = (0 - (percentage * ( block.data.speed / 10 ) )),
+						value = (currentPos - ((currentPos - newPos) * 0.08));
 
-						if ( this.parallaxElemns[i].settings.reverse ) {
-							var pos = ( ( this.parallaxElemns[i].settings.firstTop + $(this.parallaxElemns[i]).outerHeight() ) - scrollTop ) - $window.height();
-						} else {
-							var pos = ( scrollTop + $window.height() ) - ( this.parallaxElemns[i].settings.firstTop + $(this.parallaxElemns[i]).outerHeight() );
+					return self.options.round ? Math.round(value * 10) / 10 : value;
+				},
+				update = function () {
+					if (setPosition() && pause === false) {
+						animate();
+					}
+					// loop again
+					loop(update);
+				},
+				// Transform3d on parallax element
+				animate = function (e) {
+					posY = window.pageYOffset;
+					screenY = window.innerHeight;
+
+					for (var i in rellax_items) {
+						var block = rellax_items[i],
+							percentage = block.data.reverse ? ( ( block.data.top + block.data.height ) - posY ) - screenY : ( posY + screenY ) - ( block.data.top + block.data.height ),		
+							position = updatePosition(percentage, block);
+
+						if ( block.data.reverse ) {
+							position = Math.max( position, -( screenY - block.data.height ) );
+							position = Math.min( position, ( screenY / 4 ) );
 						}
 
-						var currentDelta = this.parallaxElemns[i].getAttribute('data-current-delta'),
-							newDelta = (0 - (pos * this.parallaxElemns[i].settings.speed)),
-							tweenDelta = (currentDelta - ((currentDelta - newDelta) * 0.08));
+						var translate = 'translate3d(0,' + position + 'px,0)';
+						block.el.dataset.currentPos=position;
 
-						if ( this.parallaxElemns[i].settings.reverse ) {
-							tweenDelta = Math.max( tweenDelta, -( $window.height() - $(this.parallaxElemns[i]).outerHeight() ) );
-							tweenDelta = Math.min( tweenDelta, ( $window.height() / 4 ) );
+						if (block.data.fade) {
+							var bounding = rellax_items[i].el.getBoundingClientRect(),
+								offset = (bounding.bottom - screenY * 0.15);
+							rellax_items[i].el.style['opacity'] = bounding.bottom >= 0 && offset <= block.data.height ? offset / block.data.height : (bounding.top > 0 ? 1 : '');
 						}
-
-						this.parallaxElemns[i].style.top = tweenDelta + 'px'; // use "top" property to prevent conflict with wow js
-						//this.parallaxElemns[i].style.transform = "translateY(" + tweenDelta + "px) translateZ(0)";
-						//this.parallaxElemns[i].style.webkitTransform = "translateY(" + tweenDelta + "px) translateZ(0)";
-						this.parallaxElemns[i].setAttribute('data-current-delta', tweenDelta);
-
-						// Parallax fade on scroll
-						if( $( this.parallaxElemns[i] ).data( 'prallax-fade' ) ) {
-							var parallaxElposition = this.parallaxElemns[i].getBoundingClientRect(),
-								opacityValue;
-							if( (parallaxElposition.bottom - window.innerHeight * 0.15) <= this.parallaxElemns[i].offsetHeight && parallaxElposition.bottom >= 0 ) {
-								opacityValue = (parallaxElposition.bottom - window.innerHeight * 0.15) / this.parallaxElemns[i].offsetHeight;
-								this.parallaxElemns[i].style.opacity = opacityValue;
-							} else if( parallaxElposition.top > 0 ) {
-								this.parallaxElemns[i].style.opacity = 1;
-							}
-						}
+						rellax_items[i].el.style[transformProp] = translate;
 					}
-				},
-				isElementInViewport:function (el) {
+				};
+		Rellax.destroy = function (index) {
+			function destroy(item, i) {
+				var el = item.el;
+				el.style.cssText = item.data.style;
+				el.removeAttribute('data-parallax-element-speed');
+				el.removeAttribute('data-parallax-fade');
+				el.removeAttribute('data-parallax-element-reverse');
+				el.removeAttribute('data-current-pos');
+				el.removeAttribute('data-rellax-index');
 
-					var rect = el.getBoundingClientRect();
-
-					return (
-						rect.top >= 0 &&
-						rect.left >= 0 &&
-						rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-						rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-					);
+				delete el.dataset.rellaxIndex;
+				delete el.dataset.currentPos;
+				delete el.dataset.parallaxFade;
+				delete el.dataset.parallaxElementSpeed;
+				delete el.dataset.parallaxElementReverse;
+				el.style['opacity'] = el.style[transformProp] = '';
+				delete rellax_items[i];
+			}
+			if (index && rellax_items[index] !== undefined) {
+				destroy(rellax_items[index], index);
+			}
+			else {
+				for (var i in rellax_items) {
+					destroy(rellax_items[i], i);
 				}
-		});
-
-		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
-		$.fn[ pluginName ] = function ( options ) {
-				return this.each(function() {
-						if ( !$.data( this, "plugin_" + pluginName ) ) {
-								$.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
-						}
-				});
+			}
+			if (Object.keys(rellax_items).length === 0) {
+				pause = true;
+				jQuery(window).off('tfsmartresize.tb_parallax')
+			}
+		};
+		Rellax.disableCheckPosition = function() {
+			checkPosition = false;
+		};
+		Rellax.enableCheckPosition = function() {
+			checkPosition = true;
 		};
 
-})( jQuery, window, document );
+		init();
+		return self;
+	};
+	return Rellax;
+}));

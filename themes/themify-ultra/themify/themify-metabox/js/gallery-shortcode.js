@@ -13,6 +13,12 @@
 			$('.themify-gallery-shortcode-btn').on('click', function(event) {
 				var shortcode_val = $(this).closest('.themify_field').find('.themify-gallery-shortcode-input');
 		
+				if(shortcode_val.html()){
+					shortcode_val.val(shortcode_val.html());
+					shortcode_val.html('');
+					shortcode_val.text('');
+				}
+		
 				if (file_frame) {
 					file_frame.open();
 				} else {
@@ -75,7 +81,7 @@
 					shortcode_val.val('[' + shortcode + ']');
 				});
 		
-				if ($.trim(shortcode_val.val()).length == 0) {
+				if ($.trim(shortcode_val.val()).length === 0) {
 					$('.media-menu').find('.media-menu-item').last().trigger('click');
 				}
 				event.preventDefault();

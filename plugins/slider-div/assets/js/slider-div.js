@@ -57,6 +57,14 @@ function initialize() {
     view_slider($(window).width(), 'Your Next Step', $(this));
 
   });
+
+  $('.footer-your-next-step').unbind().click(function (e) {
+
+    e.preventDefault();
+
+    view_slider($(window).width(), 'Your Next Step', $(this));
+
+  });
 	
 }
 

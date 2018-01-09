@@ -1,9 +1,15 @@
 <?php
-/**
- * Themify Icon Picker
- *
- * An extendible tool that simplifies picking icons in icon fonts
- */
+/*
+Plugin Name:  Themify Icon Picker
+Version:      1.0.0
+Author:       Themify
+Author URI:   http://themify.me/
+Description:   
+Text Domain:  themify
+Domain Path:  /languages
+License:      GNU General Public License v2.0
+License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+*/
 
 if( ! class_exists( 'Themify_Icon_Picker' ) ) :
 /**
@@ -13,8 +19,7 @@ if( ! class_exists( 'Themify_Icon_Picker' ) ) :
  */
 class Themify_Icon_Picker {
 
-	private static $instance = null;
-	private $url;
+	public $url;
 	private $types;
 
 	/**
@@ -23,7 +28,11 @@ class Themify_Icon_Picker {
 	 * @return	A single instance of this class.
 	 */
 	public static function get_instance( $url = '' ) {
-		return null == self::$instance ? self::$instance = new self( $url ) : self::$instance;
+		static $instance = null;
+		if ( $instance === null ) {
+			$instance = new self( $url );
+		}
+		return $instance;
 	}
 
 	private function __construct( $url ) {
@@ -99,10 +108,18 @@ class Themify_Icon_Picker {
 	 * Must be called manually wherever you need the icon picker.
 	 */
 	public function enqueue() {
-		wp_enqueue_style( 'tf-icon-picker', themify_enque($this->url . 'assets/styles.css' ));
-		wp_enqueue_script( 'tf-icon-picker', themify_enque($this->url . 'assets/themify.font-icons-select.js'), array( 'jquery' ), null, true );
+		wp_enqueue_style( 'tf-icon-picker', self::themify_unique($this->url . 'assets/styles.css'));
+		wp_enqueue_script( 'tf-icon-picker', self::themify_unique($this->url . 'assets/themify.font-icons-select.js'), array( 'jquery' ), null, true );
+		wp_localize_script( 'tf-icon-picker', 'tfIconPicker', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+
 		do_action( 'themify_icon_picker_enqueue' );
 	}
+        //need for themify icons plugin
+        public static function themify_unique($url){
+            return function_exists('themify_enque')?themify_enque($url):$url;
+        }
 }
 endif;
 

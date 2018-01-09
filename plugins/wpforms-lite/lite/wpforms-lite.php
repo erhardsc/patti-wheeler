@@ -115,7 +115,7 @@ class WPForms_Lite {
 						'fields' => 'email',
 					),
 					'parent'     => 'settings',
-					'subsection' => $id
+					'subsection' => $id,
 				)
 			);
 			endif;
@@ -126,12 +126,12 @@ class WPForms_Lite {
 				$settings->form_data,
 				__( 'Email Subject', 'wpforms' ),
 				array(
-					'default'    => __( 'New Entry: ' , 'wpforms' ) . $settings->form->post_title,
+					'default'    => sprintf( _x( 'New Entry: %s', 'Form name', 'wpforms' ), $settings->form->post_title ),
 					'smarttags'  => array(
-						'type'   => 'all'
+						'type'   => 'all',
 					),
 					'parent'     => 'settings',
-					'subsection' => $id
+					'subsection' => $id,
 				)
 			);
 			wpforms_panel_field(
@@ -147,7 +147,7 @@ class WPForms_Lite {
 						'fields' => 'name,text',
 					),
 					'parent'     => 'settings',
-					'subsection' => $id
+					'subsection' => $id,
 				)
 			);
 			wpforms_panel_field(
@@ -163,7 +163,7 @@ class WPForms_Lite {
 						'fields' => 'email',
 					),
 					'parent'     => 'settings',
-					'subsection' => $id
+					'subsection' => $id,
 				)
 			);
 			wpforms_panel_field(
@@ -178,7 +178,7 @@ class WPForms_Lite {
 						'fields' => 'email',
 					),
 					'parent'     => 'settings',
-					'subsection' => $id
+					'subsection' => $id,
 				)
 			);
 			wpforms_panel_field(
@@ -191,12 +191,12 @@ class WPForms_Lite {
 					'rows'       => 6,
 					'default'    => '{all_fields}',
 					'smarttags'  => array(
-						'type'   => 'all'
+						'type'   => 'all',
 					),
 					'parent'     => 'settings',
 					'subsection' => $id,
 					'class'      => 'email-msg',
-					'after'      => '<p class="note">' . __( 'To display all form fields, use the <code>{all_fields}</code> Smart Tag.', 'wpforms' ) . '</p>'
+					'after'      => '<p class="note">' . __( 'To display all form fields, use the <code>{all_fields}</code> Smart Tag.', 'wpforms' ) . '</p>',
 				)
 			);
 
@@ -250,29 +250,33 @@ class WPForms_Lite {
 
 		$templates = array(
 			array(
-				'name'        => 'Request A Quote Form',
+				'name'        => __( 'Request A Quote Form', 'wpforms' ),
 				'slug'        => 'request-quote',
-				'description' => 'Start collecting leads with this pre-made Request a quote form. You can add and remove fields as needed.',
+				'description' => __( 'Start collecting leads with this pre-made Request a quote form. You can add and remove fields as needed.', 'wpforms' ),
 			),
 			array(
-				'name'        => 'Donation Form',
+				'name'        => __( 'Donation Form', 'wpforms' ),
 				'slug'        => 'donation',
-				'description' => 'Start collecting donation payments on your website with this ready-made Donation form. You can add and remove fields as needed.',
+				'description' => __( 'Start collecting donation payments on your website with this ready-made Donation form. You can add and remove fields as needed.', 'wpforms' ),
 			),
 			array(
-				'name'        => 'Billing / Order Form',
+				'name'        => __( 'Billing / Order Form', 'wpforms' ),
 				'slug'        => 'order',
-				'description' => 'Collect payments for product and service orders with this ready-made form template. You can add and remove fields as needed.',
-			)
+				'description' => __( 'Collect payments for product and service orders with this ready-made form template. You can add and remove fields as needed.', 'wpforms' ),
+			),
 		);
 		?>
-		<div class="wpforms-setup-title">Unlock Pre-Made Form Templates <a href="<?php echo wpforms_admin_upgrade_link(); ?>" target="_blank" rel="noopener" class="btn-green" style="text-transform:uppercase;font-size:13px;font-weight:700;padding:5px 10px;vertical-align:text-bottom;">Upgrade</a></div>
-		<p class="wpforms-setup-desc">While WPForms Lite allows you to create any type of form, you can speed up the process by unlocking our other pre-built form templates among other features, so you never have to start from scratch again...</p>
+		<div class="wpforms-setup-title">
+			<?php _e( 'Unlock Pre-Made Form Templates', 'wpforms' ); ?> <a href="<?php echo wpforms_admin_upgrade_link(); ?>" target="_blank" rel="noopener" class="btn-green wpforms-upgrade-link" style="text-transform: uppercase;font-size: 13px;font-weight: 700;padding: 5px 10px;vertical-align: text-bottom;"><?php _e( 'Upgrade', 'wpforms' ); ?></a>
+		</div>
+		<p class="wpforms-setup-desc">
+			<?php _e( 'While WPForms Lite allows you to create any type of form, you can speed up the process by unlocking our other pre-built form templates among other features, so you never have to start from scratch again...', 'wpforms' ); ?>
+		</p>
 		<div class="wpforms-setup-templates wpforms-clear" style="opacity:0.5;">
 			<?php
 			$x = 0;
 			foreach ( $templates as $template ) {
-				$class =  0 == $x % 3 ? 'first ' : '';
+				$class = 0 == $x % 3 ? 'first ' : '';
 				?>
 				<div class="wpforms-template upgrade-modal <?php echo $class; ?>" id="wpforms-template-<?php echo sanitize_html_class( $template['slug'] ); ?>">
 					<div class="wpforms-template-name wpforms-clear">
@@ -409,7 +413,7 @@ class WPForms_Lite {
 
 		?>
 		<button class="wpforms-panel-payments-button upgrade-modal" data-panel="payments">
-			<i class="fa fa-usd"></i><span>Payments</span>
+			<i class="fa fa-usd"></i><span><?php _e( 'Payments', 'wpforms' ); ?></span>
 		</button>
 		<?php
 	}
@@ -436,7 +440,7 @@ class WPForms_Lite {
 				'upgrade_title'     => __( 'is a PRO Feature', 'wpforms' ),
 				'upgrade_message'   => __( 'We\'re sorry, %name% is not available on your plan.<br><br>Please upgrade to the PRO plan to unlock all these awesome features.', 'wpforms' ),
 				'upgrade_button'    => __( 'Upgrade to PRO', 'wpforms' ),
-				'upgrade_url'       => wpforms_admin_upgrade_link()
+				'upgrade_url'       => wpforms_admin_upgrade_link(),
 			)
 		);
 	}
@@ -493,7 +497,7 @@ class WPForms_Lite {
 	 */
 	public function entries_page() {
 
-		if ( ! isset( $_GET['page'] ) || 'wpforms-entries' !== $_GET['page']  ) {
+		if ( ! isset( $_GET['page'] ) || 'wpforms-entries' !== $_GET['page'] ) {
 			return;
 		}
 		?>
@@ -668,7 +672,7 @@ class WPForms_Lite {
 							<td id="cb" class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1">Select All</label><input id="cb-select-all-1" type="checkbox"></td>
 							<th scope="col" id="indicators" class="manage-column column-indicators column-primary"></th>
 							<th scope="col" id="wpforms_field_0" class="manage-column column-wpforms_field_0">Name</th>
-							<th scope="col" id="wpforms_field_1" class="manage-column column-wpforms_field_1">E-mail</th>
+							<th scope="col" id="wpforms_field_1" class="manage-column column-wpforms_field_1">Email</th>
 							<th scope="col" id="wpforms_field_2" class="manage-column column-wpforms_field_2">Comment or Message</th>
 							<th scope="col" id="date" class="manage-column column-date sortable desc"><a href="#"><span>Date</span><span class="sorting-indicator"></span></a></th>
 							<th scope="col" id="actions" class="manage-column column-actions">Actions</th>
@@ -682,7 +686,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">David Wells</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">DavidMWells@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">DavidMWells@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Vivamus sit amet dolor arcu. Praesent fermentum semper justo, nec scelerisq…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -694,7 +698,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Jennifer Selzer</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">JenniferLSelzer@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">JenniferLSelzer@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Maecenas sollicitudin felis et justo elementum, et lobortis justo vulputate…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -706,7 +710,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Philip Norton</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">PhilipTNorton@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">PhilipTNorton@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Etiam cursus orci tellus, ut vehicula odio mattis sit amet. Curabitur eros …</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -718,7 +722,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Kevin Gregory</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">KevinJGregory@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">KevinJGregory@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Cras vel orci congue, tincidunt eros vitae, consectetur risus. Proin enim m…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -730,7 +734,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">John Heiden</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">JohnCHeiden@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">JohnCHeiden@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Fusce consequat dui ut orci tempus cursus. Vivamus ut neque id ipsum tempor…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -742,7 +746,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Laura Shuler</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">LauraDShuler@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">LauraDShuler@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">In ac finibus erat. Curabitur sit amet ante nec tellus commodo commodo non …</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -754,7 +758,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Walter Sullivan</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">WalterPSullivan@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">WalterPSullivan@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Phasellus semper magna leo, ut porta nibh pretium sed. Interdum et malesuad…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 											<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -766,7 +770,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Gary Austin</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">GaryJAustin@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">GaryJAustin@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet ero…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -778,7 +782,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Mark Frahm</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">MarkTFrahm@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">MarkTFrahm@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Proin euismod tellus quis tortor bibendum, a pulvinar libero fringilla. Cur…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -790,7 +794,7 @@ class WPForms_Lite {
 								 type="button" class="toggle-row"><span class="screen-reader-text">Show more details</span></button>
 							</td>
 							<td class="wpforms_field_0 column-wpforms_field_0" data-colname="Name">Linda Reynolds</td>
-							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="E-mail">LindaJReynolds@example.com</td>
+							<td class="wpforms_field_1 column-wpforms_field_1" data-colname="Email">LindaJReynolds@example.com</td>
 							<td class="wpforms_field_2 column-wpforms_field_2" data-colname="Comment or Message">Cras sodales sagittis maximus. Nunc vestibulum orci quis orci pulvinar vulp…</td>
 							<td class="date column-date" data-colname="Date">July 27, 2017</td>
 							<td class="actions column-actions" data-colname="Actions"><a href="#" title="View Form Entry" class="view">View</a> <span class="sep">|</span> <a href="#" title="Delete Form Entry" class="delete">Delete</a></td>
@@ -801,7 +805,7 @@ class WPForms_Lite {
 							<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2">Select All</label><input id="cb-select-all-2" type="checkbox"></td>
 							<th scope="col" class="manage-column column-indicators column-primary"></th>
 							<th scope="col" class="manage-column column-wpforms_field_0">Name</th>
-							<th scope="col" class="manage-column column-wpforms_field_1">E-mail</th>
+							<th scope="col" class="manage-column column-wpforms_field_1">Email</th>
 							<th scope="col" class="manage-column column-wpforms_field_2">Comment or Message</th>
 							<th scope="col" class="manage-column column-date sortable desc"><a href="#"><span>Date</span><span class="sorting-indicator"></span></a></th>
 							<th scope="col" class="manage-column column-actions">Actions</th>
@@ -844,7 +848,7 @@ class WPForms_Lite {
 	 */
 	public function addons_page() {
 
-		if ( ! isset( $_GET['page'] ) || 'wpforms-addons' !== $_GET['page']  ) {
+		if ( ! isset( $_GET['page'] ) || 'wpforms-addons' !== $_GET['page'] ) {
 			return;
 		}
 
@@ -853,67 +857,67 @@ class WPForms_Lite {
 			array(
 				'name' => 'Aweber',
 				'desc' => 'WPForms AWeber addon allows you to create AWeber newsletter signup forms in WordPress, so you can grow your email list.',
-				'icon' => 'addon-icon-aweber.png'
+				'icon' => 'addon-icon-aweber.png',
 			),
 			array(
 				'name' => 'Campaign Monitor',
 				'desc' => 'WPForms Campaign Monitor addon allows you to create Campaign Monitor newsletter signup forms in WordPress, so you can grow your email list.',
-				'icon' => 'addon-icon-campaign-monitor.png'
+				'icon' => 'addon-icon-campaign-monitor.png',
 			),
 			array(
 				'name' => 'Conditional Logic',
 				'desc' => 'WPForms\' smart conditional logic addon allows you to show or hide fields, sections, and subscribe to newsletters based on user selections, so you can collect the most relevant information.',
-				'icon' => 'addon-icon-conditional-logic.png'
+				'icon' => 'addon-icon-conditional-logic.png',
 			),
 			array(
 				'name' => 'Custom Captcha',
 				'desc' => 'WPForms custom captcha addon allows you to define custom questions or use random math questions as captcha to combat spam form submissions.',
-				'icon' => 'addon-icon-captcha.png'
+				'icon' => 'addon-icon-captcha.png',
 			),
 			array(
 				'name' => 'Form Abandonment',
 				'desc' => 'Unlock more leads by capturing partial entries from your forms. Easily follow up with interested leads and turn them into loyal customers.',
-				'icon' => 'addon-icon-form-abandonment.png'
+				'icon' => 'addon-icon-form-abandonment.png',
 			),
 			array(
 				'name' => 'Geolocation',
 				'desc' => 'WPForms geolocation addon allows you to collect and store your website visitors geolocation data along with their form submission.',
-				'icon' => 'addon-icon-geolocation.png'
+				'icon' => 'addon-icon-geolocation.png',
 			),
 			array(
 				'name' => 'GetResponse',
 				'desc' => 'WPForms GetResponse addon allows you to create GetResponse newsletter signup forms in WordPress, so you can grow your email list.',
-				'icon' => 'addon-icon-getresponse.png'
+				'icon' => 'addon-icon-getresponse.png',
 			),
 			array(
 				'name' => 'MailChimp',
 				'desc' => 'WPForms MailChimp addon allows you to create MailChimp newsletter signup forms in WordPress, so you can grow your email list.',
-				'icon' => 'addon-icon-mailchimp.png'
+				'icon' => 'addon-icon-mailchimp.png',
 			),
 			array(
 				'name' => 'PayPal Standard',
 				'desc' => 'WPForms\' PayPal addon allows you to connect your WordPress site with PayPal to easily collect payments, donations, and online orders.',
-				'icon' => 'addon-icon-paypal.png'
+				'icon' => 'addon-icon-paypal.png',
 			),
 			array(
 				'name' => 'Post Submissions',
 				'desc' => 'WPForms Post Submissions addon makes it easy to have user-submitted content in WordPress. This front-end post submission form allow your users to submit blog posts without logging into the admin area.',
-				'icon' => 'addon-icon-post-submissions.png'
+				'icon' => 'addon-icon-post-submissions.png',
 			),
 			array(
 				'name' => 'Stripe',
 				'desc' => 'WPForms\' Stripe addon allows you to connect your WordPress site with Stripe to easily collect payments, donations, and online orders.',
-				'icon' => 'addon-icon-stripe.png'
+				'icon' => 'addon-icon-stripe.png',
 			),
 			array(
 				'name' => 'User Registration',
 				'desc' => 'WPForms\' Stripe addon allows you to connect your WordPress site with Stripe to easily collect payments, donations, and online orders.',
-				'icon' => 'addon-icon-user-registration.png'
+				'icon' => 'addon-icon-user-registration.png',
 			),
 			array(
 				'name' => 'Zapier',
 				'desc' => 'WPForms\' Zapier addon allows you to connect your WordPress forms with over 500+ web apps. The integration possibilities here are just endless..',
-				'icon' => 'addon-icon-zapier.png'
+				'icon' => 'addon-icon-zapier.png',
 			),
 		)
 		?>
@@ -926,7 +930,7 @@ class WPForms_Lite {
 			</div>
 			<div class="wpforms-admin-content">
 				<div class="addons-container">
-					<?php foreach( $addons as $addon ) : ?>
+					<?php foreach ( $addons as $addon ) : ?>
 					<div class="addon-container">
 						<div class="addon-item">
 							<div class="details wpforms-clear" style=""><img src="https://wpforms.com/images/<?php echo $addon['icon']; ?>">
@@ -946,4 +950,5 @@ class WPForms_Lite {
 		<?php
 	}
 }
+
 new WPForms_Lite;

@@ -41,6 +41,19 @@ Primary styles for the input boxes
     border: none;
 }
 
+#slider input[type=text]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: black;
+}
+#slider input[type=text]::-moz-placeholder { /* Firefox 19+ */
+    color: pink;
+}
+#slider input[type=text]:-ms-input-placeholder { /* IE 10+ */
+    color: pink;
+}
+#slider input[type=text]:-moz-placeholder { /* Firefox 18- */
+    color: pink;
+}
+
 #slider input:focus {
     box-shadow: none !important;
     outline: none !important;

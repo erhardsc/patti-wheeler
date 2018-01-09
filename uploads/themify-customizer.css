@@ -3,14 +3,44 @@ a {
 	color: #ab9279; 
 }
 a:hover {	
-	color: #63503d; 
+	color: #d1bcaa; 
 }
-#header {	
-	color: #393f43; 
+#headerwrap {	
+	padding: 10px; 
 }
-#header a:hover {	
-	color: #ab9279; 
-}
-#main-nav .current_page_item > a, #main-nav .current-menu-item > a, #main-nav > .current_page_item > a, #main-nav > .current-menu-item > a {	
+#header {		font-size:1.2em;
+
 	color: #a89078; 
 }
+#header a {	
+	color: #a89078; 
+}
+#header a:hover {	
+	color: #d1bcaa; 
+}
+#main-nav-wrap #main-nav .current_page_item > a, #main-nav .current-menu-item > a, #main-nav > .current_page_item > a, #main-nav > .current-menu-item > a {	
+	color: #a89078; 
+}
+#footer, #footer-logo, .footer-nav a, .footer-text {		font-size:1em;
+ 
+}
+@media screen and (max-width: 680px) { /* Themify Customize Styling */
+a {	
+	color: #ab9279; 
+}
+a:hover {	
+	color: #d1bcaa; 
+}
+#header {	
+	color: #a89078; 
+}
+#header a {	
+	color: #ab9279; 
+}
+#header a:hover {	
+	color: #d1bcaa; 
+}
+#main-nav-wrap #main-nav .current_page_item > a, #main-nav .current-menu-item > a, #main-nav > .current_page_item > a, #main-nav > .current-menu-item > a {	
+	color: #a89078; 
+}
+ }

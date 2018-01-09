@@ -13,18 +13,16 @@ if (!function_exists('woocommerce_get_product_thumbnail')) {
 	 * @return string Markup including image
 	 */
 	function woocommerce_get_product_thumbnail( $size = 'shop_catalog', $placeholder_width = 0, $placeholder_height = 0 ) {
-		global $post, $woocommerce;
-		
-		$shop_catalog = wc_get_image_size( $size );
-
-		if (!$placeholder_width) $placeholder_width = $shop_catalog['width'];
-		if (!$placeholder_height) $placeholder_height = $shop_catalog['height'];
-		
+		global $post;
 		$html = '<figure class="product-image">';
 		
 			if ( has_post_thumbnail() ) {
 				$html .= get_the_post_thumbnail($post->ID, $size);
 			} else {
+                            $shop_catalog = wc_get_image_size( $size );
+                            if (!$placeholder_width) $placeholder_width = $shop_catalog['width'];
+                            if (!$placeholder_height) $placeholder_height = $shop_catalog['height'];
+
 				$html .= '<img src="http://placehold.it/'.$placeholder_width.'x'.$placeholder_height.'" alt="Placeholder" />'; 
 			}
 
@@ -87,37 +85,6 @@ if(!function_exists('themify_after_shop_content')) {
 		?>
 		</div><!-- /#layout -->
 		<?php
-	}
-}
-
-if (!function_exists('woocommerce_single_product_content_ajax')) {
-	/**
-	 * WooCommerce Single Product Content with AJAX
-	 * @param object|bool $wc_query
-	 */
-	function woocommerce_single_product_content_ajax( $wc_query = false ) {
-
-		// Override the query used
-		if (!$wc_query) {
-			global $wp_query;
-			$wc_query = $wp_query;
-		}
-		
-		if ( $wc_query->have_posts() ) while ( $wc_query->have_posts() ) : $wc_query->the_post(); ?>
-			<div id="product_single_wrapper" class="product product-<?php the_ID(); ?> single product-single-ajax">
-				<div class="product-imagewrap">
-					<?php do_action('themify_single_product_image_ajax'); ?>
-				</div>
-				<div class="product-content product-single-entry">
-					<h3 class="product-title"><?php the_title(); ?></h3>
-					<div class="product-price">
-						<?php do_action('themify_single_product_price'); ?>
-					</div>
-					<?php do_action('themify_single_product_ajax_content'); ?>
-				</div>
-			</div>
-			<!-- /.product -->
-		<?php endwhile;
 	}
 }
 

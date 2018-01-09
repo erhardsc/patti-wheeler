@@ -756,6 +756,7 @@ WOOCOMMERCE
 .woocommerce .product .add-to-cart-button {
 	margin: 0;
 }
+.woocommerce .wc-products .product .button,
 .woocommerce ul.products li.product .add_to_cart_button,
 .woocommerce ul.products li.product .button[data-product_id],
 .woocommerce .product .add-to-cart-button .add_to_cart_button {
@@ -788,6 +789,7 @@ WOOCOMMERCE
 	-webkit-transition: all .3s linear;
 	transition: all .3s linear;
 }
+.woocommerce .wc-products .product .button,
 .woocommerce ul.products li.product .added_to_cart,
 .woocommerce ul.products li.product .add_to_cart_button,
 .woocommerce ul.products li.product .button[data-product_id],
@@ -814,6 +816,7 @@ WOOCOMMERCE
 .woocommerce .wc-products .product:hover .post-image {
 	border-bottom-color: transparent;
 }
+.woocommerce .wc-products .product:hover .button,
 .woocommerce ul.products li.product:hover .added_to_cart,
 .woocommerce ul.products li.product:hover .add_to_cart_button,
 .woocommerce ul.products li.product:hover .button[data-product_id],

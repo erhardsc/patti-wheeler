@@ -457,18 +457,18 @@ a.shortcode.button.outline.blue,
 }
 
 /* PROGRESS BAR */
-.module-progressbar .tf-progress-bar {
+.module-progressbar .tb-progress-bar {
 	height: 15px !important;
 	background-color: #fff !important;
 	margin-bottom: 3.65em !important;
 }
-.module-progressbar .tf-progress-bar .tf-progress-bar-bg {
+.module-progressbar .tb-progress-bar .tb-progress-bar-bg {
 	height: 15px !important;
 }
-.module-progressbar .tf-progress-bar .tf-progress-bar-label {
+.module-progressbar .tb-progress-bar .tb-progress-bar-label {
 	text-transform: none !important;
 }
-.module-progressbar .tf-progress-tooltip {
+.module-progressbar .tb-progress-tooltip {
 	background-color: #084073;
 	color: #fff;
 	font-weight: 500;
@@ -480,7 +480,7 @@ a.shortcode.button.outline.blue,
 	margin-bottom: 17px;
 	margin-right: -32.5px;
 }
-.module-progressbar .tf-progress-tooltip:after {
+.module-progressbar .tb-progress-tooltip:after {
 	content: '';
 	display: block;
 	position: absolute;

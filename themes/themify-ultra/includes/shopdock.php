@@ -29,7 +29,7 @@
 
 			<p class="cart-total">
 				<?php echo WC()->cart->get_cart_subtotal(); ?>
-				<a id="view-cart" href="<?php echo esc_url( WC()->cart->get_cart_url() ) ?>">
+				<a id="view-cart" href="<?php echo esc_url( wc_get_cart_url() ) ?>">
 					<?php _e('(view cart)', 'themify') ?>
 				</a>
 			</p>

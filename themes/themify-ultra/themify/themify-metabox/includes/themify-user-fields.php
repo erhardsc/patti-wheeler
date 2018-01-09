@@ -9,7 +9,6 @@ if( ! class_exists( 'Themify_User_Meta' ) ) :
 class Themify_User_Meta {
 
 	private static $instance = null;
-	public $fields = null;
 
 	public static function get_instance() {
 		return null == self::$instance ? self::$instance = new self : self::$instance;
@@ -29,12 +28,12 @@ class Themify_User_Meta {
 	 * @uses apply_filters calls themify_metabox/user/fields filter
 	 * @return array
 	 */
-	public function get_fields() {
-		if( $this->fields == null ) {
-			$this->fields = apply_filters( 'themify_metabox/user/fields', array() );
-		}
-
-		return $this->fields;
+	private function get_fields() {
+            static $fields = null;
+            if( $fields === null ) {
+                $fields = apply_filters( 'themify_metabox/user/fields', array() );
+            }
+            return $fields;
 	}
 
 	/**
@@ -75,14 +74,14 @@ class Themify_User_Meta {
 				if ( isset( $field['hide'] ) ) {
 					$data_hide = is_array( $field['hide'] ) ? implode( ' ', $field['hide'] ) : $field['hide'];
 				}
-				if( isset($field['default_toggle']) && $field['default_toggle'] == 'hidden' ){
+				if( isset($field['default_toggle']) && $field['default_toggle'] === 'hidden' ){
 					$ext_attr = 'style="display:none;"';
 				}
 				if( isset($field['enable_toggle']) && $field['enable_toggle'] == true ) {
 					$toggle_class .= ' enable_toggle';
 				}
 				?>
-				<tr>
+				<tr class="themify_field_row">
 					<th><label for=""><?php echo $field['title']; ?></label></th>
 					<td class="themify_field">
 						<?php
@@ -141,7 +140,7 @@ class Themify_User_Meta {
 	 */
 	function enqueue() {
 		global $pagenow;
-		if ( in_array( $pagenow, array( 'profile.php', 'user-edit.php' ) ) ) {
+		if ( in_array( $pagenow, array( 'profile.php', 'user-edit.php' ),true ) ) {
 			Themify_Metabox::get_instance()->enqueue();
 		}
 	}

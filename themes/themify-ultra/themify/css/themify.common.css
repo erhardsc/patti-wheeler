@@ -122,6 +122,12 @@ THEMIFY COMMONS
 	margin: 0 0 .5em 0;
 }
 
+.social-widget .links-list li {
+	display: inline-block;
+	margin: 0 5px 5px 0;
+	border: none !important;
+}
+
 /************************************************************************************
 HOOK CONTENT
 *************************************************************************************/
@@ -305,20 +311,17 @@ a:focus {
 /**
  * Fix flicker on animated modules or rows
  */
-.js .module.wow,
-.js .themify_builder_content .themify_builder_row.wow,
-.js .module_row.wow,
-.js .builder-posts-wrap > .post.wow {
+.module.wow,
+.themify_builder_content .themify_builder_row.wow,
+.module_row.wow,
+.builder-posts-wrap > .post.wow {
 	visibility: hidden;
 }
 
 /**
  * Hide Builder slider items during page load
  */
-.js div:not(.caroufredsel_wrapper) > .themify_builder_slider > li:not(:first-child) {
-	display: none;
-}
-
+div:not(.caroufredsel_wrapper) > .themify_builder_slider > li:not(:first-child),
 .mfp-hide {
 	display: none;
 }

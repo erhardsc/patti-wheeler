@@ -1,9 +1,10 @@
-﻿=== Quiz And Survey Master (Formerly Quiz Master Next) ===
+=== Quiz And Survey Master (Formerly Quiz Master Next) ===
 Contributors: fpcorso
-Tags: quiz, survey, lead, test, score, exam, questionnaire, answer, question, points
-Requires at least: 4.7
-Tested up to: 4.8
-Stable tag: 5.0.6
+Tags: quiz, survey, lead, test, score, exam, questionnaire, answer, question
+Requires at least: 4.8
+Tested up to: 4.9
+Requires PHP: 5.2
+Stable tag: 5.1.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,9 +63,11 @@ While Quiz And Survey Master is fully functional and is packed full of features 
 **Free Add-ons**
 
 * [Certificates](https://quizandsurveymaster.com/downloads/certificate/?utm_source=readme&utm_medium=plugin&utm_campaign=qsm_plugin&utm_content=certificate)
+* [Leaderboards](https://quizandsurveymaster.com/downloads/leaderboards/?utm_source=readme&utm_medium=plugin&utm_campaign=qsm_plugin&utm_content=leaderboads)
 
 **Premium Add-ons**
 
+* [Google Analytics Tracking](http://bit.ly/2AAgABs)
 * [Landing Page](https://quizandsurveymaster.com/downloads/landing-page/?utm_source=readme&utm_medium=plugin&utm_content=landing-page&utm_campaign=qsm_plugin)
 * [Export Results](https://quizandsurveymaster.com/downloads/export-results/?utm_source=readme&utm_medium=plugin&utm_content=export-results&utm_campaign=qsm_plugin)
 * [Reporting & Analysis](https://quizandsurveymaster.com/downloads/results-analysis/?utm_source=readme&utm_medium=plugin&utm_content=reporting-analysis&utm_campaign=qsm_plugin)
@@ -107,47 +110,33 @@ This is usually a theme conflict. You can [checkout out our common conflict solu
 
 == Changelog ==
 
-= 5.0.6 (August 1, 2017) =
-* Closed Bug: HTML Entities causing incorrect answers and missing user answer - ([Issue #565](https://github.com/fpcorso/quiz_master_next/issues/565))
+= 5.1.5 (November 27, 2017) =
+* IMPORTANT FIX: 5.1.4 had a fatal error for sites using out of date PHP versions. Please update to this!
 
-= 5.0.5 (July 8, 2017) =
-* Closed Enhancement: Add notice for leaderboard removal - ([Issue #562](https://github.com/fpcorso/quiz_master_next/issues/562))
-* Closed Bug: Scheduled timeframe options are not working - ([Issue #558](https://github.com/fpcorso/quiz_master_next/issues/558))
+= 5.1.4 (November 27, 2017) =
+* Closed Bug: Headers already sent message - ([Issue #596](https://github.com/fpcorso/quiz_master_next/issues/596))
+* Closed Bug: Styling for hints is missing causing them to be hard to read - ([Issue #587](https://github.com/fpcorso/quiz_master_next/issues/587))
 
-= 5.0.4 (June 19, 2017) =
-* Closed Bug: Required fields are not checked 2nd time user takes quiz when timer is turned on ([Issue #528](https://github.com/fpcorso/quiz_master_next/issues/528))
-* Closed Enhancement: Ensure compatibility with WordPress 4.8 ([Issue #554](https://github.com/fpcorso/quiz_master_next/issues/554))
+= 5.1.3 (November 18, 2017) =
+* Closed Bug: MathJax library not loading - ([Issue #590](https://github.com/fpcorso/quiz_master_next/issues/590))
+* Closed Bug: Fatal error: Call to a member function register_question_type - ([Issue #509](https://github.com/fpcorso/quiz_master_next/issues/509))
 
-= 5.0.3 (May 29, 2017) =
-* Minor code changes
+= 5.1.2 (October 17, 2017) =
+* Closed Bug: Special characters fail the uppercase validation in open answer/fill in the blank questions - ([Issue #580](https://github.com/fpcorso/quiz_master_next/issues/580))
 
-= 5.0.2 (May 7, 2017) =
-* Closed Bug: Social sharing text not updating when user changes the text ([Issue #541](https://github.com/fpcorso/quiz_master_next/issues/541))
+= 5.1.1 (October 4, 2017) =
+* Closed Bug: Variable function names break Certificate addon - ([Issue #578](https://github.com/fpcorso/quiz_master_next/issues/578))
 
-= 5.0.1 (March 27, 2017) =
-* Closed Bug: The setting to hide contact fields from logged-in users is hiding fields from visitors too ([Issue #535](https://github.com/fpcorso/quiz_master_next/issues/535))
+= 5.1.0 (October 2, 2017) =
+* Closed Enhancement: Add all active quizzes function to API - ([Issue #552](https://github.com/fpcorso/quiz_master_next/issues/552))
+* Closed User Request: Shortcode or variable for dynamic link to specific quiz/survey - ([Issue #524](https://github.com/fpcorso/quiz_master_next/issues/524))
+* Closed Enhancement: Use locale's date to generate date strings - ([Issue #479](https://github.com/fpcorso/quiz_master_next/issues/479))
+* Closed User Request: Allow users to change the date to European Date DD.MM.YYYY - ([Issue #439](https://github.com/fpcorso/quiz_master_next/issues/439))
+* Closed User Request: More Space in the Correct Answer Info textbox - ([Issue #417](https://github.com/fpcorso/quiz_master_next/issues/417))
 
-= 5.0.0 (March 25, 2017) =
-* Closed Bug: Fix delete custom post types during uninstall bug ([Issue #527](https://github.com/fpcorso/quiz_master_next/issues/527))
-* Closed Enhancement: Change Shortcode To QSM ([Issue #515](https://github.com/fpcorso/quiz_master_next/issues/515))
-* Closed Enhancement: Search function for quizzes/surveys ([Issue #492](https://github.com/fpcorso/quiz_master_next/issues/492))
-* Closed Enhancement: Create new fields class to handle creation/post data of settings fields ([Issue #450](https://github.com/fpcorso/quiz_master_next/issues/450))
-* Closed Enhancement: Create new settings class to handle the settings data ([Issue #449](https://github.com/fpcorso/quiz_master_next/issues/449))
-* Closed Enhancement: Rewrite options system to allow for extendibility ([Issue #448](https://github.com/fpcorso/quiz_master_next/issues/448))
-* Closed Enhancement: Enable tabs for the admin results page ([Issue #408](https://github.com/fpcorso/quiz_master_next/issues/408))
-* Closed Enhancement: Create onboarding process ([Issue #397](https://github.com/fpcorso/quiz_master_next/issues/397))
-* Closed Enhancement: Create new contact tab to allow form creation ([Issue #394](https://github.com/fpcorso/quiz_master_next/issues/394))
-* Closed Enhancement: Move Certificate to free addon ([Issue #381](https://github.com/fpcorso/quiz_master_next/issues/381))
-* Closed Enhancement: Ability to add check box for privacy statement with the contact fields ([Issue #372](https://github.com/fpcorso/quiz_master_next/issues/372))
-* Closed Enhancement: Customize the "Please complete all required fields!" text ([Issue #371](https://github.com/fpcorso/quiz_master_next/issues/371))
-* Closed Enhancement: Allow admins to customize the validation error messages ([Issue #346](https://github.com/fpcorso/quiz_master_next/issues/346))
-* Closed Enhancement: Hint field cannot be customized ([Issue #262](https://github.com/fpcorso/quiz_master_next/issues/262))
-* Closed Enhancement: Add custom fields to the contact form ([Issue #211](https://github.com/fpcorso/quiz_master_next/issues/211))
-* Closed Enhancement: Scrollable List of Quizzes ([Issue #46](https://github.com/fpcorso/quiz_master_next/issues/46))
-
- ([Read Full Changelog](https://github.com/fpcorso/quiz_master_next/blob/master/CHANGELOG.md))
+([Read Full Changelog](https://github.com/fpcorso/quiz_master_next/blob/master/CHANGELOG.md))
 
 == Upgrade Notice ==
 
-= 5.0.0 =
-Upgrade to use a variety of new features including new contact fields system, new options to customize hint and error messages, and more!
+= 5.1.5 =
+IMPORTANT FIX: 5.1.4 had a fatal error for sites using out of date PHP versions. Please update to this!

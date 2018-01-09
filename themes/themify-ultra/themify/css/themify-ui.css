@@ -430,7 +430,7 @@ img {
 	color: #888;
 	opacity: 0;
 	position: relative;
-	transition: all .5s;
+	transition: opacity .5s;
 }
 #themify .skin-preview.selected .skin-demo-content {
 	opacity: 1;
@@ -444,33 +444,17 @@ img {
 	border-bottom: solid 1px #000;
 }
 #themify .skin-preview.selected .skin-demo-import {
-		margin-right: 10px;
+	margin-right: 10px;
 }
-#themify .skin-preview.selected .skin-demo-import:after {
+#themify .skin-preview.selected .skin-erase-demo:before {
 	content: " / ";
 	color: #bfbfbf;
 	position: absolute;
-	right: -9px;
-	top: 2px;
+	left: -9px;
+	top: 0;
 }
-#themify .skin-preview.selected .busy * {
+#demo-import-notice .skin-erase-demo {
 	display: none;
-}
-#themify .skin-preview.selected .busy + .themify-modal .proceed-import {
-	position: relative;
-	padding-left: 30px;
-}
-#themify .skin-preview.selected .busy + .themify-modal .proceed-import:before {
-	left: 7px;
-}
-#themify .skin-preview.selected .busy + .themify-modal .proceed-import:before,
-#themify .skin-preview.selected .busy:after {
-	content: "\f110";
-	font-family: FontAwesome;
-	-webkit-animation: fa-spin 2s infinite linear;
-	animation: fa-spin 2s infinite linear;
-	position: absolute;
-	margin-left: 3px;
 }
 
 /* save button   
@@ -773,6 +757,14 @@ input[type=checkbox]:checked:before {
 	width: 100%;
 	display: inline-block;
 	box-sizing: border-box;
+}
+@media screen and (min-width:1001px) and (max-width: 1180px) {
+	#themify .label + label {
+		display: block;
+	}
+	#themify .label + label + br {
+		display: none;
+	}
 }
 
 /* preset  
@@ -1819,6 +1811,7 @@ form#themify .remove-item i {
 }
 #themify .disable-autoinfinite {
 	margin-left: 15px;
+	padding-left: 12px;
 }
 
 .themify_input_field.themify_fa {
@@ -1943,7 +1936,16 @@ form#themify .remove-item i {
 #themify_lightbox_visibility .themify-visibility-options {
 	height: 350px;
 }
-#visibility-tabs > .ui-widget-header {
+#themify_lightbox_visibility #visibility-tabs ul {
+	background: none;
+	border: none;
+	font-weight: normal;
+}
+#themify_lightbox_visibility #visibility-tabs ul li {
+	border: none;
+	font-weight: normal;
+}
+#themify_lightbox_visibility #visibility-tabs > .ui-widget-header {
 	color: #fff;
 	background: #bbb;
 	border-radius: 0;
@@ -1959,12 +1961,14 @@ form#themify .remove-item i {
 	height: 100%;
 	border-radius: 0;
 	border: 1px solid #bbb;
+	background: none;
 }
-#visibility-tabs > .ui-tabs-nav {
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav {
 	margin: 0;
 	padding: 1.5em 1em 0;
+	border: none;
 }
-#visibility-tabs > .ui-tabs-nav > li {
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li {
 	list-style: none;
 	float: left;
 	position: relative;
@@ -1974,8 +1978,11 @@ form#themify .remove-item i {
 	padding: 0;
 	white-space: nowrap;
 	border-radius: 0;
+	background: none;
+	border: none;
+	font-weight: normal;
 }
-#visibility-tabs > .ui-tabs-nav > li > .ui-tabs-anchor {
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li > .ui-tabs-anchor {
 	font-size: 1.15em;
 	float: left;
 	padding: .5em;
@@ -1985,20 +1992,22 @@ form#themify .remove-item i {
 	outline: none;
 	box-shadow: none;
 }
-#visibility-tabs > .ui-tabs-nav > li.ui-tabs-active {
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li.ui-state-hover,
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li.ui-tabs-active {
 	background: #fff;
 }
-#visibility-tabs > .ui-tabs-nav > li.ui-tabs-active > .ui-tabs-anchor {
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li.ui-state-hover > .ui-tabs-anchor,
+#themify_lightbox_visibility #visibility-tabs > .ui-tabs-nav > li.ui-tabs-active > .ui-tabs-anchor {
 	color: #000;
 }
 
-.themify-visibility-inner-tabs .inline-tabs {
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs {
 	margin: 0;
 }
-.themify-visibility-inner-tabs .inline-tabs li {
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs li {
 	display: inline-block;
 }
-.themify-visibility-inner-tabs .inline-tabs li a {
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs li a {
 	font-size: 1.1em;
 	margin: 0 5px;
 	padding: 3px 6px;
@@ -2009,11 +2018,11 @@ form#themify .remove-item i {
 	border-radius: 3px;
 	display: inline-block;
 }
-.themify-visibility-inner-tabs .inline-tabs li:last-child a {
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs li:last-child a {
 	border-right: none;
 }
-.themify-visibility-inner-tabs .inline-tabs li.ui-state-hover a,
-.themify-visibility-inner-tabs .inline-tabs li.ui-tabs-active a {
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs li.ui-state-hover a,
+#themify_lightbox_visibility .themify-visibility-inner-tabs .inline-tabs li.ui-tabs-active a {
 	color: #fff;
 	background-color: #bbb;
 }
@@ -2497,9 +2506,6 @@ li.role-access-controller {
     position: fixed !important;
     left: 180px;
     top: 35px;
-    max-height: 90vh;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 .folded #themify .subtabnav.themify_settings_fixed{
     left: 60px;
@@ -2564,8 +2570,6 @@ li.role-access-controller {
 .input-range .range-slider.ui-slider-horizontal .ui-slider-handle {
 	top: -.6em;
 	margin-left: -.6em;
-	-webkit-border-radius: 100%;
-	-moz-border-radius: 100%;
 	border-radius: 100%;
 }
 .ui-slider-horizontal .ui-slider-range {
@@ -2617,52 +2621,4 @@ li.role-access-controller {
 #page-builder .themify_field {
 	float: none;
 	width: 100%;
-}
-
-/* Builder lite
-----------------------------------------------------------------*/
-.themify_builder_lite{
-    position: relative;
-    opacity: .7;
-}
-.themify_builder_lite_modal{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    cursor: not-allowed;
-}
-
-.themify_tooltip {
-    display:none;
-    position:absolute;
-    background-color: rgba(33,33,33,.9);
-    border-radius:5px;
-    padding: 10px;
-    color:#fff;
-    font-size:11px;
-    line-height: 120%;
-    z-index: 99999999;
-    border-radius: 4px;
-}
-.themify_tooltip_arrow{
-    position: relative;
-    margin: 0 auto;
-    display: table; 
-    top: 13px;
-}
-.themify_tooltip_arrow_background {
-    border: 8px solid transparent;
-    border-top-color: rgba(33,33,33,.9);
-    left: 0;
-    top: 0;
-    height: 0;
-    position: absolute;
-    width: 0;
-}
-.themify_tooltip_arrow_background{
-    border-top-color: rgba(33,33,33,.9);
-    top: -3px;
 }

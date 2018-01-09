@@ -5,9 +5,6 @@ HEADER HORIZONTAL
 body.fixed-header.page-loaded #headerwrap {
 	position: fixed;
 }
-body.announcement-top.fixed-header.page-loaded #headerwrap {
-	position: absolute; /* fix A.Bar */
-}
 #header {
 	text-align: inherit;
 	padding: 1em 0;
@@ -21,10 +18,8 @@ body.announcement-top.fixed-header.page-loaded #headerwrap {
 	font-size: 1.9em;
 	margin: 5px .5em 0 0;
 }
-.fixed-header-on #site-logo img {
-	height: 30px;
-	width: auto;
-	transition: all .3s;
+#headerwrap.fixed-header #site-logo img {
+	max-height: 30px;
 }
 
 /* header horizontal site description */

@@ -37,22 +37,24 @@ class QMNQuizManager {
 	}
 
 	/**
-	  * Generates Content For Quiz Shortcode
-	  *
-	  * Generates the content for the [mlw_quizmaster] shortcode
-	  *
-	  * @since 4.0.0
-		* @uses QMNQuizManager:load_questions() Loads questions
-		* @uses QMNQuizManager:create_answer_array() Prepares answers
-		* @uses QMNQuizManager:display_quiz() Generates and prepares quiz page
-		* @uses QMNQuizManager:display_results() Generates and prepares results page
-	  * @return string The content for the shortcode
-	  */
+	 * Generates Content For Quiz Shortcode
+	 *
+	 * Generates the content for the [mlw_quizmaster] shortcode
+	 *
+	 * @since 4.0.0
+	 * @uses QMNQuizManager:load_questions() Loads questions
+	 * @uses QMNQuizManager:create_answer_array() Prepares answers
+	 * @uses QMNQuizManager:display_quiz() Generates and prepares quiz page
+	 * @uses QMNQuizManager:display_results() Generates and prepares results page
+	 * @return string The content for the shortcode
+	 */
 	public function display_shortcode( $atts ) {
 		extract(shortcode_atts(array(
 			'quiz' => 0,
 			'question_amount' => 0
 		), $atts));
+
+		ob_start();
 
 		global $wpdb;
 		global $mlwQuizMasterNext;
@@ -67,16 +69,14 @@ class QMNQuizManager {
 		global $mlw_qmn_quiz;
 		$mlw_qmn_quiz = $quiz;
 
-		if (get_option('timezone_string') != '' && get_option('timezone_string') !== false)
-		{
-			date_default_timezone_set(get_option('timezone_string'));
+		if ( ! get_option( 'timezone_string' ) ) {
+			date_default_timezone_set( get_option( 'timezone_string' ) );
 		}
 		$return_display = '';
 		$qmn_quiz_options = $mlwQuizMasterNext->quiz_settings->get_quiz_options();
 
 		//If quiz options isn't found, stop function
-		if (is_null($qmn_quiz_options) || $qmn_quiz_options->quiz_name == '')
-		{
+		if ( is_null( $qmn_quiz_options ) || $qmn_quiz_options->quiz_name == '' ) {
 			return __("It appears that this quiz is not set up correctly", 'quiz-master-next');
 		}
 
@@ -115,13 +115,14 @@ class QMNQuizManager {
 			$qmn_array_for_variables['user_ip'] = "Unknown";
 		}
 
-		echo "<script>
+		$return_display .= "<script>
 			if (window.qmn_quiz_data === undefined) {
 				window.qmn_quiz_data = new Object();
 			}
 		</script>";
 		$qmn_json_data = array(
 			'quiz_id' => $qmn_array_for_variables['quiz_id'],
+			'quiz_name' => $qmn_array_for_variables['quiz_name'],
 			'disable_answer' => $qmn_quiz_options->disable_answer_onselect,
 			'ajax_show_correct' => $qmn_quiz_options->ajax_show_correct
 		);
@@ -152,6 +153,7 @@ class QMNQuizManager {
 			window.qmn_quiz_data["'.$qmn_json_data["quiz_id"].'"] = '.json_encode( $qmn_json_data ).'
 		</script>';
 
+		$return_display .= ob_get_clean();
 		$return_display = apply_filters('qmn_end_shortcode', $return_display, $qmn_quiz_options, $qmn_array_for_variables);
 		return $return_display;
 	}
@@ -252,20 +254,20 @@ class QMNQuizManager {
 		* @uses QMNQuizManager:display_end_section() Creates display for end section
 		* @return string The content for the quiz page section
 	  */
-	public function display_quiz($qmn_quiz_options, $qmn_quiz_questions, $qmn_quiz_answers, $qmn_array_for_variables)
-	{
+	public function display_quiz( $qmn_quiz_options, $qmn_quiz_questions, $qmn_quiz_answers, $qmn_array_for_variables ) {
+
 		global $qmn_allowed_visit;
 		global $mlwQuizMasterNext;
 		$quiz_display = '';
-		$quiz_display = apply_filters('qmn_begin_quiz', $quiz_display, $qmn_quiz_options, $qmn_array_for_variables);
-		if (!$qmn_allowed_visit)
-		{
+		$quiz_display = apply_filters( 'qmn_begin_quiz', $quiz_display, $qmn_quiz_options, $qmn_array_for_variables );
+		if ( ! $qmn_allowed_visit ) {
 			return $quiz_display;
 		}
 		wp_enqueue_script( 'json2' );
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-ui-core' );
 		wp_enqueue_script( 'jquery-ui-tooltip' );
+		wp_enqueue_style( 'jquery-redmond-theme', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css' );
 
 		global $qmn_json_data;
 		$qmn_json_data["error_messages"] = array(
@@ -277,7 +279,7 @@ class QMNQuizManager {
 
 		wp_enqueue_script( 'qmn_quiz', plugins_url( '../js/qmn_quiz.js' , __FILE__ ), array( 'jquery', 'jquery-ui-tooltip' ), $mlwQuizMasterNext->version );
 		wp_localize_script( 'qmn_quiz', 'qmn_ajax_object', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) ); // setting ajaxurl
-		wp_enqueue_script( 'math_jax', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' );
+		wp_enqueue_script( 'math_jax', '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML' );
 
 		global $qmn_total_questions;
 		$qmn_total_questions = 0;
@@ -521,8 +523,7 @@ class QMNQuizManager {
 		* @uses QMNQuizManager:send_admin_email() Creates display for end section
 		* @return string The content for the results page section
 	  */
-	public function submit_results($qmn_quiz_options, $qmn_quiz_questions, $qmn_quiz_answers, $qmn_array_for_variables)
-	{
+	public function submit_results( $qmn_quiz_options, $qmn_quiz_questions, $qmn_quiz_answers, $qmn_array_for_variables ) {
 		global $qmn_allowed_visit;
 		$result_display = '';
 
@@ -532,9 +533,8 @@ class QMNQuizManager {
 			$qmn_array_for_variables['user_ip'] = "Unknown";
 		}
 
-		$result_display = apply_filters('qmn_begin_results', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
-		if (!$qmn_allowed_visit)
-		{
+		$result_display = apply_filters( 'qmn_begin_results', $result_display, $qmn_quiz_options, $qmn_array_for_variables );
+		if ( ! $qmn_allowed_visit ) {
 			return $result_display;
 		}
 
@@ -545,30 +545,29 @@ class QMNQuizManager {
 		$qmn_array_for_variables['user_phone'] = 'None';
 		$contact_responses = QSM_Contact_Manager::process_fields( $qmn_quiz_options );
 		foreach ( $contact_responses as $field ) {
-      if ( isset( $field['use'] ) ) {
-        if ( 'name' === $field['use'] ) {
-          $qmn_array_for_variables['user_name'] = $field["value"];
-        }
-        if ( 'comp' === $field['use'] ) {
-          $qmn_array_for_variables['user_business'] = $field["value"];
-        }
-        if ( 'email' === $field['use'] ) {
-          $qmn_array_for_variables['user_email'] = $field["value"];
-        }
-        if ( 'phone' === $field['use'] ) {
-          $qmn_array_for_variables['user_phone'] = $field["value"];
-        }
-      }
-    }
+			if ( isset( $field['use'] ) ) {
+				if ( 'name' === $field['use'] ) {
+					$qmn_array_for_variables['user_name'] = $field["value"];
+				}
+				if ( 'comp' === $field['use'] ) {
+					$qmn_array_for_variables['user_business'] = $field["value"];
+				}
+				if ( 'email' === $field['use'] ) {
+					$qmn_array_for_variables['user_email'] = $field["value"];
+				}
+				if ( 'phone' === $field['use'] ) {
+					$qmn_array_for_variables['user_phone'] = $field["value"];
+				}
+			}
+		}
 
 		$mlw_qmn_timer = isset($_POST["timer"]) ? intval( $_POST["timer"] ) : 0;
 		$qmn_array_for_variables['user_id'] = get_current_user_id();
 		$qmn_array_for_variables['timer'] = $mlw_qmn_timer;
-		$qmn_array_for_variables['time_taken'] = date("h:i:s A m/d/Y");
+		$qmn_array_for_variables['time_taken'] = date("h:i:s A m/d/Y", current_time( 'timestamp' ) );
 		$qmn_array_for_variables['contact'] = $contact_responses;
 
-		if (!isset($_POST["mlw_code_captcha"]) || (isset($_POST["mlw_code_captcha"]) && $_POST["mlw_user_captcha"] == $_POST["mlw_code_captcha"]))
-		{
+		if ( !isset( $_POST["mlw_code_captcha"] ) || ( isset( $_POST["mlw_code_captcha"] ) && $_POST["mlw_user_captcha"] == $_POST["mlw_code_captcha"] ) ) {
 
 			$qmn_array_for_variables = array_merge($qmn_array_for_variables,$this->check_answers($qmn_quiz_questions, $qmn_quiz_answers, $qmn_quiz_options, $qmn_array_for_variables));
 			$result_display = apply_filters('qmn_after_check_answers', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
@@ -578,12 +577,8 @@ class QMNQuizManager {
 			$result_display = apply_filters('qmn_after_results_text', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
 			$result_display .= $this->display_social($qmn_quiz_options, $qmn_array_for_variables);
 			$result_display = apply_filters('qmn_after_social_media', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
-			$this->send_user_email($qmn_quiz_options, $qmn_array_for_variables);
-			$result_display = apply_filters('qmn_after_send_user_email', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
-			$this->send_admin_email($qmn_quiz_options, $qmn_array_for_variables);
-			$result_display = apply_filters('qmn_after_send_admin_email', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
 
-			//Save the results into database
+			// Save the results into database
 			$mlw_quiz_results_array = array(
 				intval($qmn_array_for_variables['timer']),
 				$qmn_array_for_variables['question_answers_array'],
@@ -635,6 +630,12 @@ class QMNQuizManager {
 					'%d'
 				)
 			);
+
+
+			$this->send_user_email($qmn_quiz_options, $qmn_array_for_variables);
+			$result_display = apply_filters('qmn_after_send_user_email', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
+			$this->send_admin_email($qmn_quiz_options, $qmn_array_for_variables);
+			$result_display = apply_filters('qmn_after_send_admin_email', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
 			$result_display = apply_filters('qmn_end_results', $result_display, $qmn_quiz_options, $qmn_array_for_variables);
 			//Legacy Code
 			do_action('mlw_qmn_load_results_page', $wpdb->insert_id, $qmn_quiz_options->quiz_settings);
@@ -1168,7 +1169,7 @@ function qsm_scheduled_timeframe_check( $display, $options, $variable_data ) {
 		$end = strtotime( $options->scheduled_time_end ) + 86399;
 
 		// Checks if the current timestamp is outside of scheduled timeframe
-		if ( time() < $start || time() > $end ) {
+		if ( current_time( 'timestamp' ) < $start || current_time( 'timestamp' ) > $end ) {
 			$qmn_allowed_visit = false;
 			$message = wpautop( htmlspecialchars_decode( $options->scheduled_timeframe_text, ENT_QUOTES ) );
 			$message = apply_filters( 'mlw_qmn_template_variable_quiz_page', $message, $variable_data );

@@ -55,7 +55,8 @@ class Themify {
 	public $query_post_type = '';
 	public $query_taxonomy = '';
 	public $paged = '';
-
+	public $query_all_post_types;
+	
 	public $google_fonts;
 
 	/////////////////////////////////////////////
@@ -144,11 +145,16 @@ class Themify {
 		$this->orderby = themify_get( 'setting-index_orderby', 'date' );
 
 		$this->display_content = themify_get( 'setting-default_layout_display' );
+		$this->excerpt_length = themify_get( 'setting-default_excerpt_length' );
 		$this->avatar_size = apply_filters( 'themify_author_box_avatar_size', $this->avatar_size );
 
 		$this->posts_per_page = get_option( 'posts_per_page' );
 
 		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
+
+		if( $this->display_content === 'excerpt' && ! empty( $this->excerpt_length ) ) {
+			add_filter( 'excerpt_length', array( $this, 'custom_except_length' ), 999 );
+		}
 	}
 
 	function template_redirect() {
@@ -171,6 +177,10 @@ class Themify {
 
 			if( themify_get( 'portfolio_post_filter' ) ) {
 				$this->post_filter = themify_get( 'portfolio_post_filter' );
+			}
+
+			if( themify_get( 'query_all_post_types' ) ) {
+				$this->query_all_post_types = themify_get( 'query_all_post_types' ) === 'yes';
 			}
 		}
 
@@ -230,7 +240,7 @@ class Themify {
 			$this->height = $post_image_height;
 		}
 
-		if( is_home() || is_category() || is_tag() ) {
+		if( is_archive() || is_home() ) {
 			$this->query_taxonomy = 'category';
 			$this->post_filter = themify_get( 'setting-post_filter', 'yes' );
 			$this->post_layout_type = themify_get( 'setting-post_content_layout' );
@@ -367,7 +377,6 @@ class Themify {
 
 				$this->order = themify_get( 'order', 'desc' );
 				$this->orderby = themify_get( 'orderby', 'date' );
-
 			}
 			
 
@@ -418,7 +427,7 @@ class Themify {
 			}
 			$this->hide_image = ( themify_get( 'hide_post_image' ) != 'default' && themify_check( 'hide_post_image' ) ) ? themify_get( 'hide_post_image' ) : themify_get( 'setting-default_page_post_image' );
 			$this->unlink_image = ( themify_get( 'unlink_post_image' ) != 'default' && themify_check( 'unlink_post_image' ) ) ? themify_get( 'unlink_post_image' ) : themify_get( 'setting-default_page_unlink_post_image' );
-			$this->media_position = 'above';
+			$this->media_position = themify_get( 'setting-default_page_single_media_position', 'above' );
 
 			// Post Meta Values ///////////////////////
 			$post_meta_keys = array(
@@ -500,6 +509,10 @@ class Themify {
 				$this->layout = themify_check( 'setting-shop_layout' )? themify_get( 'setting-shop_layout' ) : 'sidebar-none';			
 			}
 		}
+	}
+
+	function custom_except_length() {
+		return apply_filters( 'themify_custom_excerpt_length', $this->excerpt_length );
 	}
 }
 

@@ -158,6 +158,12 @@ HEADER MAGAZINE
 	margin-bottom: .75em;
 }
 
+/* header magazine - transparent-header */
+.transparent-header #headerwrap a,
+.transparent-header .header-widget .widgettitle {
+	color: inherit;
+}
+
 /* header magazine fixed-header */
 #headerwrap.fixed-header {
 	padding-bottom: 0 !important;
@@ -171,11 +177,6 @@ HEADER MAGAZINE
 .fixed-header-on .navbar-wrapper {
 	position: static;
 	border-top: none;
-}
-.fixed-header-on #site-logo img {
-	height: 30px;
-	width: auto;
-	transition: all .3s;
 }
 #headerwrap.fixed-header .social-widget,
 #headerwrap.fixed-header #searchform-wrap {

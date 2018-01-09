@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 
-	<head>
-		<meta charset="<?php bloginfo('charset'); ?>">
+    <head>
+        <meta charset="<?php bloginfo( 'charset' ); ?>">
+        
+        <!-- wp_header -->
+        <?php wp_head(); ?>
+    </head>
 
-		<?php $title = is_home() || is_front_page() ? get_bloginfo('name') : wp_title('', false); ?>
-		<?php echo '<ti'.'tle>'. $title .'</ti'.'tle>' ?>
+    <body class="single single-template-builder-editor themify_builder_active builder-breakpoint-desktop">
 
-		<!-- wp_header -->
-		<?php wp_head(); ?>
-	</head>
+        <div class="single-template-builder-container">
 
-	<body <?php body_class( 'single single-template-builder-editor frontend' ); ?>>
+            <?php if (have_posts()) while (have_posts()) : the_post(); ?>
+                    <h2 class="builder_title"><?php the_title() ?></h2>
+                    <?php the_content(); ?>
+                <?php endwhile; ?>
 
-		<div class="single-template-builder-container">
+        </div>
+        <!-- /.single-template-builder-container -->
 
-			<?php if (have_posts()) while (have_posts()) : the_post(); ?>
-				<h2 class="builder_title"><?php the_title() ?></h2>
-				<?php the_content(); ?>
-			<?php endwhile; ?>
+        <!-- wp_footer -->
+        <?php wp_footer(); ?>
 
-		</div>
-		<!-- /.single-template-builder-container -->
-
-	<!-- wp_footer -->
-	<?php wp_footer(); ?>
-
-	</body>
+    </body>
 
 </html>

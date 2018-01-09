@@ -317,8 +317,9 @@ class Themify_Feature_Posts extends WP_Widget {
 						}
 						echo '<span class="post-excerpt">' . wp_kses_post( $the_excerpt ) . '</span>';
 					} elseif( 'content' == $display ) {
-						$the_content = get_the_content();
-						echo '<div class="post-content">' . wp_kses_post( $the_content ) . '</div>';
+						echo '<div class="post-content">';
+						the_content();
+						echo '</div>';
 					}
 
 				echo '</li>';
@@ -1183,7 +1184,7 @@ class Themify_Twitter extends WP_Widget {
 			require_once THEMIFY_DIR . '/themify-shortcodes.php';
 		}
 		
-		if(isset($_POST['action']) && $_POST['action']==='tfb_load_module_partial'){
+		if(isset($_POST['action']) && $_POST['action']==='tb_load_module_partial'){
 			global $themify_twitter_instance;
 			$themify_twitter_instance++;
 		}
@@ -1271,7 +1272,7 @@ class Themify_Twitter extends WP_Widget {
 		
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>"><?php _e('Type:', 'themify'); ?></label>
-			<select data-toggle-display="twitter-display-toggle" id="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>">
+			<select class="toggle-display" data-toggle-display="twitter-display-toggle" id="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>">
 				<option value="0" data-display="twitter-default" <?php if ( !$instance['type'] ) echo 'selected="selected"'; ?>><?php _e('Default', 'themify'); ?></option>
 				<option value="type-timeline" data-display="twitter-timeline" <?php if ( $instance['type'] == 'type-timeline' ) echo 'selected="selected"'; ?>><?php _e('Timeline', 'themify'); ?></option>
 				<option value="type-grid" data-display="twitter-grid" <?php if ( $instance['type'] == 'type-grid' ) echo 'selected="selected"'; ?>><?php _e('Grid', 'themify'); ?></option>
@@ -1289,7 +1290,7 @@ class Themify_Twitter extends WP_Widget {
 			</p>
 		</div>
 		
-		<div class="twitter-display-toggle" data-display="twitter-default" style="display: <?php echo $twitter_default ? 'block' : 'none' ?>">
+		<div class="twitter-display-toggle twitter-default" data-display="twitter-default" style="display: <?php echo $twitter_default ? 'block' : 'none' ?>">
 			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'show_count' ) ); ?>"><?php _e('Show:', 'themify'); ?></label>
 				<input id="<?php echo esc_attr( $this->get_field_id( 'show_count' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_count' ) ); ?>" value="<?php echo esc_attr( $instance['show_count'] ); ?>" size="3" type="text" /> <?php _e('tweets', 'themify'); ?>
@@ -1321,7 +1322,7 @@ class Themify_Twitter extends WP_Widget {
 			</p>
 		</div>
 		
-		<div class="twitter-display-toggle" data-display="twitter-timeline" style="display: <?php echo $instance['type'] == 'type-timeline' ? 'block' : 'none' ?>">
+		<div class="twitter-display-toggle twitter-timeline" data-display="twitter-timeline" style="display: <?php echo $instance['type'] == 'type-timeline' ? 'block' : 'none' ?>">
 			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'timeline_height' ) ); ?>"><?php _e('Embed Height:', 'themify'); ?></label>
 				<input id="<?php echo esc_attr( $this->get_field_id( 'timeline_height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'timeline_height' ) ); ?>" size=4 value="<?php echo esc_attr( $instance['timeline_height'] ); ?>" type="text"/>
@@ -1343,7 +1344,7 @@ class Themify_Twitter extends WP_Widget {
 			</p>
 		</div>
 		
-		<div class="twitter-display-toggle" data-display="twitter-grid" style="display: <?php echo $instance['type'] == 'type-grid' ? 'block' : 'none' ?>">
+		<div class="twitter-display-toggle twitter-grid" data-display="twitter-grid" style="display: <?php echo $instance['type'] == 'type-grid' ? 'block' : 'none' ?>">
 			<p>
 				<label style="display:block;" for="<?php echo esc_attr( $this->get_field_id( 'grid_embed_code' ) ); ?>"><?php _e('Embed Code', 'themify'); ?></label>
 				<textarea style="width: 100%; height: 100px;" id="<?php echo esc_attr( $this->get_field_id( 'grid_embed_code' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'grid_embed_code' ) ); ?>"><?php echo esc_attr( $instance['grid_embed_code'] ); ?></textarea>
@@ -1356,7 +1357,7 @@ class Themify_Twitter extends WP_Widget {
 		
 		<script type="text/javascript">
 		( function( $ ) {
-			var toggleDisplay = $('[data-toggle-display]');
+			var toggleDisplay = $('.toggle-display');
 			if( toggleDisplay.length ) {
 				toggleDisplay.each( function() {
 					var containerClass = $(this).attr( 'data-toggle-display' ),
@@ -1367,7 +1368,7 @@ class Themify_Twitter extends WP_Widget {
 							userFn = show == 'twitter-grid' ? $.fn.hide : $.fn.show;
 
 						$( '.' + containerClass, context ).hide();
-						$( '.' + containerClass + '[data-display="' + show + '"]', context ).show();
+						$( '.' + containerClass + '.' + show, context ).show();
 
 						userFn.call( $( '.twitter-username', context ) );
 					} );
@@ -1702,14 +1703,22 @@ class Themify_Google_Maps extends WP_Widget {
             }
             $args .= '&zoom=' . $instance['zoom_map'];
             $args .= '&maptype=' . strtolower($instance['type_map']);
-            $args .= '&size=500x300';
+            $args .= '&size=' . ( isset( $instance['width'] ) ? filter_var( $instance['width'], FILTER_SANITIZE_NUMBER_INT ) : '500' ) . 'x' . ( isset( $instance['height'] ) ? $instance['height'] : '300' );
             ?>
             <img style="<?php echo esc_attr($instance['style']); ?>" src="//maps.googleapis.com/maps/api/staticmap?<?php echo $args; ?>" />
 
         <?php else : ?>
             <?php
-            $style .= 'width:100%;';
-            $style .= 'height:300px;';
+			if ( isset( $instance['width'] ) ) {
+				// use % or pixels
+				if( ! preg_match( '/%$/', $instance['width'] ) ) {
+					$instance['width'] .= 'px';
+				}
+			} else {
+				$instance['width'] = '100%';
+			}
+            $style = 'width:' . $instance['width'] . ';';
+            $style .= 'height:' . ( isset( $instance['height'] ) ? $instance['height'] : '300' ) . 'px;';
 
             if (!empty($instance['address_map']) || !empty($instance['latlong_map'])) {
                 $geo_address = !empty($instance['address_map']) ? $instance['address_map'] : $instance['latlong_map'];
@@ -1721,7 +1730,7 @@ class Themify_Google_Maps extends WP_Widget {
                 $data['scroll'] = $instance['scrollwheel_map'] == 'enable';
                 $data['drag'] = 'enable' == $instance['draggable_map'];
                 ?>
-                <div data-map="<?php echo esc_attr(base64_encode(json_encode($data))) ?>" class="themify_map map-container"  style="<?php echo esc_attr($style); ?>"  data-info-window="<?php echo esc_attr($instance['info_window_map']); ?>" data-reverse-geocoding="<?php echo ( empty($instance['address_map']) && !empty($instance['latlong_map']) ) ? true : false; ?>"></div>
+                <div data-map="<?php echo esc_attr( base64_encode( json_encode( $data ) ) ); ?>" class="themify_map map-container"  style="<?php echo esc_attr($style); ?>"  data-info-window="<?php echo esc_attr($instance['info_window_map']); ?>" data-reverse-geocoding="<?php echo ( empty($instance['address_map']) && !empty($instance['latlong_map']) ) ? true : false; ?>"></div>
             <?php } ?>
         <?php
         endif;
@@ -1742,6 +1751,8 @@ class Themify_Google_Maps extends WP_Widget {
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['map_display_type'] = strip_tags( $new_instance['map_display_type'] );
 		$instance['address_map'] = strip_tags( $new_instance['address_map'] );
+		$instance['width'] = strip_tags( $new_instance['width'] );
+		$instance['height'] = strip_tags( $new_instance['height'] );
 
 		// Cleans the lat/lon string
 		preg_match_all("/(?<lat>[-+]?([0-9]+\.[0-9]+)).*(?<long>[-+]?([0-9]+\.[0-9]+))/", $new_instance['latlong_map'], $matches);
@@ -1765,7 +1776,10 @@ class Themify_Google_Maps extends WP_Widget {
 		$defaults = array(
 			'title' => 'Themify Google Map',
 			'map_display_type' => 'dynamic',
+			'address_map' => '',
 			'latlong_map' => '43.6453137,-79.1831939',
+			'width' => '100%',
+			'height' => '300',
 			'zoom_map' => 8,
 			'type_map' => 'ROADMAP',
 			'scrollwheel_map' => 'disable',
@@ -1777,7 +1791,7 @@ class Themify_Google_Maps extends WP_Widget {
 		
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e('Title', 'themify'); ?></label><br>
-			<input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>"/>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" class="widefat" />
 		</p>
 
 		<p>
@@ -1788,16 +1802,23 @@ class Themify_Google_Maps extends WP_Widget {
 		
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'address_map' ) ); ?>"><?php _e('Address:', 'themify'); ?></label><br>
-			<textarea id="<?php echo esc_attr( $this->get_field_id( 'address_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'address_map' ) ); ?>"><?php echo esc_attr( $instance['address_map'] ); ?></textarea>
+			<textarea id="<?php echo esc_attr( $this->get_field_id( 'address_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'address_map' ) ); ?>" class="widefat"><?php echo esc_attr( $instance['address_map'] ); ?></textarea>
 		</p>
 		
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'latlong_map' ) ); ?>"><?php _e('Lat/Lon', 'themify'); ?></label><br>
-			<input id="<?php echo esc_attr( $this->get_field_id( 'latlong_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'latlong_map' ) ); ?>" value="<?php echo esc_attr( $instance['latlong_map'] ); ?>"/><br/><small><?php _e('Use lat/lon instead of address (Leave address field empty to use this). Example: 43.6453137,-79.1831939', 'themify'); ?></small>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'latlong_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'latlong_map' ) ); ?>" value="<?php echo esc_attr( $instance['latlong_map'] ); ?>" class="widefat" /><br/><small><?php _e('Use lat/lon instead of address (Leave address field empty to use this). Example: 43.6453137,-79.1831939', 'themify'); ?></small>
 		</p>
 
 		<p>
-			<label for="<?php echo esc_attr( $this->get_field_id( 'zoom_map' ) ); ?>"><?php _e('Zoom', 'themify'); ?></label>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>"><?php _e('Width', 'themify'); ?></label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'width' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'width' ) ); ?>" value="<?php echo esc_attr( $instance['width'] ); ?>"/>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'height' ) ); ?>"><?php _e('Height', 'themify'); ?></label>
+			<input type="text" id="<?php echo esc_attr( $this->get_field_id( 'height' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'height' ) ); ?>" value="<?php echo esc_attr( $instance['height'] ); ?>"/>
+		</p>
+
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'zoom_map' ) ); ?>"><?php _e('Zoom:', 'themify'); ?></label>
 			<input type="number" min="1" max="16" id="<?php echo esc_attr( $this->get_field_id( 'zoom_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'zoom_map' ) ); ?>" value="<?php echo esc_attr( $instance['zoom_map'] ); ?>"/>
 		</p>
 
@@ -1837,7 +1858,7 @@ class Themify_Google_Maps extends WP_Widget {
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'info_window_map' ) ); ?>"><?php _e('Infowindow:', 'themify'); ?></label><br>
-			<textarea id="<?php echo esc_attr( $this->get_field_id( 'info_window_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'info_window_map' ) ); ?>"><?php echo esc_attr( $instance['info_window_map'] ); ?></textarea>
+			<textarea id="<?php echo esc_attr( $this->get_field_id( 'info_window_map' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'info_window_map' ) ); ?>" class="widefat"><?php echo esc_attr( $instance['info_window_map'] ); ?></textarea>
 		</p>
 
 		<?php

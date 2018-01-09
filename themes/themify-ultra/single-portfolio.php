@@ -54,7 +54,7 @@ global $themify;
 
 			<?php get_template_part('includes/post-nav', 'portfolio'); ?>
 
-			<?php if ( ! themify_check('setting-comments_posts') ) : ?>
+			<?php if ( ! themify_check('setting-comments_posts') || themify_check( 'setting-portfolio_comments' ) ) : ?>
 				<?php comments_template(); ?>
 			<?php endif; ?>
 

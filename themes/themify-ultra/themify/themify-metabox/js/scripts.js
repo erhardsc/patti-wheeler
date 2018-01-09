@@ -23,6 +23,7 @@ window.Themify_Metabox = (function($){
 		api.post_meta_checkbox();
 
 		api.init_fields( $( 'body' ) );
+		api.audioRemoveAction();
 	},
 
 	// create the tabs in custom meta boxes
@@ -82,8 +83,36 @@ window.Themify_Metabox = (function($){
 
 			template = template.replace( /__i__/g, new_id );
 			rows.append( template );
+
+			if( $( template ).has( '.plupload-upload-uic' ).length ) {
+				var uploadActions = $( template ).find( '.plupload-upload-uic' );
+				uploadActions.each(function () { themify_create_pluploader($(this)); });
+			}
 			// init field types for the new row
 			api.init_fields( rows.find('.themify-repeater-row:last-child') );
+		} );
+
+		$( 'body' ).on( 'click', '.themify-repeater-remove-row', function( e ) {
+			e.preventDefault();
+
+			$( this ).parent().remove();
+		} );
+	}
+
+	api.audioRemoveAction = function() {
+		$( 'body' ).on( 'click', '[data-audio-remove] a', function( e ) {
+			e.preventDefault();
+
+			var $self = $( this ).parent(),
+				data = $self.data( 'audio-remove' ),
+				callback = function() {
+					$self.parent().find( '.themify_upload_field' ).val('');
+					$self.addClass( 'hide' );
+				};
+			
+			callback();
+			data.action = 'themify_remove_audio';
+			$.post( ajaxurl, data, callback );
 		} );
 	}
 
@@ -236,7 +265,7 @@ window.Themify_Metabox = (function($){
 						if( mode === 'show' && $selector.is( ':visible' ) ) return;
 						$.fn[ mode ].call( $selector );
 					} ).trigger( 'change' );
-				}
+	}
 			}
 		} );
 	}
@@ -314,6 +343,12 @@ window.Themify_Metabox = (function($){
 
 		$( 'body' ).on( 'click', '.themify-gallery-shortcode-btn', function(event) {
 			var shortcode_val = $(this).closest('.themify_field').find('.themify-gallery-shortcode-input');
+	
+			if(shortcode_val.html()){
+				shortcode_val.val(shortcode_val.html());
+				shortcode_val.html('');
+				shortcode_val.text('');
+			}
 	
 			if (file_frame) {
 				file_frame.open();
@@ -552,7 +587,7 @@ window.Themify_Metabox = (function($){
 				states_arr = [];
 
 			// Backwards compatibility
-			if('yes' == states_str){
+			if('yes' === states_str){
 				$('.meta-all', $elf).val('yes').prop('checked', true);
 				$('.meta-sub', $elf).val('yes').prop('disabled', true).parent().addClass('opacity-7');
 			} else {
@@ -564,7 +599,7 @@ window.Themify_Metabox = (function($){
 				}
 				for ( var meta in states ) {
 					if ( states.hasOwnProperty(meta) ) {
-						if ( 'yes' == states[meta] ) {
+						if ( 'yes' === states[meta] ) {
 							$('#' + meta, $elf).val('yes').prop('checked', true);
 						}
 					}

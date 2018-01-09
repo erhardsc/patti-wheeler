@@ -206,7 +206,6 @@ body:not(.mobile_menu_active).header-top-widgets .header-widget-full .fa-phone {
 	margin-right: 15px;
 	vertical-align: middle;
 }
-
 body:not(.mobile_menu_active).header-top-widgets #header {
 	background-color: #22436c;
 	-webkit-backface-visibility: hidden;
@@ -216,16 +215,19 @@ body:not(.mobile_menu_active).header-top-widgets #header {
 	transform: translateY(50%);
 	margin-top: -50px;
 }
+body.themify_builder_active.header-top-widgets #header {
+	transform: none; /* prevent header overlap builder UI */
+}
 body:not(.mobile_menu_active).header-top-widgets #headerwrap.fixed-header #header {
 	padding: 1em 0;
 }
 body:not(.mobile_menu_active).header-top-widgets #site-logo {
 	letter-spacing: -0.03em;
-	font-size: 2.75em;
+	font-size: 2.5em;
 	padding-left: 35px;
 }
 body:not(.mobile_menu_active).header-top-widgets #site-description {
-	display: none;
+	padding-left: 35px;
 }
 body:not(.mobile_menu_active).header-top-widgets #main-nav {
 	padding-right: 30px !important;
@@ -925,8 +927,8 @@ SERVICES
 	font-size: 90%;
 	letter-spacing: -0.01em;
 }
-.module-testimonial-slider.module-slider .carousel-nav-wrap .carousel-prev,
-.module-testimonial-slider.module-slider .carousel-nav-wrap .carousel-next {
+.module-testimonial-slider .carousel-nav-wrap .carousel-prev,
+.module-testimonial-slider .carousel-nav-wrap .carousel-next {
 	background: none;
 	color: #c4943a;
 }

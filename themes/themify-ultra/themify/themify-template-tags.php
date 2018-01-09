@@ -605,14 +605,6 @@ function themify_menu_nav( $args = array() ) {
 		'menu_class'  => 'main-nav'
 	), 'menu_nav' );
 
-	if ( is_singular() || themify_is_shop() ) {
-		// See if the page has a menu assigned
-		$custom_menu = themify_get( 'custom_menu' );
-		if ( ! empty( $custom_menu ) ) {
-			$args['menu'] = $custom_menu;
-		}
-	}
-
 	// Render the menu
 	return wp_nav_menu( $args );
 }

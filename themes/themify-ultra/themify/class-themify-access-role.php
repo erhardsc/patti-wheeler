@@ -145,7 +145,7 @@ class Themify_Access_Role {
 
 			// Generate prefix with the setting name for backend builder
 			$prefix = 'setting-backend-';
-			$backend_builder = themify_get( $prefix.$role );
+			$backend_builder = themify_builder_get( $prefix.$role, $prefix.$role );
 
 			// Remove Page Builde if disabled from role access control
 			if( 'disable' === $backend_builder ){
@@ -178,9 +178,9 @@ class Themify_Access_Role {
 		if(is_null($has_access) && is_user_logged_in() ){
 			$role = self::get_current_role();
 			$prefix = 'setting-backend-';
-			$backend_builder = themify_get( $prefix.$role );
+			$backend_builder = themify_builder_get( $prefix.$role, $prefix.$role );
 			$has_access = 'disable' !== $backend_builder;
-		}  
+		}
 		return $has_access;
 	}
         
@@ -200,7 +200,7 @@ class Themify_Access_Role {
 
 			// Generate prefix with the setting name
 			$prefix = 'setting-frontend-';
-			$value = themify_get( $prefix.$role );
+			$value = themify_builder_get( $prefix.$role, $prefix.$role );
 			if ( 'enable' === $value ) {
 				return true;
 			} elseif( 'disable' === $value ) {

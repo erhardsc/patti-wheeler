@@ -41,8 +41,8 @@ function themify_theme_design_controls( $data = array() ) {
 	/**
 	 * Theme Color
 	 */
-	$html .= '<p>
-					<span class="label">' . __( 'Theme Color', 'themify' ) . '</span>';
+	$html .= '<p class="clearfix">
+					<span class="label">' . __( 'Theme Color', 'themify' ) . '</span><span class="preview-icon-wrapper">';
 	$val = themify_check( $pre ) ? themify_get( $pre ) : '';
 	foreach ( $design_options as $option ) {
 		if ( ( '' == $val || ! $val ) && $option['selected'] ) {
@@ -55,7 +55,7 @@ function themify_theme_design_controls( $data = array() ) {
 	}
 
 	$html .= '	<input type="hidden" name="' . esc_attr( $pre ) . '" class="val" value="' . esc_attr( $val ) . '" />
-				</p>';
+				</span></p>';
 
 	/**
 	 * Typography
@@ -129,6 +129,15 @@ function themify_theme_design_controls( $data = array() ) {
 			__('Disable Sticky Header.', 'themify')
 		);
 
+		/**
+		 * Shrinking Logo
+		 */
+		$html .= sprintf('<p class="hide-if none boxed-content header-leftpane header-slide-out header-minbar header-rightpane pushlabel"><label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" %2$s /> %3$s</label></p>',
+			'setting-shrinking_logo_disabled',
+			checked( themify_get( 'setting-shrinking_logo_disabled' ), 'on', false ),
+			__('Disable Shrinking Logo.', 'themify')
+		);
+		
 		/**
 		 * Full height header
 		 */
@@ -217,6 +226,9 @@ class="hide-if none header-horizontal header-leftpane header-minbar boxed-layout
 			);
 		}
 
+	// End group of elements to hide
+	$html .= '</div><!-- /.group-hide -->';
+
 	/**
 	 * Header Widgets
 	 */
@@ -262,9 +274,6 @@ class="hide-if none header-horizontal header-leftpane header-minbar boxed-layout
 	$html .= '<input type="hidden" name="setting-header_widgets" class="val" value="' . esc_attr( $val ) . '" />';
 
 	$html .= '</p>';
-
-	// End group of elements to hide
-	$html .= '</div><!-- /.group-hide -->';
 
 	/**
 	 * Footer Design
@@ -381,11 +390,7 @@ class="hide-if none header-horizontal header-leftpane header-minbar boxed-layout
 		array(
 			'value' => 'footerwidget-1col',
 			'img' => 'themify/img/sidebars/1col.png',
-			'title' => __('Widgets 1 Column', 'themify')),
-		array(
-			'value' => 'none',
-			'img' => 'themify/img/sidebars/none.png',
-			'title' => __('No Widgets', 'themify'))
+			'title' => __('Widgets 1 Column', 'themify'))
 	);
 	$val = themify_get( 'setting-footer_widgets' );
 		
@@ -600,6 +605,16 @@ function themify_related_posts( $data = array() ) {
 			</p>';
 
 	/**
+	 * Featured Image Size
+	 */
+	$html .= '<p>
+				<span class="label">' . __( 'Featured Image', 'themify' ) . '</span>
+				<input type="text" class="width2" name="' . esc_attr( $key ) . '_image_width" value="' . themify_get( $key . '_image_width' ) . '"> ' . esc_html__( 'width', 'themify' ) . ' <small>(px)</small>
+				<input type="text" class="width2 show_if_enabled_img_php" name="' . esc_attr( $key ) . '_image_height" value="' . themify_get( $key . '_image_height' ) . '">
+				<span class="show_if_enabled_img_php"> ' . esc_html__( 'height', 'themify' ) . ' <small>(px)</small></span>
+			</p>';
+
+	/**
 	 * Hide Image
 	 */
 	$html .= sprintf('<p><span class="pushlabel"><label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" %2$s /> %3$s</label></span></p>',
@@ -747,8 +762,8 @@ function themify_default_layout( $data = array() ){
 	/**
 	 * Post Layout
 	 */
-	$output .= '<p>
-					<span class="label">' . __('Post Layout', 'themify') . '</span>';
+	$output .= '<p class="clearfix">
+					<span class="label">' . __('Post Layout', 'themify') . '</span><span class="preview-icon-wrapper">';
 	$val = isset( $data[$prefix.'post_layout'] ) ? $data[$prefix.'post_layout'] : '';
 	foreach($default_post_layout_options as $option){
 		if(($val == '' || !$val || !isset($val)) && $option['selected']){ 
@@ -763,7 +778,7 @@ function themify_default_layout( $data = array() ){
 	}
 
 	$output .= '	<input type="hidden" name="' . esc_attr( $prefix ) . 'post_layout" class="val" value="' . esc_attr( $val ) . '" />
-				</p>';
+				</span></p>';
 
 	/**
 	 * Post Content Layout
@@ -820,6 +835,18 @@ function themify_default_layout( $data = array() ){
 					<select name="' . esc_attr( $prefix ) . 'layout_display">'.
 						themify_options_module($default_display_options, $prefix.'layout_display').'
 					</select>
+				</p>';
+
+	/**
+	 * Excerpt length
+	 */
+	$output .= '<p style="display:none">
+					<span class="pushlabel vertical-grouped">
+						<label>
+							<input class="width2" type="text" value="' . ( isset( $data[ $prefix . 'excerpt_length' ] ) ? esc_attr( $data[ $prefix . 'excerpt_length' ] ) : '' ) . '" name="' . esc_attr( $prefix ) . 'excerpt_length"> '
+							. __( 'Excerpt length (enter number of words)', 'themify' ) . '
+						</label>
+					</span>
 				</p>';
 	
 	/**
@@ -947,9 +974,12 @@ if (!function_exists('themify_pagination_infinite')) {
 		//Infinite Scroll
 		$output .= '<input ' . checked( themify_check( 'setting-more_posts' ) ? themify_get( 'setting-more_posts' ) : 'infinite', 'infinite', false ) . ' type="radio" name="setting-more_posts" value="infinite" /> ';
 		$output .= __('Infinite Scroll (posts are loaded on the same page)', 'themify');
+		$output .= '<div class="pushlabel disable-autoinfinite" data-show-if-element="[name=setting-more_posts]:checked" data-show-if-value="infinite">';
+		$output .= '<label for="setting-autoinfinite"><input type="checkbox" id="setting-autoinfinite" name="setting-autoinfinite" '.checked( themify_get( 'setting-autoinfinite' ), 'on', false ).'/> ' . __('Disable automatic infinite scroll', 'themify').'</label>';
 		$output .= '<br/>';
-		$output .= '<label data-show-if-element="[name=setting-more_posts]:checked" data-show-if-value="infinite" for="setting-autoinfinite"  for="setting-autoinfinite"><input class="disable-autoinfinite" type="checkbox" id="setting-autoinfinite" name="setting-autoinfinite" '.checked( themify_get( 'setting-autoinfinite' ), 'on', false ).'/> ' . __('Disable automatic infinite scroll', 'themify').'</label>';
-		$output .= '<br/><br/>';
+		$output .= '<label for="setting-infinite-url"><input type="checkbox" id="setting-infinite-url" name="setting-infinite-url" '.checked( themify_get( 'setting-infinite-url' ), 'on', false ).'/> ' . __('Disable page number updates on address URL on scrolling', 'themify').'</label>';
+		$output .= '</div>';
+		$output .= '<br/>';
 
 		//Numbered pagination
 		$output .= '<span class="pushlabel"><input ' . checked( themify_get( 'setting-more_posts' ), 'pagination', false ) . ' type="radio" name="setting-more_posts" value="pagination" /> ';
@@ -1065,7 +1095,9 @@ function single_post_slider_settings() {
 						array( 'name' => __( 'Variable', 'themify' ), 'value' => 'variable' ),
 					), 'setting-single_slider_height' ) . '
 				</select>
-				<span class="description">'. __( '"Auto" measures the highest slide and all other slides will be set to that size. "Variable" makes every slide has it\'s own height', 'themify' ) . '</span>
+			</p>
+			<p>
+				<span class="description pushlabel">'. __( '"Auto" measures the highest slide and all other slides will be set to that size. "Variable" makes every slide has it\'s own height', 'themify' ) . '</span>
 			</p>';
 
 	return $output;
